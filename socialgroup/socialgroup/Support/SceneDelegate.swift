@@ -12,13 +12,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    let userDefaults = UserDefaults.standard
 
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         //创建window
         self.window = UIWindow(windowScene: windowScene)
         //设置window的rootViewController
-        self.window?.rootViewController = ViewController()
+        if(!userDefaults.bool(forKey: "isLogin")){
+            self.window?.rootViewController = LoginViewController()
+        }else{
+            self.window?.rootViewController = MainController()
+        }
+        
+        
         self.window?.makeKeyAndVisible()
     }
 
