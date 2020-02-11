@@ -23,10 +23,12 @@
 		E98CE4E423F1BA4900BAF41F /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = E98CE4E323F1BA4900BAF41F /* SDWebImage */; };
 		E98CE4E623F1BA4900BAF41F /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E98CE4E523F1BA4900BAF41F /* SDWebImageMapKit */; };
 		E98CE4E923F1D4BC00BAF41F /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = E98CE4E823F1D4BC00BAF41F /* AlamofireImage */; };
+		E98CE4EB23F2AB3A00BAF41F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4EA23F2AB3A00BAF41F /* RegisterViewController.swift */; };
+		E98CE4EF23F2BC7000BAF41F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4EE23F2BC7000BAF41F /* Util.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E98CE4AF23F14CC600BAF41F /* socialgroup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socialgroup.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E98CE4AF23F14CC600BAF41F /* SocialGroup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialGroup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E98CE4B223F14CC600BAF41F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E98CE4B423F14CC600BAF41F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E98CE4BB23F14CC800BAF41F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -39,6 +41,8 @@
 		E98CE4D623F1509D00BAF41F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E98CE4D823F1567E00BAF41F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E98CE4DA23F177B600BAF41F /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
+		E98CE4EA23F2AB3A00BAF41F /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		E98CE4EE23F2BC7000BAF41F /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +72,7 @@
 		E98CE4B023F14CC600BAF41F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E98CE4AF23F14CC600BAF41F /* socialgroup.app */,
+				E98CE4AF23F14CC600BAF41F /* SocialGroup.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				E98CE4D823F1567E00BAF41F /* LoginViewController.swift */,
+				E98CE4EA23F2AB3A00BAF41F /* RegisterViewController.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				E98CE4DA23F177B600BAF41F /* UIDevice.swift */,
+				E98CE4EE23F2BC7000BAF41F /* Util.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -180,7 +186,7 @@
 				E98CE4E823F1D4BC00BAF41F /* AlamofireImage */,
 			);
 			productName = socialgroup;
-			productReference = E98CE4AF23F14CC600BAF41F /* socialgroup.app */;
+			productReference = E98CE4AF23F14CC600BAF41F /* SocialGroup.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -239,7 +245,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E98CE4EF23F2BC7000BAF41F /* Util.swift in Sources */,
 				E98CE4B323F14CC600BAF41F /* AppDelegate.swift in Sources */,
+				E98CE4EB23F2AB3A00BAF41F /* RegisterViewController.swift in Sources */,
 				E98CE4D323F1508800BAF41F /* WallViewController.swift in Sources */,
 				E98CE4D123F1502000BAF41F /* SquareViewController.swift in Sources */,
 				E98CE4D523F1509200BAF41F /* DiscoverViewController.swift in Sources */,
@@ -391,7 +399,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitsocialgroup.socialgroup;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SocialGroup;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -409,7 +417,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitsocialgroup.socialgroup;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = SocialGroup;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

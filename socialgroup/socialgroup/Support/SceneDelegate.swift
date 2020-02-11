@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = UIWindow(windowScene: windowScene)
         //设置window的rootViewController
         if(!userDefaults.bool(forKey: "isLogin")){
-            self.window?.rootViewController = LoginViewController()
+            self.window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
         }else{
             self.window?.rootViewController = MainController()
         }
