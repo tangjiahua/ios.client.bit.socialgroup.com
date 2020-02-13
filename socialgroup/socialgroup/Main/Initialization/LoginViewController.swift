@@ -9,10 +9,11 @@
 import Foundation
 import UIKit
 
-class LoginViewController:UIViewController,UITextFieldDelegate {
+class LoginViewController:BaseViewController,UITextFieldDelegate, LoginModelDelegate {
     
-    var ScreenWidth = Util.SCREEN_WIDTH
-    var ScreenHeight = Util.SCREEN_HEIGHT
+    
+    var ScreenWidth = UIDevice.SCREEN_WIDTH
+    var ScreenHeight = UIDevice.SCREEN_HEIGHT
     
     //用户密码输入框
     var txtUser:UITextField!
@@ -21,8 +22,20 @@ class LoginViewController:UIViewController,UITextFieldDelegate {
     //登录 注册按钮
     var loginButton:UIButton!
     var registerButton:UIButton!
-
+    
     var registerVC:RegisterViewController!
+    
+    //MARK:-
+    var loginModel:RegisterAndLoginModel?
+    
+    var account:String{
+        return txtUser.text!
+    }
+    
+    var password:String{
+        return txtPwd.text!
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,14 +46,14 @@ class LoginViewController:UIViewController,UITextFieldDelegate {
         let mainSize = UIScreen.main.bounds.size
         
         //登录框背景
-        let vLogin =  UIView(frame:CGRect(x: 15, y: 250, width: mainSize.width - 30, height: 160))
+        let vLogin =  UIView(frame:CGRect(x: 15, y: 100, width: mainSize.width - 30, height: 160))
         vLogin.layer.borderWidth = 0.5
         vLogin.layer.borderColor = UIColor.lightGray.cgColor
         vLogin.layer.cornerRadius = 5
         vLogin.backgroundColor = .tertiarySystemBackground
         self.view.addSubview(vLogin)
         
-       
+        
         
         //用户名输入框
         txtUser = UITextField(frame:CGRect(x: 30, y: 30, width: vLogin.frame.size.width - 60, height: 44))
@@ -53,6 +66,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate {
         txtUser.keyboardType = .numberPad
         txtUser.leftView = UIView(frame:CGRect(x: 0, y: 0, width: 44, height: 44))
         txtUser.leftViewMode = UITextField.ViewMode.always
+        txtUser.addTarget(self, action: #selector(textFieldChanged(textField:)), for: .editingChanged)
         
         //用户名输入框左侧图标
         let imgUser =  UIImageView(frame:CGRect(x: 11, y: 11, width: 22, height: 22))
@@ -72,6 +86,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate {
         txtPwd.textColor = .label
         txtPwd.leftView = UIView(frame:CGRect(x: 0, y: 0, width: 44, height: 44))
         txtPwd.leftViewMode = UITextField.ViewMode.always
+        txtPwd.addTarget(self, action: #selector(textFieldChanged(textField:)), for: .editingChanged)
         
         //密码输入框左侧图标
         let imgPwd =  UIImageView(frame:CGRect(x: 11, y: 11, width: 22, height: 22))
@@ -84,7 +99,8 @@ class LoginViewController:UIViewController,UITextFieldDelegate {
         loginButton = UIButton(frame: CGRect(x: vLogin.frame.minX, y: vLogin.frame.maxY + 20, width: ScreenWidth - 30, height: 50))
         loginButton.setTitle("登录", for: .normal)
         loginButton.setTitleColor(.white, for: .normal)
-        loginButton.backgroundColor = .systemBlue
+        loginButton.backgroundColor = .lightGray
+        loginButton.isUserInteractionEnabled = false
         loginButton.layer.cornerRadius = 5
         loginButton.layer.masksToBounds = true
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
@@ -93,7 +109,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate {
         
         //注册按钮
         registerButton = UIButton(frame: CGRect(x: loginButton.frame.minX, y: loginButton.frame.maxY + 20, width: ScreenWidth - 30, height: 50))
-        registerButton.setTitle("想要注册", for: .normal)
+        registerButton.setTitle("注册", for: .normal)
         registerButton.setTitleColor(.white, for: .normal)
         registerButton.layer.cornerRadius = 5
         registerButton.layer.masksToBounds = true
@@ -105,7 +121,7 @@ class LoginViewController:UIViewController,UITextFieldDelegate {
     }
     
     
-    
+    //MARK:- textfield delegate function
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -117,10 +133,46 @@ class LoginViewController:UIViewController,UITextFieldDelegate {
         txtPwd.resignFirstResponder()
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        switch textField {
+        case txtUser:
+            if(((txtUser.text?.count ?? 0) + string.count > 11) || !Util.onlyInputNumbers(string)){
+                return false
+            }
+        case txtPwd:
+            if(((txtPwd.text?.count ?? 0) + string.count > 16) || !Util.onlyInputLettersOrNumbers(string)){
+                return false
+            }
+        default:
+            return true
+        }
+        return true
+    }
+    
+    
+    //MARK:- 自定义的事件
+    // 对输入的内容进行判断所有的格式是否正确
+    @objc func textFieldChanged(textField: UITextField){
+        if((txtUser.text!.count != 0) && (txtPwd.text!.count != 0)){
+            loginButton.isUserInteractionEnabled = true
+            loginButton.backgroundColor = .systemBlue
+            return
+        }
+        loginButton.isUserInteractionEnabled = false
+        loginButton.backgroundColor = .lightGray
+        
+    }
+    
+    
+    
+    //MARK:- button click function
+    
     @objc func loginButtonTapped(){
-        let mainVC = MainController()
-            
-        UIApplication.shared.windows.first?.rootViewController = mainVC
+        loginModel = RegisterAndLoginModel(account, password)
+        loginModel?.loginDelegate = self
+        loginModel?.sendLoginRequest()
+        self.showLoading(text: "正在登录", isSupportClick: false)
     }
     
     @objc func registerButtonTapped(){
@@ -131,6 +183,28 @@ class LoginViewController:UIViewController,UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    //MARK:- RegisterAndLoginDelegate
+    func receiveLoginSuccessResponse(result: String, info: String) {
+        print("user_id  " + info)
+        self.hideHUD()
+        let chooseSGVC = ChooseSocialGroupViewController()
+        
+        chooseSGVC.chooseSocialGroupModel = ChooseSocialGroupModel(info, password)
+        
+        self.navigationController?.pushViewController(chooseSGVC, animated: true)
+    }
+    
+    func receiveLoginFailResponse(result: String, info: String) {
+        self.hideHUD()
+        let alert = UIAlertController(title: "提示", message: info, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "确定", style: .default, handler: {action in
+        })
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
 }
 
 

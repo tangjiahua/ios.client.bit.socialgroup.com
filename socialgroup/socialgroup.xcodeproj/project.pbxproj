@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E969D03E23F5771D00CEEDC8 /* LoadingUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E969D03D23F5771D00CEEDC8 /* LoadingUI.swift */; };
+		E969D04023F57CC500CEEDC8 /* ChooseSocialGroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E969D03F23F57CC500CEEDC8 /* ChooseSocialGroupModel.swift */; };
 		E98CE4B323F14CC600BAF41F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4B223F14CC600BAF41F /* AppDelegate.swift */; };
 		E98CE4B523F14CC600BAF41F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4B423F14CC600BAF41F /* SceneDelegate.swift */; };
 		E98CE4BC23F14CC800BAF41F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E98CE4BB23F14CC800BAF41F /* Assets.xcassets */; };
@@ -25,9 +27,16 @@
 		E98CE4E923F1D4BC00BAF41F /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = E98CE4E823F1D4BC00BAF41F /* AlamofireImage */; };
 		E98CE4EB23F2AB3A00BAF41F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4EA23F2AB3A00BAF41F /* RegisterViewController.swift */; };
 		E98CE4EF23F2BC7000BAF41F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4EE23F2BC7000BAF41F /* Util.swift */; };
+		E98CE4F123F319E400BAF41F /* RegisterAndLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F023F319E400BAF41F /* RegisterAndLoginModel.swift */; };
+		E98CE4F423F32DC300BAF41F /* HandyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = E98CE4F323F32DC300BAF41F /* HandyJSON */; };
+		E98CE4F623F520A900BAF41F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F523F520A900BAF41F /* BaseViewController.swift */; };
+		E98CE4F823F5218A00BAF41F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F723F5218A00BAF41F /* NetworkManager.swift */; };
+		E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E969D03D23F5771D00CEEDC8 /* LoadingUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingUI.swift; sourceTree = "<group>"; };
+		E969D03F23F57CC500CEEDC8 /* ChooseSocialGroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSocialGroupModel.swift; sourceTree = "<group>"; };
 		E98CE4AF23F14CC600BAF41F /* SocialGroup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialGroup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E98CE4B223F14CC600BAF41F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E98CE4B423F14CC600BAF41F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +52,10 @@
 		E98CE4DA23F177B600BAF41F /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		E98CE4EA23F2AB3A00BAF41F /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		E98CE4EE23F2BC7000BAF41F /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		E98CE4F023F319E400BAF41F /* RegisterAndLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterAndLoginModel.swift; sourceTree = "<group>"; };
+		E98CE4F523F520A900BAF41F /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		E98CE4F723F5218A00BAF41F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSocialGroupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +66,7 @@
 				E98CE4E423F1BA4900BAF41F /* SDWebImage in Frameworks */,
 				E98CE4DE23F1925200BAF41F /* SwiftyJSON in Frameworks */,
 				E98CE4E923F1D4BC00BAF41F /* AlamofireImage in Frameworks */,
+				E98CE4F423F32DC300BAF41F /* HandyJSON in Frameworks */,
 				E98CE4E623F1BA4900BAF41F /* SDWebImageMapKit in Frameworks */,
 				E98CE4E123F19B9000BAF41F /* Alamofire in Frameworks */,
 			);
@@ -102,8 +116,9 @@
 			isa = PBXGroup;
 			children = (
 				E98CE4CE23F14FCE00BAF41F /* MainController.swift */,
+				E98CE4F523F520A900BAF41F /* BaseViewController.swift */,
 				E98CE4C923F14E2400BAF41F /* Util */,
-				E98CE4C823F14E1C00BAF41F /* Other */,
+				E98CE4C823F14E1C00BAF41F /* Initialization */,
 				E98CE4CA23F14E2A00BAF41F /* Square */,
 				E98CE4CB23F14E3000BAF41F /* Wall */,
 				E98CE4CC23F14E3500BAF41F /* Discover */,
@@ -112,13 +127,16 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
-		E98CE4C823F14E1C00BAF41F /* Other */ = {
+		E98CE4C823F14E1C00BAF41F /* Initialization */ = {
 			isa = PBXGroup;
 			children = (
 				E98CE4D823F1567E00BAF41F /* LoginViewController.swift */,
 				E98CE4EA23F2AB3A00BAF41F /* RegisterViewController.swift */,
+				E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */,
+				E969D03F23F57CC500CEEDC8 /* ChooseSocialGroupModel.swift */,
+				E98CE4F023F319E400BAF41F /* RegisterAndLoginModel.swift */,
 			);
-			path = Other;
+			path = Initialization;
 			sourceTree = "<group>";
 		};
 		E98CE4C923F14E2400BAF41F /* Util */ = {
@@ -126,6 +144,8 @@
 			children = (
 				E98CE4DA23F177B600BAF41F /* UIDevice.swift */,
 				E98CE4EE23F2BC7000BAF41F /* Util.swift */,
+				E98CE4F723F5218A00BAF41F /* NetworkManager.swift */,
+				E969D03D23F5771D00CEEDC8 /* LoadingUI.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -184,6 +204,7 @@
 				E98CE4E323F1BA4900BAF41F /* SDWebImage */,
 				E98CE4E523F1BA4900BAF41F /* SDWebImageMapKit */,
 				E98CE4E823F1D4BC00BAF41F /* AlamofireImage */,
+				E98CE4F323F32DC300BAF41F /* HandyJSON */,
 			);
 			productName = socialgroup;
 			productReference = E98CE4AF23F14CC600BAF41F /* SocialGroup.app */;
@@ -218,6 +239,7 @@
 				E98CE4DF23F19B9000BAF41F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				E98CE4E223F1BA4900BAF41F /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				E98CE4E723F1D4BC00BAF41F /* XCRemoteSwiftPackageReference "AlamofireImage" */,
+				E98CE4F223F32DC300BAF41F /* XCRemoteSwiftPackageReference "HandyJSON" */,
 			);
 			productRefGroup = E98CE4B023F14CC600BAF41F /* Products */;
 			projectDirPath = "";
@@ -245,14 +267,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E98CE4F623F520A900BAF41F /* BaseViewController.swift in Sources */,
 				E98CE4EF23F2BC7000BAF41F /* Util.swift in Sources */,
 				E98CE4B323F14CC600BAF41F /* AppDelegate.swift in Sources */,
 				E98CE4EB23F2AB3A00BAF41F /* RegisterViewController.swift in Sources */,
 				E98CE4D323F1508800BAF41F /* WallViewController.swift in Sources */,
 				E98CE4D123F1502000BAF41F /* SquareViewController.swift in Sources */,
+				E969D03E23F5771D00CEEDC8 /* LoadingUI.swift in Sources */,
 				E98CE4D523F1509200BAF41F /* DiscoverViewController.swift in Sources */,
 				E98CE4D923F1567E00BAF41F /* LoginViewController.swift in Sources */,
 				E98CE4D723F1509D00BAF41F /* ProfileViewController.swift in Sources */,
+				E969D04023F57CC500CEEDC8 /* ChooseSocialGroupModel.swift in Sources */,
+				E98CE4F123F319E400BAF41F /* RegisterAndLoginModel.swift in Sources */,
+				E98CE4F823F5218A00BAF41F /* NetworkManager.swift in Sources */,
+				E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */,
 				E98CE4CF23F14FCE00BAF41F /* MainController.swift in Sources */,
 				E98CE4DB23F177B600BAF41F /* UIDevice.swift in Sources */,
 				E98CE4B523F14CC600BAF41F /* SceneDelegate.swift in Sources */,
@@ -479,6 +507,14 @@
 				minimumVersion = 3.6.0;
 			};
 		};
+		E98CE4F223F32DC300BAF41F /* XCRemoteSwiftPackageReference "HandyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alibaba/HandyJSON";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -506,6 +542,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E98CE4E723F1D4BC00BAF41F /* XCRemoteSwiftPackageReference "AlamofireImage" */;
 			productName = AlamofireImage;
+		};
+		E98CE4F323F32DC300BAF41F /* HandyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E98CE4F223F32DC300BAF41F /* XCRemoteSwiftPackageReference "HandyJSON" */;
+			productName = HandyJSON;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
