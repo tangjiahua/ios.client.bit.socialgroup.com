@@ -12,13 +12,14 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     let screenWidth = UIDevice.SCREEN_WIDTH
     let screenHeight = UIDevice.SCREEN_HEIGHT
-    let backgroundHeight = UIDevice.SCREEN_WIDTH / 2
+    let backgroundHeight = UIDevice.SCREEN_WIDTH * 2 / 3
     let padding:CGFloat = 10
     let avatarHeight = UIDevice.SCREEN_WIDTH / 3
     let stickButtonHeight:CGFloat = 40
     let stickCountLabelHeight:CGFloat = 20
     let stickCountLabelWidth:CGFloat = 30
     
+    var headerView = UIView()
     var tableView:UITableView?
     var backgroundView = UIImageView(image: UIImage(named: "girls"))
     var backgroundShadowView = UIView()
@@ -36,12 +37,16 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         view.backgroundColor = .systemBackground
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
+        
+        
         initTableView()
+        headerView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: backgroundHeight)
+        tableView?.tableHeaderView = headerView
+        
         initBackgroundView()
         initAvatarView()
         initStickButton()
         initStickCountLabel()
-        initHeaderViewPanGesture()
         
     }
     
@@ -50,11 +55,12 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     func initTableView(){
         //tableView
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIDevice.SCREEN_WIDTH, height: UIDevice.SCREEN_HEIGHT))
+        tableView?.showsVerticalScrollIndicator = false
         tableView?.separatorStyle = .none
         tableView?.backgroundColor = .darkGray
         tableView?.delegate = self
         tableView?.dataSource = self
-        tableView?.contentInset = UIEdgeInsets(top: backgroundHeight - UIDevice.STATUS_BAR_HEIGHT, left: 0, bottom: 0, right: 0)
+        tableView?.contentInset = UIEdgeInsets(top: -UIDevice.STATUS_BAR_HEIGHT, left: 0, bottom: 0, right: 0)
         view.addSubview(tableView!)
     }
     
@@ -63,12 +69,14 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         backgroundView.contentMode = .scaleAspectFill
         backgroundView.frame = CGRect(x: 0, y: 0, width: screenWidth, height:backgroundHeight)
         backgroundView.clipsToBounds = true
-        view.addSubview(backgroundView)
         //backgroundView shadow
         backgroundShadowView.frame = backgroundView.frame
         backgroundShadowView.backgroundColor = .black
-        backgroundShadowView.alpha = 0.2
-        view.addSubview(backgroundShadowView)
+        backgroundShadowView.alpha = 0.1
+        
+        
+        headerView.addSubview(backgroundView)
+        headerView.addSubview(backgroundShadowView)
         
     }
     
@@ -92,7 +100,7 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         avatarShadowView.clipsToBounds = false
         avatarShadowView.addSubview(avatarView)
         
-        view.addSubview(avatarShadowView)
+        headerView.addSubview(avatarShadowView)
     }
     
     func initStickButton(){
@@ -105,12 +113,12 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         stickButton.layer.shadowColor = UIColor.black.cgColor
         stickButton.layer.shadowOffset = CGSize(width: 0, height: 0)
         stickButton.layer.shadowRadius = 3
-        view.addSubview(stickButton)
+        headerView.addSubview(stickButton)
     }
     
     func initStickCountLabel(){
         //stickCountLabel
-        stickCountLabel.frame = CGRect(x: backgroundView.frame.maxX - stickCountLabelWidth - padding, y: backgroundView.frame.maxY - padding, width: stickCountLabelWidth, height: stickCountLabelHeight)
+        stickCountLabel.frame = CGRect(x: backgroundView.frame.maxX - stickCountLabelWidth - padding, y: backgroundView.frame.maxY - padding - stickCountLabelHeight, width: stickCountLabelWidth, height: stickCountLabelHeight)
         stickCountLabel.text = "99"
         stickCountLabel.font = .systemFont(ofSize: 12)
         stickCountLabel.textColor = .white
@@ -120,33 +128,9 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         stickCountLabel.layer.shadowColor = UIColor.black.cgColor
         stickCountLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
         stickCountLabel.layer.shadowRadius = 5
-        view.addSubview(stickCountLabel)
+        headerView.addSubview(stickCountLabel)
     }
     
-    func initHeaderViewPanGesture(){
-        
-        let bgSwipeGesture = HeaderGetureRecognizer(target: self, action: #selector(headerViewPanGestureAction(_:)))
-//        let avSwipeGesture = HeaderGetureRecognizer(target: self, action: #selector(headerViewPanGestureAction(_:)))
-//        let stickCSwipeGesture = HeaderGetureRecognizer(target: self, action: #selector(headerViewPanGestureAction(_:)))
-//        let stickBSwipeGetsture = HeaderGetureRecognizer(target: self, action: #selector(headerViewPanGestureAction(_:)))
-        backgroundShadowView.addGestureRecognizer(bgSwipeGesture)
-//        avatarShadowView.addGestureRecognizer(avSwipeGesture)
-//        stickCountLabel.addGestureRecognizer(stickCSwipeGesture)
-//        stickButton.addGestureRecognizer(stickBSwipeGetsture)
-    }
-    
-    //MARK:- Gesture / Action
-    @objc func headerViewPanGestureAction(_ recognizer: HeaderGetureRecognizer){
-        
-        tableView!.contentOffset.y = tableView!.contentOffset.y - recognizer.movePoint.y
-        print(recognizer.movePoint.y)
-        
-        if(recognizer.touchEnded && tableView!.contentOffset.y < -backgroundHeight){
-//            tableView?.setContentOffset(CGPoint(x: 0, y: -backgroundHeight), animated: true)
-            tableView?.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
-            
-        }
-    }
     
 
     //MARK:- tableView delegate
@@ -162,34 +146,18 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
-        var backgroundFrame = self.backgroundView.frame
-        var avatarShadowFrame = self.avatarShadowView.frame
-        var stickButtonFrame = self.stickButton.frame
-        var stickCountLabelFrame = self.stickCountLabel.frame
-        if offsetY < -backgroundHeight {
-            //壁纸下移
-            backgroundFrame.origin.y = 0 // 这句代码一定要加  不然会出点问题
-            backgroundFrame.size.height = -offsetY
-            avatarShadowFrame.origin.y = -offsetY - avatarHeight - padding
-            stickButtonFrame.origin.y = -offsetY - stickButtonHeight - padding - stickCountLabelHeight
-            stickCountLabelFrame.origin.y = -offsetY - stickCountLabelHeight - padding
+        if offsetY < 0 {
+            let originalHeight:CGFloat = headerView.frame.height
+            
+            let scale:CGFloat = (originalHeight - offsetY) / originalHeight
+            let transformScale3D:CATransform3D = CATransform3DMakeScale(scale, scale, 1.0)
+            let translation3D:CATransform3D = CATransform3DMakeTranslation(0, offsetY/2, 0)
+            backgroundShadowView.layer.transform = CATransform3DConcat(transformScale3D, translation3D)
+            backgroundView.layer.transform = CATransform3DConcat(transformScale3D, translation3D)
         } else {
-            //壁纸上移
-            backgroundFrame.origin.y = -(backgroundHeight + offsetY)
-            backgroundFrame.size.height = backgroundHeight
-            avatarShadowFrame.origin.y = -(avatarHeight + offsetY + padding)
-            avatarShadowFrame.size.height = avatarHeight
-            stickButtonFrame.origin.y = -(stickButtonHeight + offsetY + padding + stickCountLabelHeight)
-            stickButtonFrame.size.height = stickButtonHeight
-            stickCountLabelFrame.origin.y = -(stickCountLabelHeight + offsetY + padding)
-            stickCountLabelFrame.size.height = stickCountLabelHeight
+            backgroundShadowView.layer.transform = CATransform3DIdentity
+            backgroundView.layer.transform = CATransform3DIdentity
         }
-        
-        self.backgroundView.frame = backgroundFrame
-        self.avatarShadowView.frame = avatarShadowFrame
-        self.stickButton.frame = stickButtonFrame
-        self.stickCountLabel.frame = stickCountLabelFrame
-        self.backgroundShadowView.frame = backgroundFrame
     }
 
     
