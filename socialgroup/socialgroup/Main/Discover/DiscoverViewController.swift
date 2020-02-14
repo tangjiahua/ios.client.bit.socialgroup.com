@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DiscoverViewController: UINavigationController {
+class DiscoverViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

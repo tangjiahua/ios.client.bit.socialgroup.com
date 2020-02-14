@@ -13,6 +13,7 @@ import Alamofire
 class NetworkManager{
     static let SERVER_API_URL:String = "https://www.bitsocialgroup.com/api/"
     static let SERVER_URL:String = "https://www.bitsocialgroup.com"
+    static let SERVER_RESOURCE_URL:String = "https://www.bitsocialgroup.com/resource/"
     
     static let manager:NetworkReachabilityManager! = NetworkReachabilityManager(host: "https://www.bitsocialgroup.com")
     

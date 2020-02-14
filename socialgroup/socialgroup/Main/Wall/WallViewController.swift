@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WallViewController: UINavigationController {
+class WallViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

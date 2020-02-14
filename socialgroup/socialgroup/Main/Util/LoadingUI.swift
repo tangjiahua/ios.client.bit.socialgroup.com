@@ -74,6 +74,8 @@ extension UIResponder {
             }
         }
     }
+    
+    
 }
 
 let kScreenWidth: CGFloat = UIScreen.main.bounds.width
@@ -323,7 +325,7 @@ class SwiftLoadingTool: UIView {
     }()
     /// 系统菊花
     lazy var loadingTool: UIActivityIndicatorView = {
-        let tool = UIActivityIndicatorView.init(style: .whiteLarge)
+        let tool = UIActivityIndicatorView.init(style: .large)
         tool.hidesWhenStopped = true
         
         return tool

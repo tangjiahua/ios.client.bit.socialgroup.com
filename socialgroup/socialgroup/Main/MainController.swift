@@ -52,7 +52,10 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         profileVC.tabBarItem.title = "我"
         profileVC.tabBarItem.image = UIImage(named: "profileTabBarIcon")
         
-        viewControllers = [squareVC, wallVC, discoverVC, profileVC]
+        viewControllers = [UINavigationController(rootViewController: squareVC),
+                           UINavigationController(rootViewController: wallVC),
+                           UINavigationController(rootViewController: discoverVC),
+                           UINavigationController(rootViewController: profileVC)]
     }
     
     

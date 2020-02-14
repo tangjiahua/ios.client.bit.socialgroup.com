@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SquareViewController: UINavigationController {
+class SquareViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
