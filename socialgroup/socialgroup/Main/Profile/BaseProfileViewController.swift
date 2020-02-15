@@ -10,10 +10,52 @@ import UIKit
 
 class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var heightForTableView:CGFloat{
+        //照片墙高度
+        var wallCollectionViewHeight:CGFloat
+        let count = Int(profileModel.wallPhotosCount)!
+        let itemHeight:CGFloat = (screenWidth - padding*4)/3
+        if(count == 0){
+            wallCollectionViewHeight = 0
+        }else if(count > 0 && count <= 3){
+            wallCollectionViewHeight = itemHeight + padding*2
+        }else{
+            wallCollectionViewHeight = itemHeight*2 + padding*2
+        }
+        
+        //
+        var publicIntroductionTextViewHeight = UIDevice.getLabHeigh(labelStr: profileModel.publicIntroduce, font: .systemFont(ofSize: publicIntroductionTextViewFonrSize), width: screenWidth - padding*2)
+        if(publicIntroductionTextViewHeight < publicIntroductionTextViewMinimunHeight){
+            publicIntroductionTextViewHeight = publicIntroductionTextViewMinimunHeight
+        }
+        
+        //
+        var privateIntroductionTextViewHeight = UIDevice.getLabHeigh(labelStr: profileModel.privateIntroduce, font: .systemFont(ofSize: publicIntroductionTextViewFonrSize), width: screenWidth - padding*2)
+        if(privateIntroductionTextViewHeight < publicIntroductionTextViewMinimunHeight){
+            privateIntroductionTextViewHeight = publicIntroductionTextViewMinimunHeight
+        }
+        
+        //最终返回
+        return smallpadding + nicknameLabelHeight + smallpadding + realnameLabelHeight + padding + 160 + padding + wallCollectionViewHeight + padding + publicIntroductionLabelHeight + padding + publicIntroductionTextViewHeight + 20 + padding + publicIntroductionLabelHeight + padding + privateIntroductionTextViewHeight + 20 + padding*6
+    }
+    
+    //记录cell的数据
+    let nicknameFontSize:CGFloat = 30
+    let nicknameLabelHeight:CGFloat = 30
+    let realnameLabelHeight:CGFloat = 18
+    let publicIntroductionLabelFontSize:CGFloat = 20
+    let publicIntroductionLabelHeight:CGFloat = 20
+    let publicIntroductionTextViewFonrSize:CGFloat = 16
+    let publicIntroductionTextViewMinimunHeight:CGFloat = 100
+    
+    
+    
+    
     let screenWidth = UIDevice.SCREEN_WIDTH
     let screenHeight = UIDevice.SCREEN_HEIGHT
     let backgroundHeight = UIDevice.SCREEN_WIDTH * 2 / 3
     let padding:CGFloat = 10
+    let smallpadding:CGFloat = 5
     let avatarHeight = UIDevice.SCREEN_WIDTH / 3
     let stickButtonHeight:CGFloat = 40
     let stickCountLabelHeight:CGFloat = 20
@@ -35,6 +77,8 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     //gesture
     var panOriginPoint:CGPoint = CGPoint.zero
     
+    //model
+    var profileModel:ProfileModel!
     
 
     override func viewDidLoad() {
@@ -43,7 +87,8 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         
-        
+        profileModel = ProfileModel()
+        profileModel.setProfileModel()
         initTableView()
         
         //init HeaderView
@@ -163,15 +208,15 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = DetailTableViewCell(style: .default, reuseIdentifier: nil)
-        let profileModel = ProfileModel()
-        profileModel.setProfileModel()
+//        let profileModel = ProfileModel()
+//        profileModel.setProfileModel()
         cell.setUpUI(profileModel)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 1500
+        return heightForTableView
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

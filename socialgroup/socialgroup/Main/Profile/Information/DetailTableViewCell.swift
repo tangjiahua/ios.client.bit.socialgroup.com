@@ -11,7 +11,6 @@ import UIKit
 class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
     
-    
     //ui
     let screenWidth = UIDevice.SCREEN_WIDTH
     let screenHeight = UIDevice.SCREEN_HEIGHT
@@ -22,7 +21,7 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
     let publicIntroductionLabelFontSize:CGFloat = 20
     let publicIntroductionLabelHeight:CGFloat = 20
     let publicIntroductionTextViewFonrSize:CGFloat = 16
-    let publicIntroductionLabelMinimunHeight:CGFloat = 100
+    let publicIntroductionTextViewMinimunHeight:CGFloat = 100
     let padding:CGFloat = 15
     let smallpadding:CGFloat = 5
     
@@ -114,7 +113,17 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
         layout.sectionInset = .init(top: smallpadding, left: padding, bottom: smallpadding, right: padding)
         layout.minimumLineSpacing = padding
         
-        wallCollectionView = UICollectionView(frame: CGRect(x: 0, y: particularInfoTableView.frame.maxY + padding, width: screenWidth, height: itemHeight * 2 + padding*2), collectionViewLayout: layout)
+        var wallCollectionViewHeight:CGFloat
+        let count = Int(profileModel.wallPhotosCount)!
+        if(count == 0){
+            wallCollectionViewHeight = 0
+        }else if(count > 0 && count <= 3){
+            wallCollectionViewHeight = itemHeight + padding*2
+        }else{
+            wallCollectionViewHeight = itemHeight*2 + padding*2
+        }
+        
+        wallCollectionView = UICollectionView(frame: CGRect(x: 0, y: particularInfoTableView.frame.maxY + padding, width: screenWidth, height: wallCollectionViewHeight), collectionViewLayout: layout)
         wallCollectionView.backgroundColor = .secondarySystemBackground
         wallCollectionView.delegate = self
         wallCollectionView.dataSource = self
@@ -135,8 +144,8 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
         
         
         var publicIntroductionTextViewHeight = UIDevice.getLabHeigh(labelStr: profileModel.publicIntroduce, font: .systemFont(ofSize: publicIntroductionTextViewFonrSize), width: screenWidth - padding*2)
-        if(publicIntroductionTextViewHeight < publicIntroductionLabelMinimunHeight){
-            publicIntroductionTextViewHeight = publicIntroductionLabelMinimunHeight
+        if(publicIntroductionTextViewHeight < publicIntroductionTextViewMinimunHeight){
+            publicIntroductionTextViewHeight = publicIntroductionTextViewMinimunHeight
         }
         publicIntroductionTextView = UITextView(frame: CGRect(x: padding, y: publicIntroductionLabel.frame.maxY + padding, width: screenWidth - 2*padding, height: publicIntroductionTextViewHeight + 20))
         publicIntroductionTextView.font = .systemFont(ofSize: publicIntroductionTextViewFonrSize)
@@ -158,8 +167,8 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
             self.addSubview(privateIntroductionLabel)
             
             var privateIntroductionTextViewHeight = UIDevice.getLabHeigh(labelStr: profileModel.privateIntroduce, font: .systemFont(ofSize: publicIntroductionTextViewFonrSize), width: screenWidth - padding*2)
-            if(privateIntroductionTextViewHeight < publicIntroductionLabelMinimunHeight){
-                privateIntroductionTextViewHeight = publicIntroductionLabelMinimunHeight
+            if(privateIntroductionTextViewHeight < publicIntroductionTextViewMinimunHeight){
+                privateIntroductionTextViewHeight = publicIntroductionTextViewMinimunHeight
             }
             privateIntroductionTextView = UITextView(frame: CGRect(x: padding, y: privateIntroductionLabel.frame.maxY + padding, width: screenWidth - 2*padding, height: privateIntroductionTextViewHeight + 20))
             privateIntroductionTextView.font = .systemFont(ofSize: publicIntroductionTextViewFonrSize)
@@ -184,7 +193,7 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
     //MARK:- Wall Photos Collection View Delegate
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return Int(profileModel.wallPhotosCount)!
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
