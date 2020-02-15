@@ -13,7 +13,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     let squareVC = SquareViewController()
     let wallVC = WallViewController()
     let discoverVC = DiscoverViewController()
-    let profileVC = ProfileViewController()
+    let profileVC = MyProfileViewController()
 
     
     override func viewDidLoad() {

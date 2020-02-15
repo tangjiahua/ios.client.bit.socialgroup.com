@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
     let screenWidth = UIDevice.SCREEN_WIDTH
     let screenHeight = UIDevice.SCREEN_HEIGHT
@@ -18,6 +18,8 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     let stickButtonHeight:CGFloat = 40
     let stickCountLabelHeight:CGFloat = 20
     let stickCountLabelWidth:CGFloat = 30
+    let moreButtonHeight:CGFloat = 20
+    let moreButtonWidth:CGFloat = 30
     
     var headerView = UIView()
     var tableView:UITableView?
@@ -27,10 +29,13 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
     var avatarShadowView = UIView()
     var stickButton = UIButton()
     var stickCountLabel = UILabel()
+    var moreButton = UIButton()
     
     
     //gesture
     var panOriginPoint:CGPoint = CGPoint.zero
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +45,8 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         
         
         initTableView()
+        
+        //init HeaderView
         headerView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: backgroundHeight)
         tableView?.tableHeaderView = headerView
         
@@ -47,6 +54,8 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         initAvatarView()
         initStickButton()
         initStickCountLabel()
+        initMoreButton()
+        
         
     }
     
@@ -131,17 +140,38 @@ class ProfileViewController: BaseViewController, UITableViewDelegate, UITableVie
         headerView.addSubview(stickCountLabel)
     }
     
+    private func initMoreButton(){
+        moreButton.setImage(UIImage(named: "more"), for: .normal)
+        moreButton.imageView?.contentMode = .scaleAspectFill
+        moreButton.frame = CGRect(x: backgroundView.frame.maxX - moreButtonWidth - padding, y: UIDevice.STATUS_BAR_HEIGHT + padding, width: moreButtonWidth, height: moreButtonHeight)
+        moreButton.backgroundColor = .none
+        //stickButton shadow
+        moreButton.layer.shadowOpacity = 0.5
+        moreButton.layer.shadowColor = UIColor.black.cgColor
+        moreButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        moreButton.layer.shadowRadius = 3
+        headerView.addSubview(moreButton)
+    }
+    
     
 
     //MARK:- tableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.textLabel?.text = String(indexPath.row)
+        
+        let cell = DetailTableViewCell(style: .default, reuseIdentifier: nil)
+        let profileModel = ProfileModel()
+        profileModel.setProfileModel()
+        cell.setUpUI(profileModel)
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 1500
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
