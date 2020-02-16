@@ -12,14 +12,14 @@ class UserDefaultsManager{
     static let userDefaults = UserDefaults.standard
     
     static public func setBasicUserInfo(_ userId:String, _ password: String, _ socialGroupId: String){
-        userDefaults.set(userId, forKey: "userId")
+        userDefaults.set(userId, forKey: "user_id")
         userDefaults.set(password, forKey: "password")
-        userDefaults.set(socialGroupId, forKey: "socialGroupId")
+        userDefaults.set(socialGroupId, forKey: "socialgroup_id")
     }
     
     static public func getBasicUserInfo() -> Dictionary<String, String>{
         var basicUserInfoDic:Dictionary<String, String> = [:]
-        basicUserInfoDic = ["userId":userDefaults.string(forKey: "userId")!, "password":userDefaults.string(forKey: "password")!, "socialGroupId":userDefaults.string(forKey: "socialGroupId")!]
+        basicUserInfoDic = ["userId":userDefaults.string(forKey: "user_id")!, "password":userDefaults.string(forKey: "password")!, "socialGroupId":userDefaults.string(forKey: "socialgroup_id")!]
         return basicUserInfoDic
     }
     

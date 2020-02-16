@@ -8,6 +8,13 @@
 
 import UIKit
 
+
+protocol DetailTableViewCellDelegate: NSObjectProtocol {
+    func wallPhotoTapped()
+}
+
+
+
 class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
     
@@ -17,13 +24,14 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
     let nicknameFontSize:CGFloat = 30
     let nicknameLabelHeight:CGFloat = 30
     let realnameLabelHeight:CGFloat = 18
-//    let shortDetailInfoLabelHeight:CGFloat = 20
     let publicIntroductionLabelFontSize:CGFloat = 20
     let publicIntroductionLabelHeight:CGFloat = 20
     let publicIntroductionTextViewFonrSize:CGFloat = 16
     let publicIntroductionTextViewMinimunHeight:CGFloat = 100
     let padding:CGFloat = 15
     let smallpadding:CGFloat = 5
+    let publicIntroductionTextViewHeight:CGFloat = 300
+    let privateIntroductionTextViewHeight:CGFloat = 200
     
     var itemHeight:CGFloat{
         return (screenWidth - padding * 4) / 3
@@ -41,6 +49,7 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
     //tableview
     var particularInfoTableView:UITableView!
     //collectionview
+    var wallLabel:UILabel!
     var wallCollectionView: UICollectionView!
     let identifier = "CollectionViewCell"
     var gradeLabel:UILabel!
@@ -106,6 +115,12 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
     
     func initWall(){
         
+        //照片墙label
+        wallLabel = UILabel(frame: CGRect(x: padding, y: particularInfoTableView.frame.maxY + padding, width: screenWidth, height: publicIntroductionLabelHeight))
+        wallLabel.text = "照片墙:"
+        wallLabel.font = .boldSystemFont(ofSize: publicIntroductionLabelFontSize)
+        self.addSubview(wallLabel)
+        
         let layout = UICollectionViewFlowLayout()
         
         layout.itemSize = CGSize(width: itemHeight, height: itemHeight)
@@ -123,7 +138,7 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
             wallCollectionViewHeight = itemHeight*2 + padding*2
         }
         
-        wallCollectionView = UICollectionView(frame: CGRect(x: 0, y: particularInfoTableView.frame.maxY + padding, width: screenWidth, height: wallCollectionViewHeight), collectionViewLayout: layout)
+        wallCollectionView = UICollectionView(frame: CGRect(x: 0, y: wallLabel.frame.maxY + padding, width: screenWidth, height: wallCollectionViewHeight), collectionViewLayout: layout)
         wallCollectionView.backgroundColor = .secondarySystemBackground
         wallCollectionView.delegate = self
         wallCollectionView.dataSource = self
@@ -142,12 +157,7 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
         publicIntroductionLabel.font = .boldSystemFont(ofSize: publicIntroductionLabelFontSize)
         self.addSubview(publicIntroductionLabel)
         
-        
-        var publicIntroductionTextViewHeight = UIDevice.getLabHeigh(labelStr: profileModel.publicIntroduce, font: .systemFont(ofSize: publicIntroductionTextViewFonrSize), width: screenWidth - padding*2)
-        if(publicIntroductionTextViewHeight < publicIntroductionTextViewMinimunHeight){
-            publicIntroductionTextViewHeight = publicIntroductionTextViewMinimunHeight
-        }
-        publicIntroductionTextView = UITextView(frame: CGRect(x: padding, y: publicIntroductionLabel.frame.maxY + padding, width: screenWidth - 2*padding, height: publicIntroductionTextViewHeight + 20))
+        publicIntroductionTextView = UITextView(frame: CGRect(x: padding, y: publicIntroductionLabel.frame.maxY + padding, width: screenWidth - 2*padding, height: publicIntroductionTextViewHeight))
         publicIntroductionTextView.font = .systemFont(ofSize: publicIntroductionTextViewFonrSize)
         publicIntroductionTextView.text = profileModel.publicIntroduce
         publicIntroductionTextView.textColor = .secondaryLabel
@@ -159,18 +169,14 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
         
         
         if(profileModel.isPrivateAbleToSee){
-            
             //private introducetion
             let privateIntroductionLabel = UILabel(frame: CGRect(x: padding, y: publicIntroductionTextView.frame.maxY + padding, width: screenWidth - padding*2, height: publicIntroductionLabelHeight))
             privateIntroductionLabel.text = "私密:"
             privateIntroductionLabel.font = .boldSystemFont(ofSize: publicIntroductionLabelFontSize)
             self.addSubview(privateIntroductionLabel)
             
-            var privateIntroductionTextViewHeight = UIDevice.getLabHeigh(labelStr: profileModel.privateIntroduce, font: .systemFont(ofSize: publicIntroductionTextViewFonrSize), width: screenWidth - padding*2)
-            if(privateIntroductionTextViewHeight < publicIntroductionTextViewMinimunHeight){
-                privateIntroductionTextViewHeight = publicIntroductionTextViewMinimunHeight
-            }
-            privateIntroductionTextView = UITextView(frame: CGRect(x: padding, y: privateIntroductionLabel.frame.maxY + padding, width: screenWidth - 2*padding, height: privateIntroductionTextViewHeight + 20))
+
+            privateIntroductionTextView = UITextView(frame: CGRect(x: padding, y: privateIntroductionLabel.frame.maxY + padding, width: screenWidth - 2*padding, height: privateIntroductionTextViewHeight))
             privateIntroductionTextView.font = .systemFont(ofSize: publicIntroductionTextViewFonrSize)
             privateIntroductionTextView.text = profileModel.privateIntroduce
             privateIntroductionTextView.textColor = .secondaryLabel
@@ -234,20 +240,20 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
         
         switch indexPath.row {
         case 0:
-            cell.textLabel?.text = space + "重庆"
+            cell.textLabel?.text = space + profileModel.hometown
             icon.image = UIImage(named:"hometown")
         case 1:
-            cell.textLabel?.text = space + "2017"
+            cell.textLabel?.text = space + profileModel.grade
             icon.image = UIImage(named:"grade")
 
 
         case 2:
-            cell.textLabel?.text = space + "恋爱中"
+            cell.textLabel?.text = space + profileModel.relationshipStatus
             icon.image = UIImage(named:"love")
 
 
         case 3:
-            cell.textLabel?.text = space + "计算机科学与技术"
+            cell.textLabel?.text = space + profileModel.major
             icon.image = UIImage(named:"major")
 
             

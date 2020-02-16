@@ -18,6 +18,9 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        profileVC.profileModel = ProfileModel()
+        profileVC.profileModel.setBasicModel()
+        profileVC.profileModel.isMyProfile = true
         initTabBarItems()
         
     }

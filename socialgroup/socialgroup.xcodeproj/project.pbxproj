@@ -14,6 +14,7 @@
 		E98264BF23F66D41009CE123 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264BE23F66D41009CE123 /* ProfileModel.swift */; };
 		E98264CA23F6CACE009CE123 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */; };
 		E98264CC23F6D89D009CE123 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264CB23F6D89D009CE123 /* MyProfileViewController.swift */; };
+		E98264CF23F96D14009CE123 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264CE23F96D14009CE123 /* SettingViewController.swift */; };
 		E98CE4B323F14CC600BAF41F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4B223F14CC600BAF41F /* AppDelegate.swift */; };
 		E98CE4B523F14CC600BAF41F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4B423F14CC600BAF41F /* SceneDelegate.swift */; };
 		E98CE4BC23F14CC800BAF41F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E98CE4BB23F14CC800BAF41F /* Assets.xcassets */; };
@@ -47,6 +48,7 @@
 		E98264BE23F66D41009CE123 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		E98264CB23F6D89D009CE123 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
+		E98264CE23F96D14009CE123 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		E98CE4AF23F14CC600BAF41F /* SocialGroup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialGroup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E98CE4B223F14CC600BAF41F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E98CE4B423F14CC600BAF41F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -95,12 +97,20 @@
 			path = ChooseSocialGroup;
 			sourceTree = "<group>";
 		};
-		E98264C823F6C97B009CE123 /* Information */ = {
+		E98264C823F6C97B009CE123 /* MyProfile */ = {
 			isa = PBXGroup;
 			children = (
-				E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */,
+				E98264CB23F6D89D009CE123 /* MyProfileViewController.swift */,
+				E98264CE23F96D14009CE123 /* SettingViewController.swift */,
 			);
-			path = Information;
+			path = MyProfile;
+			sourceTree = "<group>";
+		};
+		E98264CD23F95CBF009CE123 /* OtherProfile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = OtherProfile;
 			sourceTree = "<group>";
 		};
 		E98CE4A623F14CC600BAF41F = {
@@ -206,9 +216,10 @@
 			isa = PBXGroup;
 			children = (
 				E98CE4D623F1509D00BAF41F /* BaseProfileViewController.swift */,
+				E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */,
 				E98264BE23F66D41009CE123 /* ProfileModel.swift */,
-				E98264CB23F6D89D009CE123 /* MyProfileViewController.swift */,
-				E98264C823F6C97B009CE123 /* Information */,
+				E98264C823F6C97B009CE123 /* MyProfile */,
+				E98264CD23F95CBF009CE123 /* OtherProfile */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -316,6 +327,7 @@
 				E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */,
 				E98264BF23F66D41009CE123 /* ProfileModel.swift in Sources */,
 				E98264CC23F6D89D009CE123 /* MyProfileViewController.swift in Sources */,
+				E98264CF23F96D14009CE123 /* SettingViewController.swift in Sources */,
 				E969D04323F5899400CEEDC8 /* SocialGroupTableViewCell.swift in Sources */,
 				E98CE4CF23F14FCE00BAF41F /* MainController.swift in Sources */,
 				E98CE4DB23F177B600BAF41F /* UIDevice.swift in Sources */,

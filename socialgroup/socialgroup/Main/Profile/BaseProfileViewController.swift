@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SDWebImage
+
+
 
 class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -23,21 +26,14 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
             wallCollectionViewHeight = itemHeight*2 + padding*2
         }
         
-        //
-        var publicIntroductionTextViewHeight = UIDevice.getLabHeigh(labelStr: profileModel.publicIntroduce, font: .systemFont(ofSize: publicIntroductionTextViewFonrSize), width: screenWidth - padding*2)
-        if(publicIntroductionTextViewHeight < publicIntroductionTextViewMinimunHeight){
-            publicIntroductionTextViewHeight = publicIntroductionTextViewMinimunHeight
-        }
-        
-        //
-        var privateIntroductionTextViewHeight = UIDevice.getLabHeigh(labelStr: profileModel.privateIntroduce, font: .systemFont(ofSize: publicIntroductionTextViewFonrSize), width: screenWidth - padding*2)
-        if(privateIntroductionTextViewHeight < publicIntroductionTextViewMinimunHeight){
-            privateIntroductionTextViewHeight = publicIntroductionTextViewMinimunHeight
-        }
-        
         //最终返回
-        return smallpadding + nicknameLabelHeight + smallpadding + realnameLabelHeight + padding + 160 + padding + wallCollectionViewHeight + padding + publicIntroductionLabelHeight + padding + publicIntroductionTextViewHeight + 20 + padding + publicIntroductionLabelHeight + padding + privateIntroductionTextViewHeight + 20 + padding*6
+        if(profileModel.isPrivateAbleToSee){
+            return smallpadding + nicknameLabelHeight + smallpadding + realnameLabelHeight + padding + 160 + padding + publicIntroductionLabelHeight + padding + wallCollectionViewHeight + padding + publicIntroductionLabelHeight + padding + publicIntroductionViewHeight + 20 + padding + publicIntroductionLabelHeight + padding + privateIntroductionTextViewHeight + 20 + 30
+        }else{
+            return smallpadding + nicknameLabelHeight + smallpadding + realnameLabelHeight + padding + 160 + padding + publicIntroductionLabelHeight + padding + wallCollectionViewHeight + padding + publicIntroductionLabelHeight + padding + publicIntroductionViewHeight + 20 + padding + publicIntroductionLabelHeight + padding + 30
+        }
     }
+    
     
     //记录cell的数据
     let nicknameFontSize:CGFloat = 30
@@ -47,10 +43,12 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     let publicIntroductionLabelHeight:CGFloat = 20
     let publicIntroductionTextViewFonrSize:CGFloat = 16
     let publicIntroductionTextViewMinimunHeight:CGFloat = 100
+    let publicIntroductionViewHeight:CGFloat = 300
+    let privateIntroductionTextViewHeight:CGFloat = 200
     
     
     
-    
+    //basic ui
     let screenWidth = UIDevice.SCREEN_WIDTH
     let screenHeight = UIDevice.SCREEN_HEIGHT
     let backgroundHeight = UIDevice.SCREEN_WIDTH * 2 / 3
@@ -65,7 +63,7 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     
     var headerView = UIView()
     var tableView:UITableView?
-    var backgroundView = UIImageView(image: UIImage(named: "girls"))
+    var backgroundView = UIImageView(image: UIImage(named: "placeholder"))
     var backgroundShadowView = UIView()
     var avatarView = UIImageView(image: UIImage(named: "placeholder"))
     var avatarShadowView = UIView()
@@ -74,11 +72,11 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     var moreButton = UIButton()
     
     
-    //gesture
-    var panOriginPoint:CGPoint = CGPoint.zero
     
     //model
     var profileModel:ProfileModel!
+    
+    //delegate
     
 
     override func viewDidLoad() {
@@ -87,8 +85,8 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
         
-        profileModel = ProfileModel()
-        profileModel.setProfileModel()
+        
+        
         initTableView()
         
         //init HeaderView
@@ -101,6 +99,16 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
         initStickCountLabel()
         initMoreButton()
         
+    
+        //子类需要重写发生的事件的方法
+        
+        let avatarTapGestureRocognizer = UITapGestureRecognizer(target: self, action: #selector(avatarTappedGesture))
+        avatarShadowView.addGestureRecognizer(avatarTapGestureRocognizer)
+        let backgroundTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(backgroundTappedGesture))
+        backgroundShadowView.addGestureRecognizer(backgroundTapGestureRecognizer)
+        moreButton.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
+        stickButton.addTarget(self, action: #selector(stickButtonTapped), for: .touchUpInside)
+        
         
     }
     
@@ -111,7 +119,7 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIDevice.SCREEN_WIDTH, height: UIDevice.SCREEN_HEIGHT))
         tableView?.showsVerticalScrollIndicator = false
         tableView?.separatorStyle = .none
-        tableView?.backgroundColor = .darkGray
+        tableView?.backgroundColor = .secondarySystemBackground
         tableView?.delegate = self
         tableView?.dataSource = self
         tableView?.contentInset = UIEdgeInsets(top: -UIDevice.STATUS_BAR_HEIGHT, left: 0, bottom: 0, right: 0)
@@ -173,7 +181,7 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     func initStickCountLabel(){
         //stickCountLabel
         stickCountLabel.frame = CGRect(x: backgroundView.frame.maxX - stickCountLabelWidth - padding, y: backgroundView.frame.maxY - padding - stickCountLabelHeight, width: stickCountLabelWidth, height: stickCountLabelHeight)
-        stickCountLabel.text = "99"
+        stickCountLabel.text = profileModel.stickCount
         stickCountLabel.font = .systemFont(ofSize: 12)
         stickCountLabel.textColor = .white
         stickCountLabel.textAlignment = .center
@@ -199,6 +207,23 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     }
     
     
+    func refreshProfileView(){
+        let avatarUrlStr:String = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.userDefaults.string(forKey: "socialgroup_id")! + "/profile/avatar/" + profileModel.userDefaults.string(forKey: "user_id")! + "@" + profileModel.avatar + ".jpg"
+        avatarView.sd_setImage(with: URL(string: avatarUrlStr), placeholderImage: UIImage(named: "placeholder"), options:[], context: nil)
+        avatarView.setNeedsDisplay()
+        
+        let backgroundUrlStr = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.userDefaults.string(forKey: "socialgroup_id")! + "/profile/background/" + profileModel.userDefaults.string(forKey: "user_id")! + "@" + profileModel.background + ".jpg"
+        backgroundView.sd_setImage(with: URL(string: backgroundUrlStr)!, placeholderImage: UIImage(named: "placeholder"), options: [], context: nil)
+        backgroundView.setNeedsDisplay()
+        
+        stickCountLabel.text = profileModel.stickCount
+        
+        
+        tableView?.reloadData()
+        view.setNeedsDisplay()
+    }
+    
+    
 
     //MARK:- tableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -206,12 +231,8 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = DetailTableViewCell(style: .default, reuseIdentifier: nil)
-//        let profileModel = ProfileModel()
-//        profileModel.setProfileModel()
         cell.setUpUI(profileModel)
-        
         return cell
     }
     
@@ -234,9 +255,27 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
             backgroundView.layer.transform = CATransform3DIdentity
         }
     }
-
     
-
+    
+    
+    //MARK:- my own profile tapped actions
+    @objc func avatarTappedGesture(){
+        
+    }
+    
+    @objc func backgroundTappedGesture(){
+        
+    }
+    
+    @objc func moreButtonTapped(){
+        
+    }
+    
+    @objc func stickButtonTapped(){
+        
+    }
+    
+    
 }
 
 
