@@ -15,6 +15,9 @@ class NetworkManager{
     static let SERVER_URL:String = "https://www.bitsocialgroup.com"
     static let PROFILE_DETAIL_API:String = "https://www.bitsocialgroup.com/api/profile/detail"
     static let PROFILE_UPDATE_API:String = "https://www.bitsocialgroup.com/api/profile/update"
+    static let PROFILE_STICK_LIST_API:String = "https://www.bitsocialgroup.com/api/profile/stick_list"
+    
+    
     static let manager:NetworkReachabilityManager! = NetworkReachabilityManager(host: "https://www.bitsocialgroup.com")
     
     static let SERVER_RESOURCE_URL:String = "https://www.bitsocialgroup.com/resource/"

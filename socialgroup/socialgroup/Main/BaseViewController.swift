@@ -30,5 +30,14 @@ class BaseViewController: UIViewController {
         return true
     }
     
+    public func showTempAlert(info: String){
+        let alertController = UIAlertController(title: info, message: nil, preferredStyle: .alert)
+        self.present(alertController, animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            self.presentedViewController?.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
 
 }

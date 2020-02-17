@@ -97,7 +97,11 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
         self.addSubview(nicknameLabel!)
         
         realnameAndgenderAndageLabel = UILabel(frame: CGRect(x: padding, y: nicknameLabel!.frame.maxY + smallpadding , width: screenWidth - padding * 2, height: realnameLabelHeight))
-        realnameAndgenderAndageLabel.text = "@" + profileModel.realname + "  " + profileModel.gender + "  " + profileModel.age
+        var genderSymbol = "♂"
+        if(profileModel.gender.equals(str: "f")){
+            genderSymbol = "♀"
+        }
+        realnameAndgenderAndageLabel.text = "@" + profileModel.realname + " · " + genderSymbol + " · " + profileModel.age
         realnameAndgenderAndageLabel.font = .systemFont(ofSize: realnameLabelHeight)
         realnameAndgenderAndageLabel.textAlignment = .left
         realnameAndgenderAndageLabel.textColor = .tertiaryLabel

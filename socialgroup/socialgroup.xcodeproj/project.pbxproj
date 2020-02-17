@@ -15,6 +15,13 @@
 		E98264CA23F6CACE009CE123 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */; };
 		E98264CC23F6D89D009CE123 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264CB23F6D89D009CE123 /* MyProfileViewController.swift */; };
 		E98264CF23F96D14009CE123 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264CE23F96D14009CE123 /* SettingViewController.swift */; };
+		E98264D123F979FC009CE123 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264D023F979FC009CE123 /* UserListViewController.swift */; };
+		E98264D423F97A44009CE123 /* UserListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264D323F97A44009CE123 /* UserListManager.swift */; };
+		E98264D623FA16BF009CE123 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264D523FA16BF009CE123 /* EditProfileViewController.swift */; };
+		E98264D823FA1706009CE123 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264D723FA1706009CE123 /* AboutViewController.swift */; };
+		E98264DB23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264DA23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift */; };
+		E98264DD23FA1D50009CE123 /* EditTextProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264DC23FA1D50009CE123 /* EditTextProfileViewController.swift */; };
+		E98264DF23FA1D5A009CE123 /* EditWallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264DE23FA1D5A009CE123 /* EditWallViewController.swift */; };
 		E98CE4B323F14CC600BAF41F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4B223F14CC600BAF41F /* AppDelegate.swift */; };
 		E98CE4B523F14CC600BAF41F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4B423F14CC600BAF41F /* SceneDelegate.swift */; };
 		E98CE4BC23F14CC800BAF41F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E98CE4BB23F14CC800BAF41F /* Assets.xcassets */; };
@@ -49,6 +56,13 @@
 		E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		E98264CB23F6D89D009CE123 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		E98264CE23F96D14009CE123 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		E98264D023F979FC009CE123 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
+		E98264D323F97A44009CE123 /* UserListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListManager.swift; sourceTree = "<group>"; };
+		E98264D523FA16BF009CE123 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		E98264D723FA1706009CE123 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		E98264DA23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAvatarAndBackgroundViewController.swift; sourceTree = "<group>"; };
+		E98264DC23FA1D50009CE123 /* EditTextProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextProfileViewController.swift; sourceTree = "<group>"; };
+		E98264DE23FA1D5A009CE123 /* EditWallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWallViewController.swift; sourceTree = "<group>"; };
 		E98CE4AF23F14CC600BAF41F /* SocialGroup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialGroup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E98CE4B223F14CC600BAF41F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E98CE4B423F14CC600BAF41F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +116,8 @@
 			children = (
 				E98264CB23F6D89D009CE123 /* MyProfileViewController.swift */,
 				E98264CE23F96D14009CE123 /* SettingViewController.swift */,
+				E98264D723FA1706009CE123 /* AboutViewController.swift */,
+				E98264D923FA1D1B009CE123 /* EditProfile */,
 			);
 			path = MyProfile;
 			sourceTree = "<group>";
@@ -111,6 +127,24 @@
 			children = (
 			);
 			path = OtherProfile;
+			sourceTree = "<group>";
+		};
+		E98264D223F97A0F009CE123 /* UserList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UserList;
+			sourceTree = "<group>";
+		};
+		E98264D923FA1D1B009CE123 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				E98264D523FA16BF009CE123 /* EditProfileViewController.swift */,
+				E98264DC23FA1D50009CE123 /* EditTextProfileViewController.swift */,
+				E98264DA23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift */,
+				E98264DE23FA1D5A009CE123 /* EditWallViewController.swift */,
+			);
+			path = EditProfile;
 			sourceTree = "<group>";
 		};
 		E98CE4A623F14CC600BAF41F = {
@@ -220,6 +254,9 @@
 				E98264BE23F66D41009CE123 /* ProfileModel.swift */,
 				E98264C823F6C97B009CE123 /* MyProfile */,
 				E98264CD23F95CBF009CE123 /* OtherProfile */,
+				E98264D223F97A0F009CE123 /* UserList */,
+				E98264D023F979FC009CE123 /* UserListViewController.swift */,
+				E98264D323F97A44009CE123 /* UserListManager.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -309,6 +346,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E98264D623FA16BF009CE123 /* EditProfileViewController.swift in Sources */,
+				E98264DD23FA1D50009CE123 /* EditTextProfileViewController.swift in Sources */,
 				E98CE4F623F520A900BAF41F /* BaseViewController.swift in Sources */,
 				E98CE4EF23F2BC7000BAF41F /* Util.swift in Sources */,
 				E98CE4B323F14CC600BAF41F /* AppDelegate.swift in Sources */,
@@ -317,20 +356,25 @@
 				E98264BD23F5C0BB009CE123 /* UserDefaultsManager.swift in Sources */,
 				E98CE4D123F1502000BAF41F /* SquareViewController.swift in Sources */,
 				E969D03E23F5771D00CEEDC8 /* LoadingUI.swift in Sources */,
+				E98264DF23FA1D5A009CE123 /* EditWallViewController.swift in Sources */,
 				E98CE4D523F1509200BAF41F /* DiscoverViewController.swift in Sources */,
 				E98264CA23F6CACE009CE123 /* DetailTableViewCell.swift in Sources */,
 				E98CE4D923F1567E00BAF41F /* LoginViewController.swift in Sources */,
+				E98264D823FA1706009CE123 /* AboutViewController.swift in Sources */,
+				E98264DB23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift in Sources */,
 				E98CE4D723F1509D00BAF41F /* BaseProfileViewController.swift in Sources */,
 				E969D04023F57CC500CEEDC8 /* ChooseSocialGroupModel.swift in Sources */,
 				E98CE4F123F319E400BAF41F /* RegisterAndLoginModel.swift in Sources */,
 				E98CE4F823F5218A00BAF41F /* NetworkManager.swift in Sources */,
 				E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */,
 				E98264BF23F66D41009CE123 /* ProfileModel.swift in Sources */,
+				E98264D123F979FC009CE123 /* UserListViewController.swift in Sources */,
 				E98264CC23F6D89D009CE123 /* MyProfileViewController.swift in Sources */,
 				E98264CF23F96D14009CE123 /* SettingViewController.swift in Sources */,
 				E969D04323F5899400CEEDC8 /* SocialGroupTableViewCell.swift in Sources */,
 				E98CE4CF23F14FCE00BAF41F /* MainController.swift in Sources */,
 				E98CE4DB23F177B600BAF41F /* UIDevice.swift in Sources */,
+				E98264D423F97A44009CE123 /* UserListManager.swift in Sources */,
 				E98CE4B523F14CC600BAF41F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
