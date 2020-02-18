@@ -1,27 +1,28 @@
 //
-//  EditProfileViewController.swift
+//  SettingViewController.swift
 //  socialgroup
 //
-//  Created by 汤佳桦 on 2020/2/17.
+//  Created by 汤佳桦 on 2020/2/16.
 //  Copyright © 2020 bitsocialgroup.com. All rights reserved.
 //
 
 import UIKit
 
-class EditProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+    
     
     var tableView:UITableView!
     
     let smallPadding:CGFloat = 5
     let padding:CGFloat = 10
     
+    var profileModel:ProfileModel!
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        self.navigationItem.title = "更改资料"
+        self.navigationItem.title = "设置"
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         tableView = UITableView(frame: view.bounds)
         tableView.backgroundColor = .secondarySystemBackground
@@ -29,20 +30,21 @@ class EditProfileViewController: BaseViewController, UITableViewDelegate, UITabl
         tableView.delegate = self
         tableView.dataSource = self
         
+        
         view.addSubview(tableView)
-    }
-    
 
-    
-    //MARK:- tableview delegate
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        // Do any additional setup after loading the view.
     }
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "reuse")
@@ -50,19 +52,17 @@ class EditProfileViewController: BaseViewController, UITableViewDelegate, UITabl
         
         switch indexPath.row {
         case 0:
-            cell.textLabel?.text = "更改个人资料"
+            cell.textLabel?.text = "更改资料"
         case 1:
-            cell.textLabel?.text = "更改头像与背景"
-        case 2:
-            cell.textLabel?.text = "更改照片墙"
+            cell.textLabel?.text = "关于"
         default:
-            break
+            cell.textLabel?.text = "默认"
         }
         
-        cell.selectionStyle = .none
         
         let footer = UIView(frame: CGRect(x: padding, y: cell.frame.maxY - 1, width: UIDevice.SCREEN_WIDTH - 2*padding, height: 1))
         footer.backgroundColor = .darkGray
+        
         cell.addSubview(footer)
         return cell
     }
@@ -74,16 +74,18 @@ class EditProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            let editTextProfileVC = EditTextProfileViewController()
-            self.navigationController?.pushViewController(editTextProfileVC, animated: true)
+            let editProfileVC = EditProfileViewController()
+            editProfileVC.profileModel = profileModel
+            self.navigationController?.pushViewController(editProfileVC, animated: true)
         case 1:
-            let editABVC = EditAvatarAndBackgroundViewController()
-            self.navigationController?.pushViewController(editABVC, animated: true)
-        case 3:
-            let editWallVC = EditWallViewController()
-            self.navigationController?.pushViewController(editWallVC, animated: true)
+            let aboutVC = AboutViewController()
+            self.navigationController?.pushViewController(aboutVC, animated: true)
         default:
             break
         }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    
 }

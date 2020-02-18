@@ -17,6 +17,7 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
     let buttonHeight:CGFloat = 20
     var uploadMethod:Int = 1    //1代表头像，2代表背景
     
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,7 +32,7 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
-
+        refreshProfileView()
     }
     
     private func initMyProfileView(){
@@ -52,6 +53,7 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
     //MARK:- MyProfileViewButton functions
     override func moreButtonTapped(){
         let settingVC = SettingViewController()
+        settingVC.profileModel = super.profileModel
         self.navigationController?.pushViewController(settingVC, animated: true)
 
     }
@@ -168,7 +170,7 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
     }
     
     func setMyTextProfileToServerSuccess() {
-                print("hello")
+        super.refreshProfileView()
 
     }
     

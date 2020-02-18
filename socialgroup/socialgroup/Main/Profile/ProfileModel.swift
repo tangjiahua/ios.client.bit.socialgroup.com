@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-protocol MyProfileModelDelegate: NSObjectProtocol {
+@objc protocol MyProfileModelDelegate: NSObjectProtocol {
     func getMyProfileServerSuccess()
     func getMyProfileServerFail(info: String)
     func setMyAvatarToServerSuccess()
@@ -318,6 +318,7 @@ class ProfileModel{
             relationshipStatus = userDefaults.string(forKey: "relationship_status")
             publicIntroduce = userDefaults.string(forKey: "public_introduce")
             privateIntroduce = userDefaults.string(forKey: "private_introduce")
+            role = userDefaults.string(forKey: "role")
             isPrivateAbleToSee = true
             return true
         }
@@ -339,6 +340,7 @@ class ProfileModel{
         userDefaults.set(relationshipStatus, forKey: "relationship_status")
         userDefaults.set(publicIntroduce, forKey: "public_introduce")
         userDefaults.set(privateIntroduce, forKey: "private_introduce")
+        userDefaults.set(role, forKey: "role")
         userDefaults.set(true, forKey: "isMyProfileExists")
     }
     

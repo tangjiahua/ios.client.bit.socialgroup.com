@@ -58,8 +58,8 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     let stickButtonHeight:CGFloat = 40
     let stickCountLabelHeight:CGFloat = 20
     let stickCountLabelWidth:CGFloat = 30
-    let moreButtonHeight:CGFloat = 20
-    let moreButtonWidth:CGFloat = 30
+    let moreButtonHeight:CGFloat = 30
+    let moreButtonWidth:CGFloat = 40
     
     var headerView = UIView()
     var tableView:UITableView?
