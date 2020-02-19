@@ -19,7 +19,7 @@ extension UIDevice{
 
     static let NAVIGATION_BAR_HEIGHT: CGFloat = UINavigationController().navigationBar.frame.height
 
-    static let TAB_BAR_HEIGHT = UITabBar().bounds.height
+    
 
     static let SCREEN_WIDTH:CGFloat = UIScreen.main.bounds.size.width
     

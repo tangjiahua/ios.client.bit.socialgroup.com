@@ -80,14 +80,15 @@ class EditProfileViewController: BaseViewController, UITableViewDelegate, UITabl
             let editABVC = EditAvatarAndBackgroundViewController()
             self.navigationController?.pushViewController(editABVC, animated: true)
         case 2:
-//            let editWallVC = EditWallViewController()
-//            self.navigationController?.pushViewController(editWallVC, animated: true)
-                _ = self.presentHGImagePicker(maxSelected: 3, completeHandler: { (assets) in
-                print("共选择了\(assets.count)张图片，分别如下：")
-                for asset in assets {
-                    print(asset)
-                }
-            })
+            let editWallVC = EditWallViewController()
+            editWallVC.profileModel = profileModel
+            self.navigationController?.pushViewController(editWallVC, animated: true)
+//                _ = self.presentHGImagePicker(maxSelected: 3, completeHandler: { (assets) in
+//                print("共选择了\(assets.count)张图片，分别如下：")
+//                for asset in assets {
+//                    print(asset)
+//                }
+//            })
         default:
             break
         }

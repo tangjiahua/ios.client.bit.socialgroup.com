@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Photos
 
 class Util {
     
@@ -59,5 +60,19 @@ extension UIColor {
     }
 }
 
-
+extension UITabBarController{
+    func hideTabbar(hidden: Bool) {
+          UIView.animate(withDuration: 0.2) {
+              if hidden {
+                  var frame = self.tabBar.frame
+                frame.origin.y = UIDevice.SCREEN_HEIGHT
+                  self.tabBar.frame = frame
+              } else {
+                  var frame = self.tabBar.frame
+                frame.origin.y = UIDevice.SCREEN_HEIGHT - self.tabBar.frame.height
+                  self.tabBar.frame = frame
+              }
+          }
+      }
+}
 

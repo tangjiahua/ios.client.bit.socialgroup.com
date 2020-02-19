@@ -34,7 +34,7 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
     let privateIntroductionTextViewHeight:CGFloat = 200
     
     var itemHeight:CGFloat{
-        return (screenWidth - padding * 4) / 3
+        return (screenWidth - padding*2) / 3 - 3
     }
     
     
@@ -130,7 +130,8 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
         layout.itemSize = CGSize(width: itemHeight, height: itemHeight)
         layout.scrollDirection = .vertical
         layout.sectionInset = .init(top: smallpadding, left: padding, bottom: smallpadding, right: padding)
-        layout.minimumLineSpacing = padding
+        layout.minimumLineSpacing = 6
+        layout.minimumInteritemSpacing = 3
         
         var wallCollectionViewHeight:CGFloat
         let count = Int(profileModel.wallPhotosCount)!
@@ -209,7 +210,10 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = wallCollectionView.dequeueReusableCell(withReuseIdentifier: "identifier", for: indexPath)
         let imageView = UIImageView(frame: cell.bounds)
-        imageView.image = UIImage(named: "placeholder")
+        
+        let picUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/thumbnail/" + profileModel.myuserid + "@" + String(indexPath.row + 1) + ".jpg"
+        imageView.sd_setImage(with: URL(string: picUrl)!, placeholderImage: UIImage(named: "placeholder"), options: .refreshCached)
+        
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true

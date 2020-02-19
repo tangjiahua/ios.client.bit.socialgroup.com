@@ -22,8 +22,11 @@ class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UI
     let smallPadding:CGFloat = 5
     let padding:CGFloat = 10
     let rightTextLablWidth:CGFloat = 150
+    let toolBarHeight:CGFloat = 70
+    let saveButtonHeight:CGFloat = 50
     
     var profileModel:ProfileModel!
+    var toolBar:UIToolbar!
     
     let editList = [
         "昵称",
@@ -35,8 +38,7 @@ class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UI
         "感情状态",
         "专业",
         "公开介绍",
-        "私密介绍",
-        "保存"
+        "私密介绍"
     ]
     
     override func viewDidLoad() {
@@ -59,7 +61,23 @@ class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UI
             print("获取本地资料成功")
         }
         
+        
+        let uploadButton = UIButton(frame: CGRect(x: padding, y: padding, width: UIDevice.SCREEN_WIDTH - padding*2, height: saveButtonHeight))
+        uploadButton.backgroundColor = .systemBlue
+        uploadButton.setTitle("保存资料", for: .normal)
+        uploadButton.layer.cornerRadius = 5
+        uploadButton.layer.masksToBounds = true
+        uploadButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        
+        toolBar = UIToolbar(frame: CGRect(x: 0, y: UIDevice.SCREEN_HEIGHT - toolBarHeight - UIDevice.HEIGHT_OF_ADDITIONAL_FOOTER, width: UIDevice.SCREEN_WIDTH, height: toolBarHeight))
+        
+        toolBar.addSubview(uploadButton)
+        view.addSubview(toolBar)
+        
     }
+    
+    
+    
     
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -108,9 +126,6 @@ class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UI
             rightTextLabel.text = profileModel.publicIntroduce
         case 9:
             rightTextLabel.text = profileModel.privateIntroduce
-        case 10:
-            cell.textLabel?.textAlignment = .center
-            cell.backgroundColor = .systemBlue
             
         default:
             cell.textLabel?.text = "默认"
@@ -162,13 +177,10 @@ class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UI
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if(indexPath.row != 10){
-            let nc = UINavigationController(rootViewController: editDetailVC)
-            nc.modalPresentationStyle = .fullScreen
-            self.present(nc, animated: true, completion: nil)
-        }else{
-            saveButtonTapped()
-        }
+        let nc = UINavigationController(rootViewController: editDetailVC)
+        nc.modalPresentationStyle = .fullScreen
+        self.present(nc, animated: true, completion: nil)
+        
         
         
         
@@ -222,7 +234,7 @@ class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UI
         tableView.reloadData()
     }
     
-    func saveButtonTapped(){
+    @objc func saveButtonTapped(){
         self.showLoading(text: "正在更改个人资料", isSupportClick: false)
         profileModel.setMyTextProfileModelToServer()
         

@@ -31,9 +31,19 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         refreshProfileView()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if(self.navigationController!.viewControllers.count <= 1){
+            tabBarController?.hideTabbar(hidden: false)
+        }
+        
+    }
+    
     
     private func initMyProfileView(){
         
@@ -50,12 +60,21 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
     
     
     
+    
+    
+    
+    
+    
     //MARK:- MyProfileViewButton functions
     override func moreButtonTapped(){
         let settingVC = SettingViewController()
         settingVC.profileModel = super.profileModel
+        
+        
+        if(self.navigationController?.viewControllers.count == 1){
+            self.tabBarController?.hideTabbar(hidden: true)
+        }
         self.navigationController?.pushViewController(settingVC, animated: true)
-
     }
     
     override func stickButtonTapped(){

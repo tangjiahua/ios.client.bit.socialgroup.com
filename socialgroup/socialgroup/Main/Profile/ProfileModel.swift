@@ -27,6 +27,17 @@ import SwiftyJSON
 
 class ProfileModel{
     
+    var socialgroup_id:String{
+        let userDefaults = UserDefaults.standard
+        return userDefaults.string(forKey: "socialgroup_id")!
+    }
+    
+    var myuserid:String{
+        let userDefaults = UserDefaults.standard
+        return userDefaults.string(forKey: "user_id")!
+    }
+    
+    var userid:String!
     var avatar:String!
     var background:String!
     var stickCount:String!
@@ -51,6 +62,7 @@ class ProfileModel{
     
     
     func setBasicModel(){
+        userid = ""
         avatar = "placeholder"
         background = "placeholder"
         stickCount = "0"
@@ -178,22 +190,22 @@ class ProfileModel{
     
     
     
-    func setMyAddWallPhotoToServer(fileLocations: [String]){
+    func setMyAddWallPhotoToServer(datas: [Data]){
         
         var dic = [String:String]()
         dic["socialgroup_id"] = userDefaults.string(forKey: "socialgroup_id")
         dic["method"] = "4"
         dic["user_id"] = userDefaults.string(forKey: "user_id")
         dic["password"] = userDefaults.string(forKey: "password")
-        dic["new_wall_picture_count"] = String(fileLocations.count)
+        dic["new_wall_picture_count"] = String(datas.count)
         var jsonData:Data
         
         do{
             jsonData = try JSONSerialization.data(withJSONObject: dic, options: [])
             Alamofire.upload(multipartFormData: { (multipart) in
                 multipart.append(jsonData, withName: "json")
-                for i in fileLocations{
-                    multipart.append(URL(fileURLWithPath: i), withName: "picture")
+                for data in datas{
+                    multipart.append(data, withName: "picture",fileName: "pciturefile",  mimeType: "image/*")
                 }
                 
             }, to: NetworkManager.PROFILE_UPDATE_API,method: .post) { (encodingResult) in
@@ -204,11 +216,12 @@ class ProfileModel{
                             let json = JSON(responseData)
                             let resultString = json["result"].string
                             if(resultString!.equals(str: "1")){
-                                let newWallPicCount = String(Int(self.wallPhotosCount)! + fileLocations.count)
+                                let newWallPicCount = String(Int(self.wallPhotosCount)! + datas.count)
                                 self.wallPhotosCount = newWallPicCount
                                 self.setMyProfileModelToLocal()
                                 self.myProfileModelDelegate?.setMyAddWallPhotoToServerSuccess()
                             }else{
+                                print(json["info"].string!)
                                 self.myProfileModelDelegate?.setMyAddWallPhotoToServerFail()
                             }
                         }
@@ -319,6 +332,8 @@ class ProfileModel{
             publicIntroduce = userDefaults.string(forKey: "public_introduce")
             privateIntroduce = userDefaults.string(forKey: "private_introduce")
             role = userDefaults.string(forKey: "role")
+            
+            wallPhotosCount = userDefaults.string(forKey: "wall_picture_count")
             isPrivateAbleToSee = true
             return true
         }
@@ -337,10 +352,14 @@ class ProfileModel{
         userDefaults.set(hometown, forKey: "hometown")
         userDefaults.set(major, forKey: "major")
         userDefaults.set(grade, forKey: "grade")
+        
         userDefaults.set(relationshipStatus, forKey: "relationship_status")
         userDefaults.set(publicIntroduce, forKey: "public_introduce")
         userDefaults.set(privateIntroduce, forKey: "private_introduce")
         userDefaults.set(role, forKey: "role")
+        
+        userDefaults.set(wallPhotosCount, forKey: "wall_picture_count")
+        
         userDefaults.set(true, forKey: "isMyProfileExists")
     }
     

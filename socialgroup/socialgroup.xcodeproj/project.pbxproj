@@ -153,10 +153,9 @@
 			isa = PBXGroup;
 			children = (
 				E98264D523FA16BF009CE123 /* EditProfileViewController.swift */,
-				E98264DC23FA1D50009CE123 /* EditTextProfileViewController.swift */,
-				E98264E023FA846F009CE123 /* EditTextDetailViewController.swift */,
-				E98264DA23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift */,
-				E98264DE23FA1D5A009CE123 /* EditWallViewController.swift */,
+				E98264F123FBCD79009CE123 /* EditTextProfile */,
+				E98264F223FBCD86009CE123 /* Avatar&Background */,
+				E98264F323FBCD93009CE123 /* Wall */,
 			);
 			path = EditProfile;
 			sourceTree = "<group>";
@@ -173,6 +172,31 @@
 				E98264E923FBBE69009CE123 /* HGImagePickerController.swift */,
 			);
 			path = HGImagePicker;
+			sourceTree = "<group>";
+		};
+		E98264F123FBCD79009CE123 /* EditTextProfile */ = {
+			isa = PBXGroup;
+			children = (
+				E98264DC23FA1D50009CE123 /* EditTextProfileViewController.swift */,
+				E98264E023FA846F009CE123 /* EditTextDetailViewController.swift */,
+			);
+			path = EditTextProfile;
+			sourceTree = "<group>";
+		};
+		E98264F223FBCD86009CE123 /* Avatar&Background */ = {
+			isa = PBXGroup;
+			children = (
+				E98264DA23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift */,
+			);
+			path = "Avatar&Background";
+			sourceTree = "<group>";
+		};
+		E98264F323FBCD93009CE123 /* Wall */ = {
+			isa = PBXGroup;
+			children = (
+				E98264DE23FA1D5A009CE123 /* EditWallViewController.swift */,
+			);
+			path = Wall;
 			sourceTree = "<group>";
 		};
 		E98CE4A623F14CC600BAF41F = {
