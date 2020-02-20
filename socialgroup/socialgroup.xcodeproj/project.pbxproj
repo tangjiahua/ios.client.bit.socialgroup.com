@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E928C71E23FE60F3004D75E0 /* ImageBrowserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C71D23FE60F3004D75E0 /* ImageBrowserManager.swift */; };
+		E928C72223FE64F5004D75E0 /* ImageBrowserMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72123FE64F5004D75E0 /* ImageBrowserMainView.swift */; };
+		E928C72623FE65A4004D75E0 /* ImageBrowserSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72523FE65A4004D75E0 /* ImageBrowserSubView.swift */; };
+		E928C72823FE6638004D75E0 /* ImageBroserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72723FE6638004D75E0 /* ImageBroserModel.swift */; };
+		E928C72A23FE84F2004D75E0 /* ImageBrowserTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72923FE84F2004D75E0 /* ImageBrowserTranslation.swift */; };
+		E928C72C23FE8B9A004D75E0 /* ImageBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72B23FE8B9A004D75E0 /* ImageBrowserViewController.swift */; };
 		E969D03E23F5771D00CEEDC8 /* LoadingUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E969D03D23F5771D00CEEDC8 /* LoadingUI.swift */; };
 		E969D04023F57CC500CEEDC8 /* ChooseSocialGroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E969D03F23F57CC500CEEDC8 /* ChooseSocialGroupModel.swift */; };
 		E969D04323F5899400CEEDC8 /* SocialGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E969D04223F5899400CEEDC8 /* SocialGroupTableViewCell.swift */; };
@@ -55,6 +61,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E928C71B23FE5F3F004D75E0 /* BridgeHeaderFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeaderFile.h; sourceTree = "<group>"; };
+		E928C71D23FE60F3004D75E0 /* ImageBrowserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserManager.swift; sourceTree = "<group>"; };
+		E928C72123FE64F5004D75E0 /* ImageBrowserMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserMainView.swift; sourceTree = "<group>"; };
+		E928C72523FE65A4004D75E0 /* ImageBrowserSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserSubView.swift; sourceTree = "<group>"; };
+		E928C72723FE6638004D75E0 /* ImageBroserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBroserModel.swift; sourceTree = "<group>"; };
+		E928C72923FE84F2004D75E0 /* ImageBrowserTranslation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserTranslation.swift; sourceTree = "<group>"; };
+		E928C72B23FE8B9A004D75E0 /* ImageBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserViewController.swift; sourceTree = "<group>"; };
 		E969D03D23F5771D00CEEDC8 /* LoadingUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingUI.swift; sourceTree = "<group>"; };
 		E969D03F23F57CC500CEEDC8 /* ChooseSocialGroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSocialGroupModel.swift; sourceTree = "<group>"; };
 		E969D04223F5899400CEEDC8 /* SocialGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialGroupTableViewCell.swift; sourceTree = "<group>"; };
@@ -115,6 +128,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E928C71C23FE607F004D75E0 /* ImageBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				E928C71D23FE60F3004D75E0 /* ImageBrowserManager.swift */,
+				E928C72523FE65A4004D75E0 /* ImageBrowserSubView.swift */,
+				E928C72723FE6638004D75E0 /* ImageBroserModel.swift */,
+				E928C72923FE84F2004D75E0 /* ImageBrowserTranslation.swift */,
+				E928C72123FE64F5004D75E0 /* ImageBrowserMainView.swift */,
+				E928C72B23FE8B9A004D75E0 /* ImageBrowserViewController.swift */,
+			);
+			path = ImageBrowser;
+			sourceTree = "<group>";
+		};
 		E969D04123F5895000CEEDC8 /* ChooseSocialGroup */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +247,7 @@
 				E98CE4BB23F14CC800BAF41F /* Assets.xcassets */,
 				E98CE4BD23F14CC800BAF41F /* LaunchScreen.storyboard */,
 				E98CE4C023F14CC800BAF41F /* Info.plist */,
+				E928C71B23FE5F3F004D75E0 /* BridgeHeaderFile.h */,
 				E98CE4C623F14DDA00BAF41F /* Support */,
 				E98CE4C723F14DFA00BAF41F /* Main */,
 			);
@@ -270,6 +297,7 @@
 				E98264BC23F5C0BB009CE123 /* UserDefaultsManager.swift */,
 				E98CE4F723F5218A00BAF41F /* NetworkManager.swift */,
 				E969D03D23F5771D00CEEDC8 /* LoadingUI.swift */,
+				E928C71C23FE607F004D75E0 /* ImageBrowser */,
 				E98264E223FBBE4C009CE123 /* HGImagePicker */,
 			);
 			path = Util;
@@ -417,6 +445,8 @@
 				E98CE4D923F1567E00BAF41F /* LoginViewController.swift in Sources */,
 				E98264D823FA1706009CE123 /* AboutViewController.swift in Sources */,
 				E98264F023FBBE69009CE123 /* HGImagePickerController.swift in Sources */,
+				E928C72823FE6638004D75E0 /* ImageBroserModel.swift in Sources */,
+				E928C72A23FE84F2004D75E0 /* ImageBrowserTranslation.swift in Sources */,
 				E98264DB23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift in Sources */,
 				E98CE4D723F1509D00BAF41F /* BaseProfileViewController.swift in Sources */,
 				E969D04023F57CC500CEEDC8 /* ChooseSocialGroupModel.swift in Sources */,
@@ -429,13 +459,17 @@
 				E98264CC23F6D89D009CE123 /* MyProfileViewController.swift in Sources */,
 				E98264CF23F96D14009CE123 /* SettingViewController.swift in Sources */,
 				E969D04323F5899400CEEDC8 /* SocialGroupTableViewCell.swift in Sources */,
+				E928C72223FE64F5004D75E0 /* ImageBrowserMainView.swift in Sources */,
 				E98CE4CF23F14FCE00BAF41F /* MainController.swift in Sources */,
+				E928C72C23FE8B9A004D75E0 /* ImageBrowserViewController.swift in Sources */,
+				E928C71E23FE60F3004D75E0 /* ImageBrowserManager.swift in Sources */,
 				E98264E123FA846F009CE123 /* EditTextDetailViewController.swift in Sources */,
 				E98CE4DB23F177B600BAF41F /* UIDevice.swift in Sources */,
 				E98264EB23FBBE69009CE123 /* HGImagePickerCell.swift in Sources */,
 				E98264EA23FBBE69009CE123 /* HGImageCollectionViewController.swift in Sources */,
 				E98264D423F97A44009CE123 /* UserListManager.swift in Sources */,
 				E98CE4B523F14CC600BAF41F /* SceneDelegate.swift in Sources */,
+				E928C72623FE65A4004D75E0 /* ImageBrowserSubView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,6 +614,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitsocialgroup.socialgroup;
 				PRODUCT_NAME = SocialGroup;
+				SWIFT_OBJC_BRIDGING_HEADER = socialgroup/BridgeHeaderFile.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -598,6 +633,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitsocialgroup.socialgroup;
 				PRODUCT_NAME = SocialGroup;
+				SWIFT_OBJC_BRIDGING_HEADER = socialgroup/BridgeHeaderFile.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

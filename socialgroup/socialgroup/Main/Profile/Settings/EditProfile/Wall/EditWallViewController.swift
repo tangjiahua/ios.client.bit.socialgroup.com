@@ -11,7 +11,8 @@ import Photos
 
 class EditWallViewController: BaseViewController, UICollectionViewDelegate, UICollectionViewDataSource, MyProfileModelDelegate {
     
-    
+    var originImageViews:[UIImageView] = [] //查看大图的时候传入的原始的imageView
+    var imageUrls:[String] = []
     
     var profileModel:ProfileModel!
     
@@ -110,14 +111,17 @@ class EditWallViewController: BaseViewController, UICollectionViewDelegate, UICo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "identifier", for: indexPath)
         let imageView = UIImageView(frame: cell.bounds)
         
-        let picUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/thumbnail/" + profileModel.myuserid + "@" + String(indexPath.row + 1) + ".jpg"
-        imageView.sd_setImage(with: URL(string: picUrl)!, placeholderImage: UIImage(named: "placeholder"), options: .fromLoaderOnly)
+        let picThumbnailUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/thumbnail/" + profileModel.myuserid + "@" + String(indexPath.row + 1) + ".jpg"
+        let picUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/" + profileModel.myuserid + "@" + String(indexPath.row + 1) + ".jpg"
+        imageView.sd_setImage(with: URL(string: picThumbnailUrl)!, placeholderImage: UIImage(named: "placeholder"), options: .fromLoaderOnly)
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
         
 //        let imageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(indexPath.row)))
 //        imageView.addGestureRecognizer(imageTapGestureRecognizer)
+        originImageViews.append(imageView)
+        imageUrls.append(picUrl)
         
         cell.addSubview(imageView)
         
@@ -135,6 +139,12 @@ class EditWallViewController: BaseViewController, UICollectionViewDelegate, UICo
         let sheet = UIAlertController.init(title: "选择功能", message: nil, preferredStyle: .actionSheet)
         sheet.addAction(.init(title: "查看原图", style: .default, handler: { (UIAlertAction) in
             print("查看原图")
+            
+            let imageBrowserManager = ImageBrowserManager()
+            imageBrowserManager.imageBrowserManagerWithUrlStr(imageUrls:self.imageUrls, originalImageViews: self.originImageViews, controller: self, titles: [])
+            imageBrowserManager.selectPage = imageNum
+            imageBrowserManager.showImageBrowser()
+            
         }))
         sheet.addAction(.init(title: "删除该图", style: .default, handler: { (UIAlertAction) in
             self.showLoading(text: "正在删除", isSupportClick: false)
