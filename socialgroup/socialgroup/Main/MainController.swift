@@ -10,7 +10,7 @@ import UIKit
 
 class MainController: UITabBarController, UITabBarControllerDelegate {
     
-    let squareVC = SquareViewController()
+    let squareVC = SquareScrollViewController()
     let wallVC = WallViewController()
     let discoverVC = DiscoverViewController()
     let profileVC = MyProfileViewController()

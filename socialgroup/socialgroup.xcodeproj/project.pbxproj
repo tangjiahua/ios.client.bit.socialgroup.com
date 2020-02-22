@@ -16,6 +16,14 @@
 		E969D03E23F5771D00CEEDC8 /* LoadingUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E969D03D23F5771D00CEEDC8 /* LoadingUI.swift */; };
 		E969D04023F57CC500CEEDC8 /* ChooseSocialGroupModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E969D03F23F57CC500CEEDC8 /* ChooseSocialGroupModel.swift */; };
 		E969D04323F5899400CEEDC8 /* SocialGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E969D04223F5899400CEEDC8 /* SocialGroupTableViewCell.swift */; };
+		E97E892624000BFC00E32811 /* BaseSquareScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E892524000BFC00E32811 /* BaseSquareScrollViewController.swift */; };
+		E97E892A24000CC000E32811 /* BroadcastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E892924000CC000E32811 /* BroadcastViewController.swift */; };
+		E97E892C24000CC800E32811 /* CircleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E892B24000CC800E32811 /* CircleViewController.swift */; };
+		E97E893224005BAF00E32811 /* BroadcastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E893124005BAF00E32811 /* BroadcastManager.swift */; };
+		E97E893424005BC300E32811 /* BroadcastItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E893324005BC300E32811 /* BroadcastItem.swift */; };
+		E97E893624005C1300E32811 /* CircleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E893524005C1300E32811 /* CircleItem.swift */; };
+		E97E893824010D4500E32811 /* CircleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E893724010D4500E32811 /* CircleManager.swift */; };
+		E97E893A2401184600E32811 /* BroadcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E89392401184600E32811 /* BroadcastTableViewCell.swift */; };
 		E98264BD23F5C0BB009CE123 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264BC23F5C0BB009CE123 /* UserDefaultsManager.swift */; };
 		E98264BF23F66D41009CE123 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264BE23F66D41009CE123 /* ProfileModel.swift */; };
 		E98264CA23F6CACE009CE123 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */; };
@@ -41,7 +49,7 @@
 		E98CE4BC23F14CC800BAF41F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E98CE4BB23F14CC800BAF41F /* Assets.xcassets */; };
 		E98CE4BF23F14CC800BAF41F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E98CE4BD23F14CC800BAF41F /* LaunchScreen.storyboard */; };
 		E98CE4CF23F14FCE00BAF41F /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4CE23F14FCE00BAF41F /* MainController.swift */; };
-		E98CE4D123F1502000BAF41F /* SquareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4D023F1502000BAF41F /* SquareViewController.swift */; };
+		E98CE4D123F1502000BAF41F /* SquareScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4D023F1502000BAF41F /* SquareScrollViewController.swift */; };
 		E98CE4D323F1508800BAF41F /* WallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4D223F1508800BAF41F /* WallViewController.swift */; };
 		E98CE4D523F1509200BAF41F /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4D423F1509200BAF41F /* DiscoverViewController.swift */; };
 		E98CE4D723F1509D00BAF41F /* BaseProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4D623F1509D00BAF41F /* BaseProfileViewController.swift */; };
@@ -71,6 +79,14 @@
 		E969D03D23F5771D00CEEDC8 /* LoadingUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingUI.swift; sourceTree = "<group>"; };
 		E969D03F23F57CC500CEEDC8 /* ChooseSocialGroupModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSocialGroupModel.swift; sourceTree = "<group>"; };
 		E969D04223F5899400CEEDC8 /* SocialGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialGroupTableViewCell.swift; sourceTree = "<group>"; };
+		E97E892524000BFC00E32811 /* BaseSquareScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSquareScrollViewController.swift; sourceTree = "<group>"; };
+		E97E892924000CC000E32811 /* BroadcastViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastViewController.swift; sourceTree = "<group>"; };
+		E97E892B24000CC800E32811 /* CircleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleViewController.swift; sourceTree = "<group>"; };
+		E97E893124005BAF00E32811 /* BroadcastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastManager.swift; sourceTree = "<group>"; };
+		E97E893324005BC300E32811 /* BroadcastItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastItem.swift; sourceTree = "<group>"; };
+		E97E893524005C1300E32811 /* CircleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleItem.swift; sourceTree = "<group>"; };
+		E97E893724010D4500E32811 /* CircleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleManager.swift; sourceTree = "<group>"; };
+		E97E89392401184600E32811 /* BroadcastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastTableViewCell.swift; sourceTree = "<group>"; };
 		E98264BC23F5C0BB009CE123 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		E98264BE23F66D41009CE123 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -98,7 +114,7 @@
 		E98CE4BE23F14CC800BAF41F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E98CE4C023F14CC800BAF41F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E98CE4CE23F14FCE00BAF41F /* MainController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
-		E98CE4D023F1502000BAF41F /* SquareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareViewController.swift; sourceTree = "<group>"; };
+		E98CE4D023F1502000BAF41F /* SquareScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareScrollViewController.swift; sourceTree = "<group>"; };
 		E98CE4D223F1508800BAF41F /* WallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallViewController.swift; sourceTree = "<group>"; };
 		E98CE4D423F1509200BAF41F /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		E98CE4D623F1509D00BAF41F /* BaseProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProfileViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +165,27 @@
 				E969D03F23F57CC500CEEDC8 /* ChooseSocialGroupModel.swift */,
 			);
 			path = ChooseSocialGroup;
+			sourceTree = "<group>";
+		};
+		E97E892724000C8000E32811 /* Broadcast */ = {
+			isa = PBXGroup;
+			children = (
+				E97E892924000CC000E32811 /* BroadcastViewController.swift */,
+				E97E89392401184600E32811 /* BroadcastTableViewCell.swift */,
+				E97E893124005BAF00E32811 /* BroadcastManager.swift */,
+				E97E893324005BC300E32811 /* BroadcastItem.swift */,
+			);
+			path = Broadcast;
+			sourceTree = "<group>";
+		};
+		E97E892824000C8800E32811 /* Circle */ = {
+			isa = PBXGroup;
+			children = (
+				E97E892B24000CC800E32811 /* CircleViewController.swift */,
+				E97E893724010D4500E32811 /* CircleManager.swift */,
+				E97E893524005C1300E32811 /* CircleItem.swift */,
+			);
+			path = Circle;
 			sourceTree = "<group>";
 		};
 		E98264C823F6C97B009CE123 /* Settings */ = {
@@ -306,7 +343,10 @@
 		E98CE4CA23F14E2A00BAF41F /* Square */ = {
 			isa = PBXGroup;
 			children = (
-				E98CE4D023F1502000BAF41F /* SquareViewController.swift */,
+				E97E892524000BFC00E32811 /* BaseSquareScrollViewController.swift */,
+				E98CE4D023F1502000BAF41F /* SquareScrollViewController.swift */,
+				E97E892724000C8000E32811 /* Broadcast */,
+				E97E892824000C8800E32811 /* Circle */,
 			);
 			path = Square;
 			sourceTree = "<group>";
@@ -331,9 +371,9 @@
 			isa = PBXGroup;
 			children = (
 				E98CE4D623F1509D00BAF41F /* BaseProfileViewController.swift */,
+				E98264CB23F6D89D009CE123 /* MyProfileViewController.swift */,
 				E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */,
 				E98264BE23F66D41009CE123 /* ProfileModel.swift */,
-				E98264CB23F6D89D009CE123 /* MyProfileViewController.swift */,
 				E98264C823F6C97B009CE123 /* Settings */,
 				E98264CD23F95CBF009CE123 /* OtherProfile */,
 				E98264D223F97A0F009CE123 /* UserList */,
@@ -428,19 +468,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E97E893424005BC300E32811 /* BroadcastItem.swift in Sources */,
 				E98264D623FA16BF009CE123 /* EditProfileViewController.swift in Sources */,
 				E98264DD23FA1D50009CE123 /* EditTextProfileViewController.swift in Sources */,
+				E97E892C24000CC800E32811 /* CircleViewController.swift in Sources */,
 				E98CE4F623F520A900BAF41F /* BaseViewController.swift in Sources */,
 				E98CE4EF23F2BC7000BAF41F /* Util.swift in Sources */,
 				E98CE4B323F14CC600BAF41F /* AppDelegate.swift in Sources */,
 				E98CE4EB23F2AB3A00BAF41F /* RegisterViewController.swift in Sources */,
 				E98CE4D323F1508800BAF41F /* WallViewController.swift in Sources */,
 				E98264BD23F5C0BB009CE123 /* UserDefaultsManager.swift in Sources */,
-				E98CE4D123F1502000BAF41F /* SquareViewController.swift in Sources */,
+				E98CE4D123F1502000BAF41F /* SquareScrollViewController.swift in Sources */,
 				E969D03E23F5771D00CEEDC8 /* LoadingUI.swift in Sources */,
 				E98264DF23FA1D5A009CE123 /* EditWallViewController.swift in Sources */,
+				E97E893A2401184600E32811 /* BroadcastTableViewCell.swift in Sources */,
 				E98CE4D523F1509200BAF41F /* DiscoverViewController.swift in Sources */,
 				E98264CA23F6CACE009CE123 /* DetailTableViewCell.swift in Sources */,
+				E97E893224005BAF00E32811 /* BroadcastManager.swift in Sources */,
 				E98264ED23FBBE69009CE123 /* HGImageCollectionViewCell.swift in Sources */,
 				E98CE4D923F1567E00BAF41F /* LoginViewController.swift in Sources */,
 				E98264D823FA1706009CE123 /* AboutViewController.swift in Sources */,
@@ -458,6 +502,7 @@
 				E98264D123F979FC009CE123 /* UserListViewController.swift in Sources */,
 				E98264CC23F6D89D009CE123 /* MyProfileViewController.swift in Sources */,
 				E98264CF23F96D14009CE123 /* SettingViewController.swift in Sources */,
+				E97E892A24000CC000E32811 /* BroadcastViewController.swift in Sources */,
 				E969D04323F5899400CEEDC8 /* SocialGroupTableViewCell.swift in Sources */,
 				E928C72223FE64F5004D75E0 /* ImageBrowserMainView.swift in Sources */,
 				E98CE4CF23F14FCE00BAF41F /* MainController.swift in Sources */,
@@ -468,8 +513,11 @@
 				E98264EB23FBBE69009CE123 /* HGImagePickerCell.swift in Sources */,
 				E98264EA23FBBE69009CE123 /* HGImageCollectionViewController.swift in Sources */,
 				E98264D423F97A44009CE123 /* UserListManager.swift in Sources */,
+				E97E893624005C1300E32811 /* CircleItem.swift in Sources */,
 				E98CE4B523F14CC600BAF41F /* SceneDelegate.swift in Sources */,
 				E928C72623FE65A4004D75E0 /* ImageBrowserSubView.swift in Sources */,
+				E97E892624000BFC00E32811 /* BaseSquareScrollViewController.swift in Sources */,
+				E97E893824010D4500E32811 /* CircleManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

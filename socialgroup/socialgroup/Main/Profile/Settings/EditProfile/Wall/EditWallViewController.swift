@@ -118,8 +118,6 @@ class EditWallViewController: BaseViewController, UICollectionViewDelegate, UICo
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
         
-//        let imageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(indexPath.row)))
-//        imageView.addGestureRecognizer(imageTapGestureRecognizer)
         originImageViews.append(imageView)
         imageUrls.append(picUrl)
         

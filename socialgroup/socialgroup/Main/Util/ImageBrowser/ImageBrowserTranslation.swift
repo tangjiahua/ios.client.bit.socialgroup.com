@@ -63,6 +63,8 @@ class ImageBrowserTranslation:NSObject, UIViewControllerAnimatedTransitioning {
             
             self.mainBrowserMainView.subViewHidden(isHidden: true)
             
+            
+            
             UIView.animate(withDuration: self.transitionDuration(using: transitionContext), animations: {
                 imageView.frame = currentModel.smallImageViewframeOriginWindow()
                 self.browserControllerView.backgroundColor = UIColor.black.withAlphaComponent(0.0)

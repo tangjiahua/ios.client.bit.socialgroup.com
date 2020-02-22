@@ -34,4 +34,17 @@ class UserDefaultsManager{
     static public func setLogoutInfo(){
         userDefaults.set(false, forKey: "isLogin")
     }
+    
+    static public func getUserId() -> String {
+        return userDefaults.string(forKey: "user_id")!
+    }
+    
+    static public func getPassword() -> String {
+        return userDefaults.string(forKey: "password")!
+    }
+    
+    static public func getSocialGroupId() -> String{
+        return userDefaults.string(forKey: "socialgroup_id")!
+    }
+    
 }

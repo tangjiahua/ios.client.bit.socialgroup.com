@@ -35,6 +35,10 @@ extension UIDevice{
 
     static let BUTTON_STAR_TAG:Int = 2000
     
+    static let TAB_BAR_HEIGHT = UITabBarController().tabBar.frame.height
+    
+    static let viewHeightWithoutTabNavOthersExceptAdditionalFooter:CGFloat = UIScreen.main.bounds.height - UIApplication.shared.windows.first!.windowScene!.statusBarManager!.statusBarFrame.height - UINavigationController().navigationBar.frame.height - UITabBarController().tabBar.frame.height
+    
     static func getLabHeigh(labelStr:String,font:UIFont,width:CGFloat) -> CGFloat {
 
         let statusLabelText: NSString = labelStr as NSString

@@ -1,0 +1,120 @@
+//
+//  SquareManager.swift
+//  socialgroup
+//
+//  Created by 汤佳桦 on 2020/2/22.
+//  Copyright © 2020 bitsocialgroup.com. All rights reserved.
+//
+
+import Foundation
+import SwiftyJSON
+import Alamofire
+import UIKit
+
+
+protocol BroadcastManagerDelegate:NSObjectProtocol {
+    func BroadcastFetchSuccess(result:String, info:String)
+    func BroadcastFetchFail(result:String, info:String)
+}
+
+
+class BroadcastManager {
+    
+    var broadcastItems:[BroadcastItem] = []
+    
+    var delegate:BroadcastManagerDelegate?
+    
+    
+    
+    // MARK:- 拉取消息
+    
+    // 拉取新的items
+    func fetchNewBroadacstItems(){
+        
+        let parameters:Parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":"broadcast", "method":"1", "square_item_id":"0", "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        
+        broadcastItems.removeAll()
+        
+        fetchBroadcastItems(parameters: parameters)
+        
+    }
+    
+    
+    // 拉取旧的items
+    func fetchOldBroadacstItems(){
+        let lastItem = broadcastItems.last
+        let square_item_id = lastItem?.broadcast_id
+        
+        let parameters:Parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":"broadcast", "method":"2", "square_item_id":square_item_id!, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        
+        fetchBroadcastItems(parameters: parameters)
+    }
+    
+    // 具体的网络请求
+    func fetchBroadcastItems(parameters:Parameters){
+        Alamofire.request(NetworkManager.SQUARE_FETCH_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                if let data = response.result.value{
+                    let json = JSON(data)
+                    let result = json["result"].string!
+                    if(result.equals(str: "1")){
+                        
+                        let info = json["info"]
+                        let items = info["item"].array!
+                        
+                        for item in items{
+                            let broadcast_id = Int(item["broadcast_id"].string!)!
+                            let type = Int(item["type"].string!)!
+                            let title = item["title"].string!
+                            let content = item["content"].string!
+                            let create_date = item["create_date"].string!
+                            let comment_count = Int(item["comment_count"].string!)!
+                            let like_count = Int(item["like_count"].string!)!
+                            let dislike_count = Int(item["dislike_count"].string!)!
+                            let picture_count = Int(item["picture_count"].string!)!
+                            
+                            let broadcastItem = BroadcastItem(broadcast_id: broadcast_id, type: type, title: title, content: content, create_date: create_date, comment_count: comment_count, like_count: like_count, dislike_count: dislike_count, picture_count: picture_count)
+                            self.broadcastItems.append(broadcastItem)
+                        }
+                        
+                        let like_str = info["like"].string!
+                        let liked_id_array:[String] = like_str.components(separatedBy: "@")
+                        for liked_id in liked_id_array{
+                            if(!liked_id.equals(str: "")){
+                                for item in self.broadcastItems{
+                                    if item.broadcast_id == Int(liked_id) {
+                                        item.isLiked = true
+                                    }
+                                }
+                            }
+                        }
+
+                        
+                        let dislike_str = info["dislike"].string!
+                        let disliked_id_array:[String] = dislike_str.components(separatedBy: "@")
+                        for disliked_id in disliked_id_array{
+                            if(!disliked_id.equals(str: "")){
+                                for item in self.broadcastItems{
+                                    if item.broadcast_id == Int(disliked_id) {
+                                        item.isDisliked = true
+                                    }
+                                }
+                            }
+                        }
+                        
+                        self.delegate?.BroadcastFetchSuccess(result: "1", info: "成功c拉取到所有items")
+    
+                    }else{
+                        self.delegate?.BroadcastFetchFail(result: "0", info: "response里result = 0")
+                    }
+                    
+                }else{
+                    self.delegate?.BroadcastFetchFail(result: "0", info: "解析json失败")
+                }
+            case .failure:
+                self.delegate?.BroadcastFetchFail(result: "0", info: "response failure")
+            }
+        }
+    }
+}

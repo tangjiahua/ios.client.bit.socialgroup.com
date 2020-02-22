@@ -44,7 +44,7 @@ class ImageBrowserViewController: UIViewController, UIViewControllerTransitionin
     
     init(imageUrls:[String], originImageViews:[UIImageView], selectPage:Int){
         super.init(nibName: nil, bundle: nil)
-        self.modalPresentationStyle = .overCurrentContext
+        self.modalPresentationStyle = .overFullScreen
         self.transitioningDelegate = self
         self.imageUrls = imageUrls
         self.originImageViews = originImageViews

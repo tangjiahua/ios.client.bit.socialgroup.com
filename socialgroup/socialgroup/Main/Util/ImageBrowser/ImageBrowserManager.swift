@@ -45,6 +45,7 @@ class ImageBrowserManager:NSObject{
     
     func showImageBrowser(){
         let imageBrowserViewController = ImageBrowserViewController(imageUrls: self.imageUrls, originImageViews: originImageViews, selectPage: selectPage)
+//        imageBrowserViewController.modalPresentationStyle = .overFullScreen
         self.controller.present(imageBrowserViewController, animated: true, completion: nil)
     }
     

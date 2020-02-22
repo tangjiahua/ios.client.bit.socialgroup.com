@@ -59,6 +59,10 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
     var publicIntroductionTextView:UITextView!
     var privateIntroductionTextView:UITextView!
     
+    //imageBrowser
+    var originImageViews:[UIImageView] = []
+    var imageUrls:[String] = []
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -211,16 +215,38 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
         let cell = wallCollectionView.dequeueReusableCell(withReuseIdentifier: "identifier", for: indexPath)
         let imageView = UIImageView(frame: cell.bounds)
         
-        let picUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/thumbnail/" + profileModel.myuserid + "@" + String(indexPath.row + 1) + ".jpg"
-        imageView.sd_setImage(with: URL(string: picUrl)!, placeholderImage: UIImage(named: "placeholder"), options: .refreshCached)
+        let picThumbnailUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/thumbnail/" + profileModel.myuserid + "@" + String(indexPath.row + 1) + ".jpg"
+        let picUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/" + profileModel.myuserid + "@" + String(indexPath.row + 1) + ".jpg"
+        imageView.sd_setImage(with: URL(string: picThumbnailUrl)!, placeholderImage: UIImage(named: "placeholder"), options: .refreshCached)
         
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
         
+        originImageViews.append(imageView)
+        imageUrls.append(picUrl)
+        
+        
         cell.addSubview(imageView)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        wallImageTapped(indexPath.row)
+    }
+    
+    func wallImageTapped(_ imageNum:Int){
+        print(imageNum)
+        let imageBrowserManager = ImageBrowserManager()
+        let tableview = self.superview as! UITableView
+        let controller = tableview.dataSource as! UIViewController
+//        controller.tabBarController?.hideTabbar(hidden: true)
+        imageBrowserManager.imageBrowserManagerWithUrlStr(imageUrls:self.imageUrls, originalImageViews: self.originImageViews, controller: controller, titles: [])
+        imageBrowserManager.selectPage = imageNum
+        imageBrowserManager.showImageBrowser()
+        
+        
     }
     
     

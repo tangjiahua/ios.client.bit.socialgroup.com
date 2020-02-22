@@ -76,6 +76,8 @@ class RegisterAndLoginModel {
                         self.loginDelegate?.receiveLoginFailResponse(result: result, info: info)
                     }
                     
+                }else{
+                    self.loginDelegate?.receiveLoginFailResponse(result: "0", info: "解析json失败")
                 }
             case .failure(let error):
                 print(error)

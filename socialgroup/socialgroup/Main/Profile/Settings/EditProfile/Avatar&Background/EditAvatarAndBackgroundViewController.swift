@@ -12,7 +12,7 @@ class EditAvatarAndBackgroundViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .secondarySystemBackground
         // Do any additional setup after loading the view.
     }
     
