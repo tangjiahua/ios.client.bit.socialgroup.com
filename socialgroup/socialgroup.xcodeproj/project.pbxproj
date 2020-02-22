@@ -24,6 +24,7 @@
 		E97E893624005C1300E32811 /* CircleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E893524005C1300E32811 /* CircleItem.swift */; };
 		E97E893824010D4500E32811 /* CircleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E893724010D4500E32811 /* CircleManager.swift */; };
 		E97E893A2401184600E32811 /* BroadcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E89392401184600E32811 /* BroadcastTableViewCell.swift */; };
+		E97E893C240192C600E32811 /* CircleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E893B240192C500E32811 /* CircleTableViewCell.swift */; };
 		E98264BD23F5C0BB009CE123 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264BC23F5C0BB009CE123 /* UserDefaultsManager.swift */; };
 		E98264BF23F66D41009CE123 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264BE23F66D41009CE123 /* ProfileModel.swift */; };
 		E98264CA23F6CACE009CE123 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */; };
@@ -87,6 +88,7 @@
 		E97E893524005C1300E32811 /* CircleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleItem.swift; sourceTree = "<group>"; };
 		E97E893724010D4500E32811 /* CircleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleManager.swift; sourceTree = "<group>"; };
 		E97E89392401184600E32811 /* BroadcastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastTableViewCell.swift; sourceTree = "<group>"; };
+		E97E893B240192C500E32811 /* CircleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleTableViewCell.swift; sourceTree = "<group>"; };
 		E98264BC23F5C0BB009CE123 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		E98264BE23F66D41009CE123 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				E97E892B24000CC800E32811 /* CircleViewController.swift */,
+				E97E893B240192C500E32811 /* CircleTableViewCell.swift */,
 				E97E893724010D4500E32811 /* CircleManager.swift */,
 				E97E893524005C1300E32811 /* CircleItem.swift */,
 			);
@@ -508,6 +511,7 @@
 				E98CE4CF23F14FCE00BAF41F /* MainController.swift in Sources */,
 				E928C72C23FE8B9A004D75E0 /* ImageBrowserViewController.swift in Sources */,
 				E928C71E23FE60F3004D75E0 /* ImageBrowserManager.swift in Sources */,
+				E97E893C240192C600E32811 /* CircleTableViewCell.swift in Sources */,
 				E98264E123FA846F009CE123 /* EditTextDetailViewController.swift in Sources */,
 				E98CE4DB23F177B600BAF41F /* UIDevice.swift in Sources */,
 				E98264EB23FBBE69009CE123 /* HGImagePickerCell.swift in Sources */,

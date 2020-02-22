@@ -24,34 +24,44 @@ class BroadcastManager {
     
     var delegate:BroadcastManagerDelegate?
     
-    
+    var isRequesting:Bool = false
     
     // MARK:- 拉取消息
     
     // 拉取新的items
-    func fetchNewBroadacstItems(){
+    func fetchNewBroadcastItems(){
         
         let parameters:Parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":"broadcast", "method":"1", "square_item_id":"0", "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
         
-        broadcastItems.removeAll()
         
-        fetchBroadcastItems(parameters: parameters)
+        if(!isRequesting){
+            fetchBroadcastItems(parameters: parameters, removeAllItems: true)
+        }else{
+            print("重复请求")
+        }
         
     }
     
     
     // 拉取旧的items
-    func fetchOldBroadacstItems(){
+    func fetchOldBroadcastItems(){
         let lastItem = broadcastItems.last
         let square_item_id = lastItem?.broadcast_id
         
         let parameters:Parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":"broadcast", "method":"2", "square_item_id":square_item_id!, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
         
-        fetchBroadcastItems(parameters: parameters)
+        if(!isRequesting){
+            fetchBroadcastItems(parameters: parameters, removeAllItems: false)
+        }else{
+            print("重复请求")
+        }
     }
     
     // 具体的网络请求
-    func fetchBroadcastItems(parameters:Parameters){
+    private func fetchBroadcastItems(parameters:Parameters, removeAllItems:Bool){
+        
+        isRequesting = true
+        
         Alamofire.request(NetworkManager.SQUARE_FETCH_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result{
             case .success:
@@ -62,8 +72,15 @@ class BroadcastManager {
                         
                         let info = json["info"]
                         let items = info["item"].array!
+                        var isThereItems:Bool = false
+                        
+                        if(removeAllItems){
+                            self.broadcastItems.removeAll()
+                        }
                         
                         for item in items{
+                            isThereItems = true
+                            
                             let broadcast_id = Int(item["broadcast_id"].string!)!
                             let type = Int(item["type"].string!)!
                             let title = item["title"].string!
@@ -103,7 +120,11 @@ class BroadcastManager {
                             }
                         }
                         
-                        self.delegate?.BroadcastFetchSuccess(result: "1", info: "成功c拉取到所有items")
+                        if(isThereItems){
+                            self.delegate?.BroadcastFetchSuccess(result: "1", info: "成功c拉取到所有items")
+                        }else{
+                            self.delegate?.BroadcastFetchFail(result: "0", info: "没有更多的了")
+                        }
     
                     }else{
                         self.delegate?.BroadcastFetchFail(result: "0", info: "response里result = 0")
@@ -115,6 +136,9 @@ class BroadcastManager {
             case .failure:
                 self.delegate?.BroadcastFetchFail(result: "0", info: "response failure")
             }
+            
+            // 请求停止
+            self.isRequesting = false
         }
     }
 }

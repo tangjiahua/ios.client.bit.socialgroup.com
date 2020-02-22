@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewControllerDelegate {
+class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewControllerDelegate, CircleViewControllerDelegate {
     
     
     
@@ -31,6 +31,7 @@ class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewC
         circleVC = CircleViewController()
         circleVC.view.backgroundColor = .secondarySystemBackground
         circleVC.title = "动态"
+        circleVC.delegate = self
         
         
         self.addChild(self.broadcastVC)

@@ -194,7 +194,7 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     }
     
     private func initMoreButton(){
-        moreButton.setImage(UIImage(named: "more"), for: .normal)
+        moreButton.setImage(UIImage(named: "setting"), for: .normal)
         moreButton.imageView?.contentMode = .scaleAspectFill
         moreButton.frame = CGRect(x: backgroundView.frame.maxX - moreButtonWidth - padding, y: UIDevice.STATUS_BAR_HEIGHT + padding, width: moreButtonWidth, height: moreButtonHeight)
         moreButton.backgroundColor = .none
