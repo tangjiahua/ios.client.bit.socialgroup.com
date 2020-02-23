@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CircleTableViewCellDelegate:NSObjectProtocol {
-    
+    func avatarTapped(item: CircleItem)
 }
 
 class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -102,6 +102,10 @@ class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         avatarImageView.layer.masksToBounds = true
         self.addSubview(avatarImageView)
         
+        let avatarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(avatarTapped))
+        avatarImageView.isUserInteractionEnabled = true
+        avatarImageView.addGestureRecognizer(avatarTapGestureRecognizer)
+        
         // nickname
         nicknameLabel = UILabel(frame: CGRect(x: avatarImageView.frame.maxX + padding, y: padding, width: ScreenWidth - padding*2 - cellInitPadding - avatarImageViewHeight - padding, height: nicknameLabelHeight))
         nicknameLabel.font = .systemFont(ofSize: nicknameLabelHeight)
@@ -133,6 +137,13 @@ class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             singleImageView.layer.cornerRadius = 5
             singleImageView.layer.masksToBounds = true
             singleImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "placeholder"), options: .refreshCached, context: nil, progress: nil, completed: nil)
+            self.addSubview(singleImageView)
+            
+            // image tap gesture
+            singleImageView.isUserInteractionEnabled = true
+            let singleImageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleImageTapped))
+            singleImageView.addGestureRecognizer(singleImageTapGestureRecognizer)
+            self.originImageViews.append(singleImageView)
             self.addSubview(singleImageView)
             
             // 为了调用imageBrowser
@@ -238,6 +249,12 @@ class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         
     }
     
+    
+    // MARK:- avatar tapped
+    @objc func avatarTapped(){
+        self.delegate?.avatarTapped(item: item)
+    }
+    
 }
 
 extension CircleTableViewCell{
@@ -267,4 +284,27 @@ extension CircleTableViewCell{
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        imageTapped(indexPath.row)
+        
+    }
+    
+    // MARK:- 点击查看大图
+    func imageTapped(_ imageNum:Int){
+        print(imageNum)
+        let imageBrowserManager = ImageBrowserManager()
+        let tableview = self.superview as! UITableView
+        let controller = tableview.dataSource as! UIViewController
+        imageBrowserManager.imageBrowserManagerWithUrlStr(imageUrls:self.imageUrls, originalImageViews: self.originImageViews, controller: controller, titles: [])
+        imageBrowserManager.selectPage = imageNum
+        imageBrowserManager.showImageBrowser()
+        }
+    
+    @objc func singleImageTapped(){
+        imageTapped(0)
+    }
+    
+    
 }

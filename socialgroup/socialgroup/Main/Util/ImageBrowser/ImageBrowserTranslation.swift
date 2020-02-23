@@ -42,6 +42,8 @@ class ImageBrowserTranslation:NSObject, UIViewControllerAnimatedTransitioning {
             //隐藏子组件
             self.mainBrowserMainView.subViewHidden(isHidden: true)
             self.browserControllerView.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+            currentModel.smallImageView.isHidden = true
+            
             UIView.animate(withDuration: self.transitionDuration(using: transitionContext), animations: {
                 imageView.frame = currentModel.imageViewframeShowWindow()
                 self.browserControllerView.backgroundColor = UIColor.black.withAlphaComponent(1.0)
@@ -64,7 +66,6 @@ class ImageBrowserTranslation:NSObject, UIViewControllerAnimatedTransitioning {
             self.mainBrowserMainView.subViewHidden(isHidden: true)
             
             
-            
             UIView.animate(withDuration: self.transitionDuration(using: transitionContext), animations: {
                 imageView.frame = currentModel.smallImageViewframeOriginWindow()
                 self.browserControllerView.backgroundColor = UIColor.black.withAlphaComponent(0.0)
@@ -74,6 +75,7 @@ class ImageBrowserTranslation:NSObject, UIViewControllerAnimatedTransitioning {
                 }else{
                     transitionContext.completeTransition(true)
                     imageView.removeFromSuperview()
+                    currentModel.smallImageView?.isHidden = false
                 }
             }
             

@@ -15,6 +15,10 @@ import UIKit
 protocol BroadcastManagerDelegate:NSObjectProtocol {
     func BroadcastFetchSuccess(result:String, info:String)
     func BroadcastFetchFail(result:String, info:String)
+    
+    func likeItemSuccess(item:BroadcastItem, isToCancel:Bool)
+    func likeItemFail(result:String, info: String, isToCancel:Bool)
+    
 }
 
 
@@ -141,4 +145,63 @@ class BroadcastManager {
             self.isRequesting = false
         }
     }
+    
+    
+    // MARK:- 互动操作 点赞 评论 疑惑 更多（举报）
+    
+    // like
+    func likeItem(item: BroadcastItem, isToCancel:Bool){
+        if(isToCancel){
+            let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "square_item_type":"broadcast", "square_item_id":String(item.broadcast_id), "judge_type":"1", "is_to_cancel":"1", "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+            Alamofire.request(NetworkManager.SQUARE_JUDGE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                switch response.result{
+                case .success:
+                    if let data = response.result.value{
+                        let json = JSON(data)
+                        if(json["result"].string!.equals(str: "1")){
+                            self.delegate?.likeItemSuccess(item: item, isToCancel: isToCancel)
+                        }else{
+                            self.delegate?.likeItemFail(result: "0", info: json["info"].string!, isToCancel: isToCancel)
+                        }
+                    }
+                case .failure:
+                    self.delegate?.likeItemFail(result: "0", info: "response fail", isToCancel: isToCancel)
+                }
+            }
+        }else{
+            let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "square_item_type":"broadcast", "square_item_id":String(item.broadcast_id), "judge_type":"1", "is_to_cancel":"0", "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+            Alamofire.request(NetworkManager.SQUARE_JUDGE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                switch response.result{
+                case .success:
+                    if let data = response.result.value{
+                        let json = JSON(data)
+                        if(json["result"].string!.equals(str: "1")){
+                            self.delegate?.likeItemSuccess(item: item, isToCancel: isToCancel)
+                        }else{
+                            self.delegate?.likeItemFail(result: "0", info: json["info"].string!, isToCancel: isToCancel)
+                        }
+                    }
+                case .failure:
+                    self.delegate?.likeItemFail(result: "0", info: "response fail", isToCancel: isToCancel)
+                }
+            }
+        }
+    }
+    
+    // comment
+    func commentItem(item:BroadcastItem){
+        
+    }
+    
+    // dislike
+    func dislikeItem(item:BroadcastItem, isToCancel:Bool){
+        
+    }
+    
+    //report
+    func reportItem(item: BroadcastItem){
+        
+    }
+    
+    
 }

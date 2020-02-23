@@ -17,6 +17,8 @@ class CircleViewController: BaseViewController, UITableViewDelegate, UITableView
     
     
     
+    
+    
     var tableView:UITableView!
     
     var manager:CircleManager!
@@ -178,5 +180,19 @@ extension CircleViewController{
     
     func CircleFetchFail(result: String, info: String) {
         print("no more")
+    }
+}
+
+
+extension CircleViewController{
+    // MARK:- circle tableviewCell delegate
+    func avatarTapped(item: CircleItem) {
+        let otherProfileVC = OtherProfileViewController()
+        otherProfileVC.profileModel = ProfileModel()
+        otherProfileVC.profileModel.otherProfileModelDelegate = otherProfileVC
+        otherProfileVC.profileModel.setBasicModel()
+        otherProfileVC.getProfile(user_id: item.user_id)
+        otherProfileVC.modalPresentationStyle = .fullScreen
+        self.present(otherProfileVC, animated: true, completion: nil)
     }
 }

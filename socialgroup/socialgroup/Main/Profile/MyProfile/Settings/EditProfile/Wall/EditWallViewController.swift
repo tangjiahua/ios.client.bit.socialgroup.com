@@ -109,11 +109,16 @@ class EditWallViewController: BaseViewController, UICollectionViewDelegate, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "identifier", for: indexPath)
+        
+        for subview in cell.subviews{
+            subview.removeFromSuperview()
+        }
+        
         let imageView = UIImageView(frame: cell.bounds)
         
         let picThumbnailUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/thumbnail/" + profileModel.myuserid + "@" + String(indexPath.row + 1) + ".jpg"
         let picUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/" + profileModel.myuserid + "@" + String(indexPath.row + 1) + ".jpg"
-        imageView.sd_setImage(with: URL(string: picThumbnailUrl)!, placeholderImage: UIImage(named: "placeholder"), options: .fromLoaderOnly)
+        imageView.sd_setImage(with: URL(string: picThumbnailUrl)!, placeholderImage: UIImage(named: "placeholder"), options: [.fromLoaderOnly, .retryFailed])
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
@@ -157,10 +162,18 @@ class EditWallViewController: BaseViewController, UICollectionViewDelegate, UICo
 
 
 extension EditWallViewController{
+    
+    @objc func delayReload(){
+        collectionView.reloadData()
+    }
+    
     func getMyProfileServerSuccess() {
         print("get my profile server success")
         profileModel.setMyProfileModelToLocal()
-        collectionView.reloadData()
+        self.hideHUD()
+        self.showTempAlertWithOneSecond(info: "删除成功")
+        self.perform(#selector(delayReload), with: nil, afterDelay: 1.0)
+        
     }
     
     func getMyProfileServerFail(info: String) {
@@ -194,6 +207,8 @@ extension EditWallViewController{
     func setMyAddWallPhotoToServerSuccess() {
         self.hideHUD()
         self.showTempAlert(info: "上传照片墙成功")
+        originImageViews.removeAll()
+        imageUrls.removeAll()
         profileModel.getMyProfileModelFromServer()
     }
     
@@ -205,8 +220,9 @@ extension EditWallViewController{
     }
     
     func setMyDeleteWallPhotoToServerSuccess() {
-        self.hideHUD()
-        self.showTempAlert(info: "删除成功")
+        
+        originImageViews.removeAll()
+        imageUrls.removeAll()
         profileModel.getMyProfileModelFromServer()
     }
     

@@ -56,7 +56,7 @@ class BaseSquareScrollViewController: UIViewController, UIScrollViewDelegate {
             setupAllButtonTitle()
             setupUnderlineFunction()
 
-//            self.isIninttial = false
+            self.isIninttial = false
 //            self.titleScrollView?.frame = CGRect(x: 0, y: UIDevice.NAVIGATION_BAR_HEIGHT + UIDevice.STATUS_BAR_HEIGHT, width: self.titleScrollView!.frame.width, height: self.titleScrollView!.frame.height)
 //            self.contentScollView?.frame = CGRect(x: 0, y: 0 , width: self.contentScollView!.frame.width, height: self.contentScollView!.frame.height)
 

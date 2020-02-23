@@ -10,7 +10,10 @@ import UIKit
 import SDWebImage
 
 protocol BroadcastTableViewCellDelegate:NSObjectProtocol {
-    
+    func likeButtonTapped(item:BroadcastItem)
+    func commentButtonTapped(item:BroadcastItem)
+    func dislikeButtonTapped(item:BroadcastItem)
+    func moreButtonTapped(item:BroadcastItem)
 }
 
 class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -124,7 +127,15 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
             singleImageView.layer.cornerRadius = 5
             singleImageView.layer.masksToBounds = true
             singleImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "placeholder"), options: .refreshCached, context: nil, progress: nil, completed: nil)
+            
+            // image tap gesture
+            singleImageView.isUserInteractionEnabled = true
+            let singleImageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(singleImageTapped))
+            singleImageView.addGestureRecognizer(singleImageTapGestureRecognizer)
+            self.originImageViews.append(singleImageView)
             self.addSubview(singleImageView)
+            
+            
             
             
             // 为了调用imageBrowser
@@ -193,6 +204,8 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         }
         likeButton.imageView?.contentMode = .scaleAspectFill
         interactionView.addSubview(likeButton)
+        
+        likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
     
         if(item.like_count != 0){
             likeCountLabel = UILabel(frame: CGRect(x: likeButton.frame.maxX + padding, y: 0, width: interactionItemWidth - interactionButtonHeight - padding, height: interactionCountLabelHeight))
@@ -208,6 +221,9 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         commentButton.setImage(UIImage(named: "square-comment"), for: .normal)
         commentButton.imageView?.contentMode = .scaleAspectFill
         interactionView.addSubview(commentButton)
+        
+        commentButton.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
+        
         if(item.comment_count != 0){
             commentCountLabel = UILabel(frame: CGRect(x: commentButton.frame.maxX + padding, y: 0, width: interactionItemWidth - interactionButtonHeight - padding, height: interactionCountLabelHeight))
             commentCountLabel.text = String(item.comment_count)
@@ -229,6 +245,8 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         dislikeButton.imageView?.contentMode = .scaleAspectFill
         interactionView.addSubview(dislikeButton)
         
+        dislikeButton.addTarget(self, action: #selector(dislikeButtonTapped), for: .touchUpInside)
+        
         if(item.dislike_count != 0){
             dislikeCountLabel = UILabel(frame: CGRect(x: dislikeButton.frame.maxX + padding, y: 0, width: interactionItemWidth - interactionButtonHeight - padding, height: interactionCountLabelHeight))
             dislikeCountLabel.text = String(item.dislike_count)
@@ -242,6 +260,8 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         moreButton.setImage(UIImage(named: "square-more"), for: .normal)
         moreButton.imageView?.contentMode = .scaleAspectFill
         interactionView.addSubview(moreButton)
+        
+        moreButton.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         
         for view in interactionView.subviews{
             view.alpha = 0.7
@@ -277,5 +297,46 @@ extension BroadcastTableViewCell{
         cell.addSubview(imageView)
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        imageTapped(indexPath.row)
+        
+    }
+    
+    // MARK:- 点击查看大图
+    func imageTapped(_ imageNum:Int){
+        print(imageNum)
+        let imageBrowserManager = ImageBrowserManager()
+        let tableview = self.superview as! UITableView
+        let controller = tableview.dataSource as! UIViewController
+        imageBrowserManager.imageBrowserManagerWithUrlStr(imageUrls:self.imageUrls, originalImageViews: self.originImageViews, controller: controller, titles: [])
+        imageBrowserManager.selectPage = imageNum
+        imageBrowserManager.showImageBrowser()
+        }
+    
+    @objc func singleImageTapped(){
+        imageTapped(0)
+    }
+    
+    
+    
+    // MARK:- Interaction Buttons Actions
+    @objc func likeButtonTapped(){
+        
+        delegate?.likeButtonTapped(item: item)
+    }
+    
+    @objc func commentButtonTapped(){
+        delegate?.commentButtonTapped(item: item)
+    }
+    
+    @objc func dislikeButtonTapped(){
+        delegate?.dislikeButtonTapped(item: item)
+    }
+    
+    @objc func moreButtonTapped(){
+        delegate?.moreButtonTapped(item: item)
     }
 }

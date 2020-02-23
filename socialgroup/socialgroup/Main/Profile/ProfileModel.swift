@@ -25,6 +25,11 @@ import SwiftyJSON
     func setMyDeleteWallPhotoToServerFail()
 }
 
+@objc protocol OtherProfileModelDelegate: NSObjectProtocol{
+    func getOtherProfileServerSuccess()
+    func getOtherProfileServerFail(info: String)
+}
+
 class ProfileModel{
     
     var socialgroup_id:String{
@@ -58,7 +63,7 @@ class ProfileModel{
     var isPrivateAbleToSee:Bool = false
     let userDefaults = UserDefaults.standard
     var myProfileModelDelegate:MyProfileModelDelegate?
-    
+    var otherProfileModelDelegate:OtherProfileModelDelegate?
     
     
     func setBasicModel(){
@@ -68,7 +73,7 @@ class ProfileModel{
         stickCount = "0"
         nickname = ""
         realname = ""
-        gender = ""
+        gender = "m"
         age = ""
         wallPhotosCount = "0"
         grade = ""
@@ -84,7 +89,52 @@ class ProfileModel{
     
     
     //MARK:- other's profile model functions
-    
+    //从服务器到model
+    func getOtherProfileModelFromServer(another_user_id:String){
+        self.userid = another_user_id
+        let parameters:Parameters = ["socialgroup_id":userDefaults.string(forKey: "socialgroup_id")!, "method":"1", "another_user_id":another_user_id,  "user_id":userDefaults.string(forKey: "user_id")!, "password":userDefaults.string(forKey: "password")!]
+        Alamofire.request(NetworkManager.PROFILE_DETAIL_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                if let data = response.result.value{
+                    let json = JSON(data)
+                    if(json["result"].string!.equals(str: "1")){
+                        //拉取成功
+                        let profile:JSON = json["info"]
+                        self.nickname = profile["nickname"].string
+                        self.realname = profile["realname"].string
+                        self.gender = profile["gender"].string
+                        self.age = profile["age"].string
+                        self.avatar = profile["avatar"].string
+                        self.background = profile["background"].string
+                        self.stickCount = profile["stick_count"].string
+                        self.wallPhotosCount = profile["wall_picture_count"].string
+                        self.publicIntroduce = profile["public_introduce"].string
+                        self.grade = profile["grade"].string
+                        self.hometown = profile["hometown"].string
+                        self.major = profile["major"].string
+                        self.relationshipStatus = profile["relationship_status"].string
+                        self.role = profile["role"].string
+                        
+                        if(profile["private_introduce"].exists()){
+                            self.privateIntroduce = profile["private_introduce"].string
+                            self.isPrivateAbleToSee = true
+                        }
+                        self.otherProfileModelDelegate?.getOtherProfileServerSuccess()
+
+                        
+                    }else{
+                        //拉取失败
+                        self.otherProfileModelDelegate?.getOtherProfileServerFail(info: json["info"].string!)
+                    }
+                }
+            case .failure(let error):
+                print(error)
+                self.otherProfileModelDelegate?.getOtherProfileServerFail(info: "response error")
+            }
+        }
+        
+    }
     
     
     
@@ -276,6 +326,8 @@ class ProfileModel{
 
     //从服务器到model
     func getMyProfileModelFromServer(){
+        
+        userid = self.myuserid
         let parameters:Parameters = ["socialgroup_id":userDefaults.string(forKey: "socialgroup_id")!, "method":"2", "user_id":userDefaults.string(forKey: "user_id")!, "password":userDefaults.string(forKey: "password")!]
         Alamofire.request(NetworkManager.PROFILE_DETAIL_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result{
@@ -318,6 +370,9 @@ class ProfileModel{
     //从本地获取到model
     public func getMyProfileModelFromLocal() -> Bool{
         if(userDefaults.bool(forKey: "isMyProfileExists")){
+            
+            userid = UserDefaultsManager.getUserId()
+            
             avatar = userDefaults.string(forKey: "avatar")
             background = userDefaults.string(forKey: "background")
             stickCount = userDefaults.string(forKey: "stick_count")

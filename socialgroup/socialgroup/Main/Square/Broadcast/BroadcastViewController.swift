@@ -16,6 +16,10 @@ protocol BroadcastViewControllerDelegate:NSObjectProtocol {
 class BroadcastViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, BroadcastManagerDelegate, BroadcastTableViewCellDelegate{
     
     
+    
+    
+    
+    
     var manager:BroadcastManager!
     
     var heightForRows:[CGFloat] = []
@@ -108,7 +112,13 @@ extension BroadcastViewController{
             cell?.selectionStyle = .none
             // calculate height for row
             heightForRows.append(calculateHeightForRow(row: indexPath.row))
+        }else{
+            for view in cell!.subviews{
+                view.removeFromSuperview()
+            }
+            cell?.initUI(item: manager.broadcastItems[indexPath.row])
         }
+        
         
         return cell!
         
@@ -186,5 +196,51 @@ extension BroadcastViewController{
         print("no more")
     }
     
+    func likeItemSuccess(item:BroadcastItem, isToCancel: Bool) {
+        print("likeItem succuess")
+        if(isToCancel){
+            item.isLiked = false
+            item.like_count -= 1
+        }else{
+            item.isLiked = true
+            item.like_count += 1
+        }
+        tableView.reloadData()
+    }
     
+    func likeItemFail(result: String, info: String, isToCancel: Bool) {
+        print("likeItem FAil maybe istocancel??")
+    }
+    
+    
+    
+    // MARK:- Broadcast Cell delegate
+    func likeButtonTapped(item: BroadcastItem) {
+        if(item.isLiked){
+            let alert = UIAlertController(title: "提示", message: "您已点赞过，是否取消点赞？", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "确定", style: .default, handler: {action in
+                self.manager.likeItem(item: item, isToCancel: true)
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
+                
+            }
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            self.manager.likeItem(item: item, isToCancel: false)
+        }
+    }
+    
+    func commentButtonTapped(item: BroadcastItem) {
+        
+    }
+    
+    func dislikeButtonTapped(item: BroadcastItem) {
+        
+    }
+    
+    func moreButtonTapped(item: BroadcastItem) {
+        
+    }
 }

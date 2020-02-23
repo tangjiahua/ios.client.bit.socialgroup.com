@@ -25,6 +25,7 @@
 		E97E893824010D4500E32811 /* CircleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E893724010D4500E32811 /* CircleManager.swift */; };
 		E97E893A2401184600E32811 /* BroadcastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E89392401184600E32811 /* BroadcastTableViewCell.swift */; };
 		E97E893C240192C600E32811 /* CircleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E893B240192C500E32811 /* CircleTableViewCell.swift */; };
+		E97E893F24024A4E00E32811 /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97E893E24024A4E00E32811 /* OtherProfileViewController.swift */; };
 		E98264BD23F5C0BB009CE123 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264BC23F5C0BB009CE123 /* UserDefaultsManager.swift */; };
 		E98264BF23F66D41009CE123 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264BE23F66D41009CE123 /* ProfileModel.swift */; };
 		E98264CA23F6CACE009CE123 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */; };
@@ -89,6 +90,7 @@
 		E97E893724010D4500E32811 /* CircleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleManager.swift; sourceTree = "<group>"; };
 		E97E89392401184600E32811 /* BroadcastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastTableViewCell.swift; sourceTree = "<group>"; };
 		E97E893B240192C500E32811 /* CircleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleTableViewCell.swift; sourceTree = "<group>"; };
+		E97E893E24024A4E00E32811 /* OtherProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
 		E98264BC23F5C0BB009CE123 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		E98264BE23F66D41009CE123 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -191,6 +193,15 @@
 			path = Circle;
 			sourceTree = "<group>";
 		};
+		E97E893D24024A2B00E32811 /* MyProfile */ = {
+			isa = PBXGroup;
+			children = (
+				E98264CB23F6D89D009CE123 /* MyProfileViewController.swift */,
+				E98264C823F6C97B009CE123 /* Settings */,
+			);
+			path = MyProfile;
+			sourceTree = "<group>";
+		};
 		E98264C823F6C97B009CE123 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +215,7 @@
 		E98264CD23F95CBF009CE123 /* OtherProfile */ = {
 			isa = PBXGroup;
 			children = (
+				E97E893E24024A4E00E32811 /* OtherProfileViewController.swift */,
 			);
 			path = OtherProfile;
 			sourceTree = "<group>";
@@ -211,6 +223,8 @@
 		E98264D223F97A0F009CE123 /* UserList */ = {
 			isa = PBXGroup;
 			children = (
+				E98264D323F97A44009CE123 /* UserListManager.swift */,
+				E98264D023F979FC009CE123 /* UserListViewController.swift */,
 			);
 			path = UserList;
 			sourceTree = "<group>";
@@ -374,14 +388,11 @@
 			isa = PBXGroup;
 			children = (
 				E98CE4D623F1509D00BAF41F /* BaseProfileViewController.swift */,
-				E98264CB23F6D89D009CE123 /* MyProfileViewController.swift */,
 				E98264C923F6CACE009CE123 /* DetailTableViewCell.swift */,
 				E98264BE23F66D41009CE123 /* ProfileModel.swift */,
-				E98264C823F6C97B009CE123 /* Settings */,
+				E97E893D24024A2B00E32811 /* MyProfile */,
 				E98264CD23F95CBF009CE123 /* OtherProfile */,
 				E98264D223F97A0F009CE123 /* UserList */,
-				E98264D023F979FC009CE123 /* UserListViewController.swift */,
-				E98264D323F97A44009CE123 /* UserListManager.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -473,6 +484,7 @@
 			files = (
 				E97E893424005BC300E32811 /* BroadcastItem.swift in Sources */,
 				E98264D623FA16BF009CE123 /* EditProfileViewController.swift in Sources */,
+				E97E893F24024A4E00E32811 /* OtherProfileViewController.swift in Sources */,
 				E98264DD23FA1D50009CE123 /* EditTextProfileViewController.swift in Sources */,
 				E97E892C24000CC800E32811 /* CircleViewController.swift in Sources */,
 				E98CE4F623F520A900BAF41F /* BaseViewController.swift in Sources */,

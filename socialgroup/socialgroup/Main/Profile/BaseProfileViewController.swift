@@ -82,8 +82,8 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.navigationBar.alpha = 0
         
         
         
@@ -208,11 +208,11 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     
     
     func refreshProfileView(){
-        let avatarUrlStr:String = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.userDefaults.string(forKey: "socialgroup_id")! + "/profile/avatar/" + profileModel.userDefaults.string(forKey: "user_id")! + "@" + profileModel.avatar + ".jpg"
+        let avatarUrlStr:String = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/avatar/" + profileModel.userid + "@" + profileModel.avatar + ".jpg"
         avatarView.sd_setImage(with: URL(string: avatarUrlStr), placeholderImage: UIImage(named: "placeholder"), options:[], context: nil)
         avatarView.setNeedsDisplay()
         
-        let backgroundUrlStr = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.userDefaults.string(forKey: "socialgroup_id")! + "/profile/background/" + profileModel.userDefaults.string(forKey: "user_id")! + "@" + profileModel.background + ".jpg"
+        let backgroundUrlStr = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/background/" + profileModel.userid + "@" + profileModel.background + ".jpg"
         backgroundView.sd_setImage(with: URL(string: backgroundUrlStr)!, placeholderImage: UIImage(named: "placeholder"), options: [], context: nil)
         backgroundView.setNeedsDisplay()
         

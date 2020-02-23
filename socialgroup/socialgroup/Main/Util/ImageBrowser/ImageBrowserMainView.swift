@@ -124,12 +124,17 @@ extension ImageBrowserMainView{
         let currentPage = Int(currentX / (ScreenWidth + SpaceWidth))
         self.selectPage = currentPage
         self.pageController.currentPage = currentPage
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let currentX = scrollView.contentOffset.x
         let currentPage = Int(currentX / (ScreenWidth + SpaceWidth))
         self.pageController.currentPage = currentPage
+        for view in originImageViews{
+            view.isHidden = false
+        }
+        originImageViews[currentPage].isHidden = true
     }
     
 }

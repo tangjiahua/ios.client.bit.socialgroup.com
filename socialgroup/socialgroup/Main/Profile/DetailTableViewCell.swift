@@ -215,8 +215,8 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
         let cell = wallCollectionView.dequeueReusableCell(withReuseIdentifier: "identifier", for: indexPath)
         let imageView = UIImageView(frame: cell.bounds)
         
-        let picThumbnailUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/thumbnail/" + profileModel.myuserid + "@" + String(indexPath.row + 1) + ".jpg"
-        let picUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/" + profileModel.myuserid + "@" + String(indexPath.row + 1) + ".jpg"
+        let picThumbnailUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/thumbnail/" + profileModel.userid + "@" + String(indexPath.row + 1) + ".jpg"
+        let picUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/wall/" + profileModel.userid + "@" + String(indexPath.row + 1) + ".jpg"
         imageView.sd_setImage(with: URL(string: picThumbnailUrl)!, placeholderImage: UIImage(named: "placeholder"), options: .refreshCached)
         
         imageView.contentMode = .scaleAspectFill
