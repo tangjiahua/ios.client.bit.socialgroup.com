@@ -32,6 +32,9 @@ class HGImageCollectionViewController: UIViewController {
     //照片选择完毕后的回调
     var completeHandler:((_ assets:[PHAsset])->())?
     
+    var assets:[PHAsset] = []
+    
+    
     //完成按钮
     var completeButton:HGImageCompleteButton!
     
@@ -97,15 +100,15 @@ class HGImageCollectionViewController: UIViewController {
     //完成按钮点击
     @objc func finishSelect(){
         //取出已选择的图片资源
-        var assets:[PHAsset] = []
-        if let indexPaths = self.collectionView.indexPathsForSelectedItems{
-            for indexPath in indexPaths{
-                assets.append(assetsFetchResults![indexPath.row] )
-            }
-        }
+//        var assets:[PHAsset] = []
+//        if let indexPaths = self.collectionView.indexPathsForSelectedItems{
+//            for indexPath in indexPaths{
+//                assets.append(assetsFetchResults![indexPath.row] )
+//            }
+//        }
         //调用回调函数
         self.navigationController?.dismiss(animated: true, completion: {
-            self.completeHandler?(assets)
+            self.completeHandler?(self.assets)
         })
     }
 }
@@ -127,8 +130,12 @@ extension HGImageCollectionViewController:UICollectionViewDataSource
                                     for: indexPath) as! HGImageCollectionViewCell
         let asset = self.assetsFetchResults![indexPath.row]
         //获取缩略图
+        let imageRequesOption = PHImageRequestOptions()
+        imageRequesOption.isSynchronous = true
+        imageRequesOption.resizeMode = .fast
+        imageRequesOption.deliveryMode = .highQualityFormat
         self.imageManager.requestImage(for: asset, targetSize: assetGridThumbnailSize,
-                                       contentMode: .aspectFill, options: nil) {
+                                       contentMode: .aspectFill, options: imageRequesOption) {
                                         (image, nfo) in
             cell.imageView.image = image
         }
@@ -159,6 +166,8 @@ extension HGImageCollectionViewController:UICollectionViewDataSource
             }
             //如果不超过最大选择数
             else{
+                
+                assets.append(assetsFetchResults![indexPath.row])
                 //改变完成按钮数字，并播放动画
                 completeButton.num = count
                 if count > 0 && !self.completeButton.isEnabled{
@@ -174,6 +183,16 @@ extension HGImageCollectionViewController:UICollectionViewDataSource
                         didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath)
             as? HGImageCollectionViewCell{
+            
+            var flag = 0
+            for i in self.assets{
+                if (i == assetsFetchResults![indexPath.row]){
+                    assets.remove(at: flag)
+                    break
+                }
+                flag += 1
+            }
+            
              //获取选中的数量
             let count = self.selectedCount()
             completeButton.num = count
@@ -182,6 +201,7 @@ extension HGImageCollectionViewController:UICollectionViewDataSource
                 completeButton.isEnabled = false
             }
             cell.playAnimate()
+            
         }
     }
 }

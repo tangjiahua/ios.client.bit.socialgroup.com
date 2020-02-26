@@ -44,7 +44,6 @@ class BaseSquareScrollViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.NavigationHeight = UIDevice.NAVIGATION_BAR_HEIGHT + UIDevice.STATUS_BAR_HEIGHT
-        view.backgroundColor = UIColor.secondarySystemBackground
         setupTitleScrollViewFunction()
         setupContentScrollVewFunction()
         
@@ -69,6 +68,9 @@ class BaseSquareScrollViewController: UIViewController, UIScrollViewDelegate {
         titleScrollView?.showsHorizontalScrollIndicator = false
         titleScrollView?.scrollsToTop = false
         titleScrollView?.backgroundColor = UIColor.secondarySystemBackground
+//        titleScrollView?.backgroundColor = UIDevice.THEME_COLOR
+            
+            
         view.addSubview(titleScrollView!)
     
     }
@@ -85,6 +87,7 @@ class BaseSquareScrollViewController: UIViewController, UIScrollViewDelegate {
         contentScollView?.alwaysBounceVertical = false
         contentScollView?.scrollsToTop = true
         contentScollView?.delegate = self
+        contentScollView?.backgroundColor = .secondarySystemBackground
         view.insertSubview(contentScollView!, at: 0)
         
         

@@ -18,6 +18,11 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //square
+        
+        
+        
+        //profile
         profileVC.profileModel = ProfileModel()
         profileVC.profileModel.setBasicModel()
         profileVC.profileModel.isMyProfile = true

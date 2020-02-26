@@ -35,7 +35,7 @@ class BaseViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
             self.presentedViewController?.dismiss(animated: true, completion: nil)
-            self.dismiss(animated: true, completion: nil)
+//            self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -44,9 +44,10 @@ class BaseViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
             self.presentedViewController?.dismiss(animated: true, completion: nil)
-            self.dismiss(animated: true, completion: nil)
+//            self.dismiss(animated: true, completion: nil)
         }
     }
+    
     
 
 }

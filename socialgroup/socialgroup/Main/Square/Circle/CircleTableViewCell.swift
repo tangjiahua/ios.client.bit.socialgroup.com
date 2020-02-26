@@ -86,6 +86,9 @@ class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     }
     
     func initUI(item:CircleItem){
+        self.originImageViews.removeAll()
+        self.imageUrls.removeAll()
+        
         self.item = item
         
         self.backgroundColor = .tertiarySystemBackground
@@ -163,11 +166,11 @@ class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             // collectionView Height
             var collectionViewHeight:CGFloat
             if(item.picture_count <= 3){
-                collectionViewHeight = collectionViewItemHeight + padding*2
+                collectionViewHeight = collectionViewItemHeight + padding
             }else if(item.picture_count <= 6){
                 collectionViewHeight = collectionViewItemHeight*2 + padding*2
             }else{
-                collectionViewHeight = collectionViewItemHeight*3 + padding*2
+                collectionViewHeight = collectionViewItemHeight*3 + padding*3
             }
             
             //collectionView
@@ -176,6 +179,7 @@ class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             collectionView.delegate = self
             collectionView.dataSource = self
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "identifier")
+            collectionView.isScrollEnabled = false
             
             self.addSubview(collectionView)
             

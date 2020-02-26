@@ -327,6 +327,7 @@ class SwiftLoadingTool: UIView {
     lazy var loadingTool: UIActivityIndicatorView = {
         let tool = UIActivityIndicatorView.init(style: .large)
         tool.hidesWhenStopped = true
+        tool.color = .lightGray
         
         return tool
     }()

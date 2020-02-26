@@ -22,7 +22,6 @@ class CircleViewController: BaseViewController, UITableViewDelegate, UITableView
     var tableView:UITableView!
     
     var manager:CircleManager!
-    var heightForRows:[CGFloat] = []
     var refresher:UIRefreshControl!
     var delegate:CircleViewControllerDelegate?
     let titleScrollHeight:CGFloat = 40.0
@@ -106,14 +105,13 @@ extension CircleViewController{
             cell?.initUI(item: manager.circleItems[indexPath.row])
             cell?.selectionStyle = .none
             // calculate height for row
-            heightForRows.append(calculateHeightForRow(row: indexPath.row))
         }
         
         return cell!
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return heightForRows[indexPath.row]
+        return calculateHeightForRow(row: indexPath.row)
     }
     
     

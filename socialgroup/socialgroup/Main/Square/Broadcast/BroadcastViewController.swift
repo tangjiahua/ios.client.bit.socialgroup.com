@@ -22,9 +22,6 @@ class BroadcastViewController: BaseViewController, UITableViewDataSource, UITabl
     
     var manager:BroadcastManager!
     
-    var heightForRows:[CGFloat] = []
-    
-    
     var tableView:UITableView!
     var refresher:UIRefreshControl!
     
@@ -38,6 +35,7 @@ class BroadcastViewController: BaseViewController, UITableViewDataSource, UITabl
     
     
     // tableView height calculator
+    let cellInitPadding:CGFloat = 10
     let padding:CGFloat = 10
     let titleLabelHeight:CGFloat = 20
     let dateLabelHeight:CGFloat = 10
@@ -107,11 +105,12 @@ extension BroadcastViewController{
         
         if(cell == nil){
             cell = BroadcastTableViewCell(style: .default, reuseIdentifier: "identifier" + String(manager.broadcastItems[indexPath.row].broadcast_id))
+            cell?.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 200)
             cell?.delegate = self
             cell?.initUI(item: manager.broadcastItems[indexPath.row])
             cell?.selectionStyle = .none
             // calculate height for row
-            heightForRows.append(calculateHeightForRow(row: indexPath.row))
+//            heightForRows.append(calculateHeightForRow(row: indexPath.row))
         }else{
             for view in cell!.subviews{
                 view.removeFromSuperview()
@@ -125,11 +124,17 @@ extension BroadcastViewController{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return heightForRows[indexPath.row]
+        return calculateHeightForRow(row: indexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let commentVC = SquareCommentViewController()
+        commentVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(commentVC, animated: true)
     }
     
     func calculateHeightForRow(row: Int) -> CGFloat{
-        let cellWidth = BroadcastTableViewCell().bounds.width
+        let cellWidth = ScreenWidth
         var height = padding + titleLabelHeight + padding + dateLabelHeight + padding + UIDevice.getLabHeigh(labelStr: manager.broadcastItems[row].content, font: .systemFont(ofSize: contentLabelFontSize), width: cellWidth - padding*2) + padding
         
         let pic_count = manager.broadcastItems[row].picture_count!
@@ -139,11 +144,11 @@ extension BroadcastViewController{
         }else if(pic_count == 1){
             height += (padding + singleImageViewHeight)
         }else if(pic_count <= 3){
-            height += (padding + collectionViewItemHeight + padding * 2)
+            height += (padding + padding/2 + collectionViewItemHeight)
         }else if(pic_count <= 6){
-            height += (padding + collectionViewItemHeight*2 + padding * 2)
+            height += (padding*2 + collectionViewItemHeight*2)
         }else{
-            height += (padding + collectionViewItemHeight*3 + padding * 2)
+            height += (padding*3 + collectionViewItemHeight*3)
         }
         
         let interactionHeight:CGFloat = 50
@@ -186,9 +191,7 @@ extension BroadcastViewController{
     
     // MARK:- BroadcastManager Delegate
     func BroadcastFetchSuccess(result: String, info: String) {
-        
         tableView.refreshControl?.endRefreshing()
-        
         tableView.reloadData()
     }
     

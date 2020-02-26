@@ -77,7 +77,7 @@ class ImageBrowserSubView: UIView, UIScrollViewDelegate {
         
         //    __weak typeof (self)ws = self;
         
-        self.subImageView.sd_setImage(with: URL(string: imageBrowserModel.urlStr), placeholderImage: imageBrowserModel.smallImageView.image, options: [.fromLoaderOnly]) { (image, error, cachetype, imageURL) in
+        self.subImageView.sd_setImage(with: URL(string: imageBrowserModel.urlStr), placeholderImage: imageBrowserModel.smallImageView.image, options: [.refreshCached]) { (image, error, cachetype, imageURL) in
             if(error == nil){
                 self.updateSubScrollViewSubImageView()
             }

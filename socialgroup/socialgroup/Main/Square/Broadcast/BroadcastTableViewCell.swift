@@ -86,7 +86,13 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         // Configure the view for the selected state
     }
     
+    
+    
     func initUI(item:BroadcastItem){
+        self.originImageViews.removeAll()
+        self.imageUrls.removeAll()
+        
+        
         self.item = item
         
         self.backgroundColor = .tertiarySystemBackground
@@ -155,11 +161,11 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
             // collectionView Height
             var collectionViewHeight:CGFloat
             if(item.picture_count <= 3){
-                collectionViewHeight = collectionViewItemHeight + padding*2
+                collectionViewHeight = collectionViewItemHeight + padding
             }else if(item.picture_count <= 6){
                 collectionViewHeight = collectionViewItemHeight*2 + padding*2
             }else{
-                collectionViewHeight = collectionViewItemHeight*3 + padding*2
+                collectionViewHeight = collectionViewItemHeight*3 + padding*3
             }
             
             //collectionView
@@ -168,6 +174,7 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
             collectionView.delegate = self
             collectionView.dataSource = self
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "identifier")
+            collectionView.isScrollEnabled = false
             
             self.addSubview(collectionView)
             

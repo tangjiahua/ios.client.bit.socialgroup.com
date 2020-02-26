@@ -19,6 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         //创建window
         self.window = UIWindow(windowScene: windowScene)
+        self.window?.backgroundColor = .secondarySystemBackground
         //设置window的rootViewController
         if(!userDefaults.bool(forKey: "isLogin")){
             self.window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
