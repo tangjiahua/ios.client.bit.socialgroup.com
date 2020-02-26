@@ -72,6 +72,7 @@
 		E98CE4F623F520A900BAF41F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F523F520A900BAF41F /* BaseViewController.swift */; };
 		E98CE4F823F5218A00BAF41F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F723F5218A00BAF41F /* NetworkManager.swift */; };
 		E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */; };
+		E9FFD9C62406D53E0009BCD7 /* SquareCommentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FFD9C52406D53E0009BCD7 /* SquareCommentManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -138,6 +139,7 @@
 		E98CE4F523F520A900BAF41F /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		E98CE4F723F5218A00BAF41F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSocialGroupViewController.swift; sourceTree = "<group>"; };
+		E9FFD9C52406D53E0009BCD7 /* SquareCommentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCommentManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				E944DC94240550ED00ED770A /* SquareCommentViewController.swift */,
+				E9FFD9C52406D53E0009BCD7 /* SquareCommentManager.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				E969D04023F57CC500CEEDC8 /* ChooseSocialGroupModel.swift in Sources */,
 				E98CE4F123F319E400BAF41F /* RegisterAndLoginModel.swift in Sources */,
 				E98264EE23FBBE69009CE123 /* HGImageCompleteButton.swift in Sources */,
+				E9FFD9C62406D53E0009BCD7 /* SquareCommentManager.swift in Sources */,
 				E98CE4F823F5218A00BAF41F /* NetworkManager.swift in Sources */,
 				E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */,
 				E98264BF23F66D41009CE123 /* ProfileModel.swift in Sources */,

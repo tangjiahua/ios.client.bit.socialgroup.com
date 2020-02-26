@@ -129,6 +129,8 @@ extension BroadcastViewController{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let commentVC = SquareCommentViewController()
+        commentVC.broadcastItem = manager.broadcastItems[indexPath.row]
+        commentVC.square_item_type = 1
         commentVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(commentVC, animated: true)
     }
@@ -215,10 +217,35 @@ extension BroadcastViewController{
         print("likeItem FAil maybe istocancel??")
     }
     
+    func dislikeItemFail(result: String, info: String, isToCancel: Bool) {
+        print("dislikeItem FAil maybe istocancel??")
+    }
+    
+    func dislikeItemSuccess(item:BroadcastItem, isToCancel: Bool) {
+        print("dislikeItem succuess")
+        if(isToCancel){
+            item.isDisliked = false
+            item.dislike_count -= 1
+        }else{
+            item.isDisliked = true
+            item.dislike_count += 1
+        }
+        tableView.reloadData()
+    }
+    
+    func reportItemSuccess(item: BroadcastItem) {
+        self.showTempAlert(info: "举报成功")
+    }
+    
+    func reportItemFail(result: String, info: String) {
+        self.showTempAlertWithOneSecond(info: "举报失败，可能因为您已经举报过了")
+    }
+    
+    
     
     
     // MARK:- Broadcast Cell delegate
-    func likeButtonTapped(item: BroadcastItem) {
+    func likeButtonTappedBroadcast(item: BroadcastItem) {
         if(item.isLiked){
             let alert = UIAlertController(title: "提示", message: "您已点赞过，是否取消点赞？", preferredStyle: .alert)
             let okAction = UIAlertAction(title: "确定", style: .default, handler: {action in
@@ -235,15 +262,33 @@ extension BroadcastViewController{
         }
     }
     
-    func commentButtonTapped(item: BroadcastItem) {
-        
+    func commentButtonTappedBroadcast(item: BroadcastItem) {
+        print("commentr")
     }
     
-    func dislikeButtonTapped(item: BroadcastItem) {
-        
+    func dislikeButtonTappedBroadcast(item: BroadcastItem) {
+        if(item.isDisliked){
+            let alert = UIAlertController(title: "提示", message: "您已表示疑惑过，是否取消表示疑惑？", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "确定", style: .default, handler: {action in
+                self.manager.dislikeItem(item: item, isToCancel: true)
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
+                
+            }
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            self.manager.dislikeItem(item: item, isToCancel: false)
+        }
     }
     
-    func moreButtonTapped(item: BroadcastItem) {
-        
+    func moreButtonTappedBroadcast(item: BroadcastItem) {
+        let pushTappedSheet = UIAlertController.init(title: "更多", message: nil, preferredStyle: .actionSheet)
+        self.present(pushTappedSheet, animated: true, completion: nil)
+        pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
+            self.manager.reportItem(item: item)
+        } ))
+        pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
     }
 }

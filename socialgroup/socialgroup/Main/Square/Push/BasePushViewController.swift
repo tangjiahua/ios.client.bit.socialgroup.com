@@ -113,7 +113,7 @@ class BasePushViewController: BaseViewController {
         if(method.equals(str: "broadcast")){
             parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":method, "title":title!, "content":content, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
         }else{
-            parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":method, content:content, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+            parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":method, "content":content, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
         }
         
         Alamofire.request(NetworkManager.SQUARE_PUSH_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in

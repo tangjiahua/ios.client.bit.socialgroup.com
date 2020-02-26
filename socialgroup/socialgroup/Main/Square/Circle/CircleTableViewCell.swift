@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CircleTableViewCellDelegate:NSObjectProtocol {
-    func avatarTapped(item: CircleItem)
+    func avatarTappedCircle(item: CircleItem)
 }
 
 class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -256,7 +256,7 @@ class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
     
     // MARK:- avatar tapped
     @objc func avatarTapped(){
-        self.delegate?.avatarTapped(item: item)
+        self.delegate?.avatarTappedCircle(item: item)
     }
     
 }

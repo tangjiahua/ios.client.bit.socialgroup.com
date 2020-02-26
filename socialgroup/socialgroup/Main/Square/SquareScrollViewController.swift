@@ -63,6 +63,7 @@ class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewC
         pushTappedSheet.addAction(.init(title: "发布动态", style: .default, handler:{(action: UIAlertAction) in
             let circlePushVC = CirclePushViewController()
             let circlePushNC = UINavigationController(rootViewController: circlePushVC)
+            circlePushVC.delegate = self
             circlePushNC.modalPresentationStyle = .fullScreen
             self.present(circlePushNC, animated: true, completion: nil)
         } ))

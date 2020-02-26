@@ -101,10 +101,16 @@ extension CircleViewController{
         
         if(cell == nil){
             cell = CircleTableViewCell(style: .default, reuseIdentifier: "identifier" + String(manager.circleItems[indexPath.row].circle_id))
+            cell?.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 200)
             cell?.delegate = self
             cell?.initUI(item: manager.circleItems[indexPath.row])
             cell?.selectionStyle = .none
             // calculate height for row
+        }else{
+            for view in cell!.subviews{
+                view.removeFromSuperview()
+            }
+            cell?.initUI(item: manager.circleItems[indexPath.row])
         }
         
         return cell!
@@ -126,11 +132,11 @@ extension CircleViewController{
         }else if(pic_count == 1){
             height += (padding + singleImageViewHeight)
         }else if(pic_count <= 3){
-            height += (padding + collectionViewItemHeight + padding * 2)
+            height += (padding + collectionViewItemHeight + padding/2)
         }else if(pic_count <= 6){
-            height += (padding + collectionViewItemHeight*2 + padding * 2)
+            height += (padding*2 + collectionViewItemHeight*2)
         }else{
-            height += (padding + collectionViewItemHeight*3 + padding * 2)
+            height += (padding*3 + collectionViewItemHeight*3)
         }
 
         let interactionHeight:CGFloat = 50
@@ -184,7 +190,7 @@ extension CircleViewController{
 
 extension CircleViewController{
     // MARK:- circle tableviewCell delegate
-    func avatarTapped(item: CircleItem) {
+    func avatarTappedCircle(item: CircleItem) {
         let otherProfileVC = OtherProfileViewController()
         otherProfileVC.profileModel = ProfileModel()
         otherProfileVC.profileModel.otherProfileModelDelegate = otherProfileVC

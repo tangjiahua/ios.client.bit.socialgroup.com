@@ -88,7 +88,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "44DE9604-BADA-48EE-B1C6-ADD20A04A59C"
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "socialgroup/Main/Square/Push/BasePushViewController.swift"
@@ -144,7 +144,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "119"
                   endingLineNumber = "119"
-                  offsetFromSymbolStart = "1939">
+                  offsetFromSymbolStart = "1624">
                </Location>
                <Location
                   uuid = "47793E93-1113-4C91-A6ED-D4C5BE1D952A - 6946ce7c76688960"
@@ -159,7 +159,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "120"
                   endingLineNumber = "120"
-                  offsetFromSymbolStart = "164">
+                  offsetFromSymbolStart = "132">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -192,7 +192,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "119"
                   endingLineNumber = "119"
-                  offsetFromSymbolStart = "1939">
+                  offsetFromSymbolStart = "1624">
                </Location>
                <Location
                   uuid = "8EDD59F5-D129-4040-9A81-CF3BCA2FB9E7 - 6946ce7c76688960"
@@ -207,7 +207,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "120"
                   endingLineNumber = "120"
-                  offsetFromSymbolStart = "164">
+                  offsetFromSymbolStart = "132">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -334,8 +334,8 @@
             filePath = "socialgroup/Main/Square/Broadcast/BroadcastViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
             landmarkName = "calculateHeightForRow(row:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -10,10 +10,10 @@ import UIKit
 import SDWebImage
 
 protocol BroadcastTableViewCellDelegate:NSObjectProtocol {
-    func likeButtonTapped(item:BroadcastItem)
-    func commentButtonTapped(item:BroadcastItem)
-    func dislikeButtonTapped(item:BroadcastItem)
-    func moreButtonTapped(item:BroadcastItem)
+    func likeButtonTappedBroadcast(item:BroadcastItem)
+    func commentButtonTappedBroadcast(item:BroadcastItem)
+    func dislikeButtonTappedBroadcast(item:BroadcastItem)
+    func moreButtonTappedBroadcast(item:BroadcastItem)
 }
 
 class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -214,14 +214,19 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         
         likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
     
-        if(item.like_count != 0){
+        
             likeCountLabel = UILabel(frame: CGRect(x: likeButton.frame.maxX + padding, y: 0, width: interactionItemWidth - interactionButtonHeight - padding, height: interactionCountLabelHeight))
-            likeCountLabel.text = String(item.like_count)
+            if(item.like_count != 0){
+                likeCountLabel.text = String(item.like_count)
+            }
             likeCountLabel.font = .systemFont(ofSize: interactionCountLabelFontSize, weight: .light)
             likeCountLabel.textColor = .systemGray
+            likeCountLabel.isUserInteractionEnabled = true
+            let likeTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(likeButtonTapped))
+            likeCountLabel.addGestureRecognizer(likeTapGestureRecognizer)
 
             interactionView.addSubview(likeCountLabel)
-        }
+        
         
         // comment
         commentButton = UIButton(frame: CGRect(x: interactionItemWidth, y: 0, width: interactionButtonHeight, height: interactionButtonHeight))
@@ -231,14 +236,20 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         
         commentButton.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
         
-        if(item.comment_count != 0){
+        
             commentCountLabel = UILabel(frame: CGRect(x: commentButton.frame.maxX + padding, y: 0, width: interactionItemWidth - interactionButtonHeight - padding, height: interactionCountLabelHeight))
-            commentCountLabel.text = String(item.comment_count)
+            if(item.comment_count != 0){
+                commentCountLabel.text = String(item.comment_count)
+            }
+            
             commentCountLabel.font = .systemFont(ofSize: interactionCountLabelFontSize, weight: .light)
             commentCountLabel.textColor = .systemGray
+            commentCountLabel.isUserInteractionEnabled = true
+            let commentTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(commentButtonTapped))
+            commentCountLabel.addGestureRecognizer(commentTapGestureRecognizer)
 
             interactionView.addSubview(commentCountLabel)
-        }
+        
         
         
         
@@ -254,13 +265,19 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         
         dislikeButton.addTarget(self, action: #selector(dislikeButtonTapped), for: .touchUpInside)
         
-        if(item.dislike_count != 0){
+        
             dislikeCountLabel = UILabel(frame: CGRect(x: dislikeButton.frame.maxX + padding, y: 0, width: interactionItemWidth - interactionButtonHeight - padding, height: interactionCountLabelHeight))
-            dislikeCountLabel.text = String(item.dislike_count)
+            if(item.dislike_count != 0){
+                dislikeCountLabel.text = String(item.dislike_count)
+            }
             dislikeCountLabel.font = .systemFont(ofSize: interactionCountLabelFontSize, weight: .light)
             dislikeCountLabel.textColor = .systemGray
             interactionView.addSubview(dislikeCountLabel)
-        }
+            dislikeCountLabel.isUserInteractionEnabled = true
+            let dislikeTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dislikeButtonTapped))
+            dislikeCountLabel.addGestureRecognizer(dislikeTapGestureRecognizer)
+            
+        
         
         // more
         moreButton = UIButton(frame: CGRect(x: interactionItemWidth*3, y: 0, width: interactionButtonHeight, height: interactionButtonHeight))
@@ -332,18 +349,18 @@ extension BroadcastTableViewCell{
     // MARK:- Interaction Buttons Actions
     @objc func likeButtonTapped(){
         
-        delegate?.likeButtonTapped(item: item)
+        delegate?.likeButtonTappedBroadcast(item: item)
     }
     
     @objc func commentButtonTapped(){
-        delegate?.commentButtonTapped(item: item)
+        delegate?.commentButtonTappedBroadcast(item: item)
     }
     
     @objc func dislikeButtonTapped(){
-        delegate?.dislikeButtonTapped(item: item)
+        delegate?.dislikeButtonTappedBroadcast(item: item)
     }
     
     @objc func moreButtonTapped(){
-        delegate?.moreButtonTapped(item: item)
+        delegate?.moreButtonTappedBroadcast(item: item)
     }
 }
