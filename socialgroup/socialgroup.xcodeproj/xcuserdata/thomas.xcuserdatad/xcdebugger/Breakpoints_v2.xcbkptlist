@@ -130,38 +130,6 @@
             endingLineNumber = "119"
             landmarkName = "pushWithoutPhoto(method:title:content:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "47793E93-1113-4C91-A6ED-D4C5BE1D952A - 43b91eea45ad3d63"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SocialGroup.BasePushViewController.pushWithoutPhoto(method: Swift.String, title: Swift.Optional&lt;Swift.String&gt;, content: Swift.String) -&gt; ()"
-                  moduleName = "SocialGroup"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/thomas/Documents/socialgroup.com/socialgroup/socialgroup/socialgroup/Main/Square/Push/BasePushViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "119"
-                  endingLineNumber = "119"
-                  offsetFromSymbolStart = "1624">
-               </Location>
-               <Location
-                  uuid = "47793E93-1113-4C91-A6ED-D4C5BE1D952A - 6946ce7c76688960"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in SocialGroup.BasePushViewController.pushWithoutPhoto(method: Swift.String, title: Swift.Optional&lt;Swift.String&gt;, content: Swift.String) -&gt; ()"
-                  moduleName = "SocialGroup"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/thomas/Documents/socialgroup.com/socialgroup/socialgroup/socialgroup/Main/Square/Push/BasePushViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "120"
-                  endingLineNumber = "120"
-                  offsetFromSymbolStart = "132">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -178,38 +146,6 @@
             endingLineNumber = "118"
             landmarkName = "pushWithoutPhoto(method:title:content:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "8EDD59F5-D129-4040-9A81-CF3BCA2FB9E7 - 43b91eea45ad3d63"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "SocialGroup.BasePushViewController.pushWithoutPhoto(method: Swift.String, title: Swift.Optional&lt;Swift.String&gt;, content: Swift.String) -&gt; ()"
-                  moduleName = "SocialGroup"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/thomas/Documents/socialgroup.com/socialgroup/socialgroup/socialgroup/Main/Square/Push/BasePushViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "119"
-                  endingLineNumber = "119"
-                  offsetFromSymbolStart = "1624">
-               </Location>
-               <Location
-                  uuid = "8EDD59F5-D129-4040-9A81-CF3BCA2FB9E7 - 6946ce7c76688960"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any&gt;) -&gt; () in SocialGroup.BasePushViewController.pushWithoutPhoto(method: Swift.String, title: Swift.Optional&lt;Swift.String&gt;, content: Swift.String) -&gt; ()"
-                  moduleName = "SocialGroup"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/thomas/Documents/socialgroup.com/socialgroup/socialgroup/socialgroup/Main/Square/Push/BasePushViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "120"
-                  endingLineNumber = "120"
-                  offsetFromSymbolStart = "132">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -296,7 +232,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "3EA6EAB9-AA4D-4138-B03C-D1D8A35B1F74"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "socialgroup/Main/Util/UIDevice.swift"
@@ -312,7 +248,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "0052CADA-4564-4429-96C2-6CBF10640B71"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "socialgroup/Main/Square/Broadcast/BroadcastTableViewCell.swift"
@@ -328,7 +264,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "4C01018E-4A3C-41B8-86A0-A1ACC3318C55"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "socialgroup/Main/Square/Broadcast/BroadcastViewController.swift"
@@ -337,6 +273,102 @@
             startingLineNumber = "139"
             endingLineNumber = "139"
             landmarkName = "calculateHeightForRow(row:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B58DE4B3-EE8E-402E-889D-05822FEEC387"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "socialgroup/Main/Square/Comment/SquareCommentViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ED748FCF-D1F8-4EC3-A219-875E3898F285"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "socialgroup/Main/Util/UIDevice.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "getLabHeigh(labelStr:font:width:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3B2E16D0-9A1A-4F87-A7A2-C06F2AD2FEE3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "socialgroup/Main/Square/Comment/SquareCommentViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
+            landmarkName = "tableView(_:numberOfRowsInSection:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AD4FFC90-897D-43E7-A49B-FA5323B25991"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "socialgroup/Main/Square/Comment/SquareCommentManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "fetchSquareCommentItems()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A0818A05-79CE-4F7C-B91D-AA0518A4A520"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "socialgroup/Main/Square/Comment/SquareCommentViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
+            landmarkName = "fetchSquareCommentItemsSuccess()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E8CA2EED-BBE6-4B48-890A-229AB2E45D22"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "socialgroup/Main/Square/Comment/SquareCommentViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

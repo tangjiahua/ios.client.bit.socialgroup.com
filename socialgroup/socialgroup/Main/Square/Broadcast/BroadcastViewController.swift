@@ -130,7 +130,8 @@ extension BroadcastViewController{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let commentVC = SquareCommentViewController()
         commentVC.broadcastItem = manager.broadcastItems[indexPath.row]
-        commentVC.square_item_type = 1
+        commentVC.square_item_type = "broadcast"
+        commentVC.square_item_id = String(manager.broadcastItems[indexPath.row].broadcast_id)
         commentVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(commentVC, animated: true)
     }

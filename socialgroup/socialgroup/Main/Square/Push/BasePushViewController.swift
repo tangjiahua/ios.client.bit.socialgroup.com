@@ -97,8 +97,6 @@ class BasePushViewController: BaseViewController {
                 
                 
             }
-        }catch(let error){
-            print(error)
         }
         
         

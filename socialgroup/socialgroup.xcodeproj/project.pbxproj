@@ -13,6 +13,8 @@
 		E928C72823FE6638004D75E0 /* ImageBroserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72723FE6638004D75E0 /* ImageBroserModel.swift */; };
 		E928C72A23FE84F2004D75E0 /* ImageBrowserTranslation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72923FE84F2004D75E0 /* ImageBrowserTranslation.swift */; };
 		E928C72C23FE8B9A004D75E0 /* ImageBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72B23FE8B9A004D75E0 /* ImageBrowserViewController.swift */; };
+		E92F7BB22407807500212167 /* SquareCommentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92F7BB12407807500212167 /* SquareCommentItem.swift */; };
+		E92F7BB4240787FB00212167 /* SquareCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92F7BB3240787FB00212167 /* SquareCommentTableViewCell.swift */; };
 		E944DC95240550ED00ED770A /* SquareCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944DC94240550ED00ED770A /* SquareCommentViewController.swift */; };
 		E944DC9A2405630A00ED770A /* BasePushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944DC992405630A00ED770A /* BasePushViewController.swift */; };
 		E944DC9C2405634B00ED770A /* BroadcastPushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944DC9B2405634B00ED770A /* BroadcastPushViewController.swift */; };
@@ -83,6 +85,8 @@
 		E928C72723FE6638004D75E0 /* ImageBroserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBroserModel.swift; sourceTree = "<group>"; };
 		E928C72923FE84F2004D75E0 /* ImageBrowserTranslation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserTranslation.swift; sourceTree = "<group>"; };
 		E928C72B23FE8B9A004D75E0 /* ImageBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserViewController.swift; sourceTree = "<group>"; };
+		E92F7BB12407807500212167 /* SquareCommentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCommentItem.swift; sourceTree = "<group>"; };
+		E92F7BB3240787FB00212167 /* SquareCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCommentTableViewCell.swift; sourceTree = "<group>"; };
 		E944DC94240550ED00ED770A /* SquareCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCommentViewController.swift; sourceTree = "<group>"; };
 		E944DC992405630A00ED770A /* BasePushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePushViewController.swift; sourceTree = "<group>"; };
 		E944DC9B2405634B00ED770A /* BroadcastPushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastPushViewController.swift; sourceTree = "<group>"; };
@@ -175,7 +179,9 @@
 			isa = PBXGroup;
 			children = (
 				E944DC94240550ED00ED770A /* SquareCommentViewController.swift */,
+				E92F7BB3240787FB00212167 /* SquareCommentTableViewCell.swift */,
 				E9FFD9C52406D53E0009BCD7 /* SquareCommentManager.swift */,
+				E92F7BB12407807500212167 /* SquareCommentItem.swift */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -536,6 +542,7 @@
 				E98264BD23F5C0BB009CE123 /* UserDefaultsManager.swift in Sources */,
 				E98CE4D123F1502000BAF41F /* SquareScrollViewController.swift in Sources */,
 				E969D03E23F5771D00CEEDC8 /* LoadingUI.swift in Sources */,
+				E92F7BB4240787FB00212167 /* SquareCommentTableViewCell.swift in Sources */,
 				E98264DF23FA1D5A009CE123 /* EditWallViewController.swift in Sources */,
 				E97E893A2401184600E32811 /* BroadcastTableViewCell.swift in Sources */,
 				E98CE4D523F1509200BAF41F /* DiscoverViewController.swift in Sources */,
@@ -556,6 +563,7 @@
 				E9FFD9C62406D53E0009BCD7 /* SquareCommentManager.swift in Sources */,
 				E98CE4F823F5218A00BAF41F /* NetworkManager.swift in Sources */,
 				E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */,
+				E92F7BB22407807500212167 /* SquareCommentItem.swift in Sources */,
 				E98264BF23F66D41009CE123 /* ProfileModel.swift in Sources */,
 				E98264D123F979FC009CE123 /* UserListViewController.swift in Sources */,
 				E98264CC23F6D89D009CE123 /* MyProfileViewController.swift in Sources */,
