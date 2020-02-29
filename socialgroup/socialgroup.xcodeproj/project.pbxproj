@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E90DA882240AF0E60070B462 /* OtherProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA881240AF0E60070B462 /* OtherProfileManager.swift */; };
 		E928C71E23FE60F3004D75E0 /* ImageBrowserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C71D23FE60F3004D75E0 /* ImageBrowserManager.swift */; };
 		E928C72223FE64F5004D75E0 /* ImageBrowserMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72123FE64F5004D75E0 /* ImageBrowserMainView.swift */; };
 		E928C72623FE65A4004D75E0 /* ImageBrowserSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72523FE65A4004D75E0 /* ImageBrowserSubView.swift */; };
@@ -85,6 +86,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E90DA881240AF0E60070B462 /* OtherProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileManager.swift; sourceTree = "<group>"; };
 		E928C71B23FE5F3F004D75E0 /* BridgeHeaderFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeaderFile.h; sourceTree = "<group>"; };
 		E928C71D23FE60F3004D75E0 /* ImageBrowserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserManager.swift; sourceTree = "<group>"; };
 		E928C72123FE64F5004D75E0 /* ImageBrowserMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserMainView.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				E97E893E24024A4E00E32811 /* OtherProfileViewController.swift */,
+				E90DA881240AF0E60070B462 /* OtherProfileManager.swift */,
 			);
 			path = OtherProfile;
 			sourceTree = "<group>";
@@ -574,6 +577,7 @@
 				E98CE4D923F1567E00BAF41F /* LoginViewController.swift in Sources */,
 				E98264D823FA1706009CE123 /* AboutViewController.swift in Sources */,
 				E98264F023FBBE69009CE123 /* HGImagePickerController.swift in Sources */,
+				E90DA882240AF0E60070B462 /* OtherProfileManager.swift in Sources */,
 				E928C72823FE6638004D75E0 /* ImageBroserModel.swift in Sources */,
 				E928C72A23FE84F2004D75E0 /* ImageBrowserTranslation.swift in Sources */,
 				E98264DB23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift in Sources */,

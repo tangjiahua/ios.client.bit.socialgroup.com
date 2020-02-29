@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OtherProfileViewController: BaseProfileViewController, OtherProfileModelDelegate {
+class OtherProfileViewController: BaseProfileViewController, OtherProfileModelDelegate, OtherProfileManagerDelegate {
     
     var backButton:UIButton!
 
@@ -16,6 +16,7 @@ class OtherProfileViewController: BaseProfileViewController, OtherProfileModelDe
         super.viewDidLoad()
         initBackButton()
         // Do any additional setup after loading the view.
+        moreButton.isHidden = true
     }
     
     func getProfile(user_id:Int){
@@ -45,9 +46,29 @@ class OtherProfileViewController: BaseProfileViewController, OtherProfileModelDe
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         super.scrollViewDidScroll(scrollView)
         print(scrollView.contentOffset.y)
-        if(scrollView.contentOffset.y < -150){
+        if(scrollView.contentOffset.y < -125){
             backButtonTapped()
         }
+    }
+    
+    override func stickButtonTapped() {
+        
+        if(profileModel.isPrivateAbleToSee){
+            self.showTempAlertWithOneSecond(info: "您已经戳过TA了")
+        }else{
+            let alert = UIAlertController(title: "确定戳一戳TA吗", message: "对方会收到戳一戳通知，并且能够看到您的私密个人介绍，并且戳一戳不可撤回", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "确定", style: .default, handler: {action in
+                let manager = OtherProfileManager()
+                manager.delegate = self
+                manager.stick(model:self.profileModel)
+            })
+            let noAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            alert.addAction(okAction)
+            alert.addAction(noAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        
     }
 
 }
@@ -66,4 +87,16 @@ extension OtherProfileViewController{
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }
+    
+    //MARK: - OtherProfileManagerDelegate
+    
+    func stickSuccess() {
+        self.showTempAlertWithOneSecond(info: "戳一戳成功")
+    }
+    
+    func stickFail() {
+        print("stick fail")
+        self.showTempAlertWithOneSecond(info: "戳一戳失败")
+    }
+    
 }

@@ -49,6 +49,14 @@ class BaseViewController: UIViewController {
         })
     }
     
-    
+    public func showOtherProfile(userId:Int){
+        let otherProfileVC = OtherProfileViewController()
+        otherProfileVC.profileModel = ProfileModel()
+        otherProfileVC.profileModel.otherProfileModelDelegate = otherProfileVC
+        otherProfileVC.profileModel.setBasicModel()
+        otherProfileVC.getProfile(user_id: userId)
+        otherProfileVC.modalPresentationStyle = .fullScreen
+        self.present(otherProfileVC, animated: true, completion: nil)
+    }
 
 }

@@ -20,8 +20,8 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
     let padding:CGFloat = 10
     let cellHeight:CGFloat = 60
     let avatarHeight:CGFloat = 50
-    let nicknameHeight:CGFloat = 25
-    let realnameHeight:CGFloat = 20
+    let nicknameHeight:CGFloat = 20
+    let realnameHeight:CGFloat = 15
     let userDefaults = UserDefaults.standard
     
     
@@ -48,6 +48,10 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
     
     
     //MARK:- tableview delegate
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.showOtherProfile(userId: Int(userListManager.model[indexPath.row].user_id)!)
+    }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return userListManager.model.count
@@ -61,6 +65,7 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "reuse")
         cell.backgroundColor = .secondarySystemBackground
+        cell.selectionStyle = .none
         
         let avatarImageView = UIImageView(frame: CGRect(x: padding, y: smallPadding, width: avatarHeight, height: avatarHeight))
         let avatarUrlStr:String = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + userDefaults.string(forKey: "socialgroup_id")! + "/profile/avatar/thumbnail/" + userDefaults.string(forKey: "user_id")! + "@" + userListManager.model[indexPath.row].avatar + ".jpg"
@@ -70,9 +75,9 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
         avatarImageView.layer.masksToBounds = true
         cell.addSubview(avatarImageView)
         
-        let nicknameLabel = UILabel(frame: CGRect(x: avatarImageView.frame.maxX + smallPadding, y: smallPadding, width: UIDevice.SCREEN_WIDTH - padding - avatarHeight - padding*2, height: nicknameHeight))
+        let nicknameLabel = UILabel(frame: CGRect(x: avatarImageView.frame.maxX + smallPadding, y: smallPadding + smallPadding, width: UIDevice.SCREEN_WIDTH - padding - avatarHeight - padding*2, height: nicknameHeight))
         nicknameLabel.text = userListManager.model[indexPath.row].nickname
-        nicknameLabel.font = .boldSystemFont(ofSize: nicknameHeight)
+        nicknameLabel.font = .systemFont(ofSize: nicknameHeight)
         nicknameLabel.textColor = .label
         nicknameLabel.textAlignment = .left
         nicknameLabel.numberOfLines = 1
