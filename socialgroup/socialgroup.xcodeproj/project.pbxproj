@@ -15,6 +15,9 @@
 		E928C72C23FE8B9A004D75E0 /* ImageBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72B23FE8B9A004D75E0 /* ImageBrowserViewController.swift */; };
 		E92F7BB22407807500212167 /* SquareCommentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92F7BB12407807500212167 /* SquareCommentItem.swift */; };
 		E92F7BB4240787FB00212167 /* SquareCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92F7BB3240787FB00212167 /* SquareCommentTableViewCell.swift */; };
+		E942E627240A4D2D004035D6 /* SquareJudgeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E942E626240A4D2D004035D6 /* SquareJudgeItem.swift */; };
+		E942E629240A514B004035D6 /* SquareJudgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E942E628240A514B004035D6 /* SquareJudgeTableViewCell.swift */; };
+		E942E62B240A5A9B004035D6 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E942E62A240A5A9B004035D6 /* WriteViewController.swift */; };
 		E944DC95240550ED00ED770A /* SquareCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944DC94240550ED00ED770A /* SquareCommentViewController.swift */; };
 		E944DC9A2405630A00ED770A /* BasePushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944DC992405630A00ED770A /* BasePushViewController.swift */; };
 		E944DC9C2405634B00ED770A /* BroadcastPushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E944DC9B2405634B00ED770A /* BroadcastPushViewController.swift */; };
@@ -87,6 +90,9 @@
 		E928C72B23FE8B9A004D75E0 /* ImageBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserViewController.swift; sourceTree = "<group>"; };
 		E92F7BB12407807500212167 /* SquareCommentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCommentItem.swift; sourceTree = "<group>"; };
 		E92F7BB3240787FB00212167 /* SquareCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCommentTableViewCell.swift; sourceTree = "<group>"; };
+		E942E626240A4D2D004035D6 /* SquareJudgeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareJudgeItem.swift; sourceTree = "<group>"; };
+		E942E628240A514B004035D6 /* SquareJudgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareJudgeTableViewCell.swift; sourceTree = "<group>"; };
+		E942E62A240A5A9B004035D6 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		E944DC94240550ED00ED770A /* SquareCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCommentViewController.swift; sourceTree = "<group>"; };
 		E944DC992405630A00ED770A /* BasePushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePushViewController.swift; sourceTree = "<group>"; };
 		E944DC9B2405634B00ED770A /* BroadcastPushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastPushViewController.swift; sourceTree = "<group>"; };
@@ -179,8 +185,10 @@
 			isa = PBXGroup;
 			children = (
 				E944DC94240550ED00ED770A /* SquareCommentViewController.swift */,
+				E942E628240A514B004035D6 /* SquareJudgeTableViewCell.swift */,
 				E92F7BB3240787FB00212167 /* SquareCommentTableViewCell.swift */,
 				E9FFD9C52406D53E0009BCD7 /* SquareCommentManager.swift */,
+				E942E626240A4D2D004035D6 /* SquareJudgeItem.swift */,
 				E92F7BB12407807500212167 /* SquareCommentItem.swift */,
 			);
 			path = Comment;
@@ -404,6 +412,7 @@
 			children = (
 				E97E892524000BFC00E32811 /* BaseSquareScrollViewController.swift */,
 				E98CE4D023F1502000BAF41F /* SquareScrollViewController.swift */,
+				E942E62A240A5A9B004035D6 /* WriteViewController.swift */,
 				E944DC98240562F700ED770A /* Push */,
 				E944DC97240562F200ED770A /* Reply */,
 				E944DC96240562E900ED770A /* Comment */,
@@ -563,6 +572,7 @@
 				E9FFD9C62406D53E0009BCD7 /* SquareCommentManager.swift in Sources */,
 				E98CE4F823F5218A00BAF41F /* NetworkManager.swift in Sources */,
 				E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */,
+				E942E62B240A5A9B004035D6 /* WriteViewController.swift in Sources */,
 				E92F7BB22407807500212167 /* SquareCommentItem.swift in Sources */,
 				E98264BF23F66D41009CE123 /* ProfileModel.swift in Sources */,
 				E98264D123F979FC009CE123 /* UserListViewController.swift in Sources */,
@@ -572,12 +582,14 @@
 				E969D04323F5899400CEEDC8 /* SocialGroupTableViewCell.swift in Sources */,
 				E928C72223FE64F5004D75E0 /* ImageBrowserMainView.swift in Sources */,
 				E98CE4CF23F14FCE00BAF41F /* MainController.swift in Sources */,
+				E942E629240A514B004035D6 /* SquareJudgeTableViewCell.swift in Sources */,
 				E928C72C23FE8B9A004D75E0 /* ImageBrowserViewController.swift in Sources */,
 				E928C71E23FE60F3004D75E0 /* ImageBrowserManager.swift in Sources */,
 				E97E893C240192C600E32811 /* CircleTableViewCell.swift in Sources */,
 				E98264E123FA846F009CE123 /* EditTextDetailViewController.swift in Sources */,
 				E98CE4DB23F177B600BAF41F /* UIDevice.swift in Sources */,
 				E98264EB23FBBE69009CE123 /* HGImagePickerCell.swift in Sources */,
+				E942E627240A4D2D004035D6 /* SquareJudgeItem.swift in Sources */,
 				E98264EA23FBBE69009CE123 /* HGImageCollectionViewController.swift in Sources */,
 				E98264D423F97A44009CE123 /* UserListManager.swift in Sources */,
 				E944DC9C2405634B00ED770A /* BroadcastPushViewController.swift in Sources */,

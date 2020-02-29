@@ -20,7 +20,7 @@ class NetworkManager{
     static let SQUARE_JUDGE_API:String = "https://www.bitsocialgroup.com/api/square/judge"
     static let SQUARE_PUSH_API:String = "https://www.bitsocialgroup.com/api/square/push"
     static let SQUARE_FETCH_DETAIL_API:String = "https://www.bitsocialgroup.com/api/square/fetch_detail"
-    
+    static let SQUARE_COMMENT_API:String = "https://www.bitsocialgroup.com/api/square/comment"
     
     
     

@@ -10,6 +10,7 @@ import UIKit
 
 protocol SquareCommentTableViewCellDelegate:NSObjectProtocol {
     func avatarTappedComment(item:SquareCommentItem)
+    func seeMoreReply(item:SquareCommentItem)
 }
 
 class SquareCommentTableViewCell: UITableViewCell {
@@ -21,6 +22,7 @@ class SquareCommentTableViewCell: UITableViewCell {
     var nicknameLabel:UILabel!
     var dateLabel:UILabel!
     var contentLabel:UILabel!
+    var replyLabel:UILabel!
     
     //CGFloat
     override var frame:CGRect{
@@ -95,15 +97,32 @@ class SquareCommentTableViewCell: UITableViewCell {
         self.addSubview(dateLabel)
         
         // content
-        contentLabel = UILabel(frame: CGRect(x: padding, y: avatarImageView.frame.maxY + padding, width: ScreenWidth - padding*2 - cellInitPadding, height: UIDevice.getLabHeigh(labelStr: item.content, font: .systemFont(ofSize: contentLabelFontSize), width: self.bounds.width - padding*2)))
+        contentLabel = UILabel(frame: CGRect(x: padding, y: avatarImageView.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: item.content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2)))
         contentLabel.font = .systemFont(ofSize: contentLabelFontSize)
         contentLabel.numberOfLines = 0
         contentLabel.text = item.content
         self.addSubview(contentLabel)
+        
+        //more reply button
+        if(!item.reply_count.equals(str: "0")){
+            replyLabel = UILabel(frame: CGRect(x: padding, y: contentLabel.frame.maxY + padding, width: ScreenWidth - padding*2 - cellInitPadding, height: contentLabelFontSize))
+            replyLabel.text = "查看" + item.reply_count + "条回复"
+            replyLabel.textColor = .systemBlue
+            replyLabel.textAlignment = .left
+            let seeReplyGestureRecognizer = UITapGestureRecognizer(target: self
+                , action: #selector(seeReply))
+            replyLabel.addGestureRecognizer(seeReplyGestureRecognizer)
+            self.addSubview(replyLabel)
+        }
+        
     }
     
     @objc func avatarTapped(){
         self.delegate?.avatarTappedComment(item: item)
+    }
+    
+    @objc func seeReply(){
+        self.delegate?.seeMoreReply(item: item)
     }
 
 }
