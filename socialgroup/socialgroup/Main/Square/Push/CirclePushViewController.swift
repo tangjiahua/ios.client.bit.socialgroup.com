@@ -149,9 +149,9 @@ class CirclePushViewController: BasePushViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if(indexPath.row == 0){
             let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-            contentTextView = UITextView(frame: CGRect(x: padding, y: padding, width: ScreenWidth - padding*2, height: contentTextViewHeight))
+            contentTextView = UITextView(frame: CGRect(x: 0, y: 0, width: ScreenWidth - padding*2, height: contentTextViewHeight))
             contentTextView.font = .systemFont(ofSize: contentFontSize)
-            contentTextView.backgroundColor = .secondarySystemBackground
+            contentTextView.backgroundColor = .tertiarySystemBackground
             contentTextView.delegate = self
             contentTextView.text = textContent
             contentTextView.returnKeyType = .default
@@ -165,7 +165,7 @@ class CirclePushViewController: BasePushViewController, UITableViewDelegate, UIT
             contentTextView.addSubview(contentTextViewPlaceHolder)
             
             cell.selectionStyle = .none
-            cell.backgroundColor = .secondarySystemBackground
+            cell.backgroundColor = .tertiarySystemBackground
             cell.addSubview(contentTextView)
             
             contentTextViewCountLabel = UILabel(frame: CGRect(x: ScreenWidth - padding - contentTextViewCountLabelWidth, y: contentTextView.frame.maxY + 5, width: contentTextViewCountLabelWidth, height: contentTextViewCountLabelHeight))

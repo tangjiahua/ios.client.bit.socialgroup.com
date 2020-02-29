@@ -47,4 +47,8 @@ class UserDefaultsManager{
         return userDefaults.string(forKey: "socialgroup_id")!
     }
     
+    static public func getUserNickname() -> String{
+        return userDefaults.string(forKey: "nickname") ?? "暂未填写"
+    }
+    
 }

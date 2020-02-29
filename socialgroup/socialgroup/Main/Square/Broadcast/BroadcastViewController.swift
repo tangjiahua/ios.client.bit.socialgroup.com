@@ -265,6 +265,17 @@ extension BroadcastViewController{
     
     func commentButtonTappedBroadcast(item: BroadcastItem) {
         print("commentr")
+        let commentVC = SquareCommentViewController()
+        commentVC.broadcastItem = item
+        commentVC.square_item_type = "broadcast"
+        commentVC.square_item_id = String(item.broadcast_id)
+        commentVC.hidesBottomBarWhenPushed = true
+        
+        self.navigationController?.pushViewController(commentVC, animated: true)
+        
+        if(item.comment_count == 0){
+            commentVC.writeComment()
+        }
     }
     
     func dislikeButtonTappedBroadcast(item: BroadcastItem) {
@@ -292,4 +303,6 @@ extension BroadcastViewController{
         } ))
         pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
     }
+    
+    
 }

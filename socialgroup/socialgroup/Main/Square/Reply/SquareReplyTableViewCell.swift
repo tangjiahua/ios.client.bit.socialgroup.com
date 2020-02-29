@@ -1,29 +1,27 @@
 //
-//  SquareCommentTableViewCell.swift
+//  SquareReplyTableViewCell.swift
 //  socialgroup
 //
-//  Created by 汤佳桦 on 2020/2/27.
+//  Created by 汤佳桦 on 2020/2/29.
 //  Copyright © 2020 bitsocialgroup.com. All rights reserved.
 //
 
 import UIKit
 
-protocol SquareCommentTableViewCellDelegate:NSObjectProtocol {
-    func avatarTappedComment(item:SquareCommentItem)
-    func seeMoreReply(item:SquareCommentItem)
-    func replyToComment(item:SquareCommentItem)
+protocol SquareReplyTableViewCellDelegate:NSObjectProtocol {
+    func avatarTappedReply(item:SquareReplyItem)
+    func cellTappedReply(item: SquareReplyItem)
 }
 
-class SquareCommentTableViewCell: UITableViewCell {
+class SquareReplyTableViewCell: UITableViewCell {
     
-    var delegate:SquareCommentTableViewCellDelegate?
-    
+    var delegate:SquareReplyTableViewCellDelegate!
+
     //view
     var avatarImageView:UIImageView!
     var nicknameLabel:UILabel!
     var dateLabel:UILabel!
     var contentLabel:UILabel!
-    var replyLabel:UILabel!
     
     //CGFloat
     override var frame:CGRect{
@@ -47,9 +45,8 @@ class SquareCommentTableViewCell: UITableViewCell {
     let contentLabelFontSize:CGFloat = 16
     let ScreenWidth = UIDevice.SCREEN_WIDTH
     
-    var item:SquareCommentItem!
+    var item:SquareReplyItem!
     
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -61,18 +58,16 @@ class SquareCommentTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func initUI(item:SquareCommentItem){
+    func initUI(item:SquareReplyItem){
         self.item = item
-        
         self.backgroundColor = .tertiarySystemBackground
         self.layer.cornerRadius = 15
         self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMinXMinYCorner]
         self.layer.masksToBounds = true
         
-        
         // avatar
         avatarImageView = UIImageView(frame: CGRect(x: padding, y: padding, width: avatarImageViewHeight, height: avatarImageViewHeight))
-        let avatarUrlStr = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + UserDefaultsManager.getSocialGroupId() + "/profile/avatar/thumbnail/" + String(item.user_id) + "@" + String(item.user_avatar) + ".jpg"
+        let avatarUrlStr = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + UserDefaultsManager.getSocialGroupId() + "/profile/avatar/thumbnail/" + item.reply_from_user_id + "@" + item.avatar + ".jpg"
         avatarImageView.sd_setImage(with: URL(string: avatarUrlStr), placeholderImage: UIImage(named: "placeholder"), options: .refreshCached, context: nil, progress: nil, completed: nil)
         avatarImageView.layer.cornerRadius = avatarImageViewHeight/2
         avatarImageView.contentMode = .scaleAspectFill
@@ -83,16 +78,10 @@ class SquareCommentTableViewCell: UITableViewCell {
         avatarImageView.isUserInteractionEnabled = true
         avatarImageView.addGestureRecognizer(avatarTapGestureRecognizer)
         
-        
-        
-        
         // nickname
         nicknameLabel = UILabel(frame: CGRect(x: avatarImageView.frame.maxX + padding, y: padding, width: ScreenWidth - padding*2 - cellInitPadding - avatarImageViewHeight - padding, height: nicknameLabelHeight))
         nicknameLabel.font = .systemFont(ofSize: nicknameLabelHeight)
-        nicknameLabel.text = item.user_nickname
-//        let nicknameLabelTappedGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contentTapped))
-//        nicknameLabel.addGestureRecognizer(nicknameLabelTappedGestureRecognizer)
-        nicknameLabel.isUserInteractionEnabled = true
+        nicknameLabel.text = item.nickname
         self.addSubview(nicknameLabel)
         
         // date
@@ -101,49 +90,26 @@ class SquareCommentTableViewCell: UITableViewCell {
         dateLabel.textAlignment = .left
         dateLabel.textColor = .systemGray
         dateLabel.text = item.create_date
-        dateLabel.isUserInteractionEnabled = true
-//        let dateLabelTappedGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(contentTapped))
-//        dateLabel.addGestureRecognizer(dateLabelTappedGestureRecognizer)
         self.addSubview(dateLabel)
         
         // content
-        contentLabel = UILabel(frame: CGRect(x: padding, y: avatarImageView.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: item.content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2)))
+        contentLabel = UILabel(frame: CGRect(x: padding, y: avatarImageView.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: "回复  " + item.reply_to_user_nickname + ":  " + item.content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2)))
         contentLabel.font = .systemFont(ofSize: contentLabelFontSize)
         contentLabel.numberOfLines = 0
-        contentLabel.text = item.content
-        contentLabel.isUserInteractionEnabled = true
-        
+        contentLabel.text = "回复  " + item.reply_to_user_nickname + ":  " + item.content
         self.addSubview(contentLabel)
         
-        //more reply button
-        if(!item.reply_count.equals(str: "0")){
-            replyLabel = UILabel(frame: CGRect(x: padding, y: contentLabel.frame.maxY + padding, width: ScreenWidth - padding*2 - cellInitPadding, height: contentLabelFontSize))
-            replyLabel.text = "查看" + item.reply_count + "条回复"
-            replyLabel.textColor = .systemBlue
-            replyLabel.textAlignment = .left
-            replyLabel.isUserInteractionEnabled = true
-            let seeReplyGestureRecognizer = UITapGestureRecognizer(target: self
-                , action: #selector(seeReply))
-            replyLabel.addGestureRecognizer(seeReplyGestureRecognizer)
-            self.addSubview(replyLabel)
-        }
-        
-        
-        let cellTappedGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
+        let cellTappedGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cellTappedReply))
         self.addGestureRecognizer(cellTappedGestureRecognizer)
         
     }
     
     @objc func avatarTapped(){
-        self.delegate?.avatarTappedComment(item: item)
+        self.delegate?.avatarTappedReply(item: item)
     }
     
-    @objc func seeReply(){
-        self.delegate?.seeMoreReply(item: item)
-    }
-    
-    @objc func cellTapped(){
-        self.delegate?.replyToComment(item:item)
+    @objc func cellTappedReply(){
+        self.delegate.cellTappedReply(item: item)
     }
 
 }

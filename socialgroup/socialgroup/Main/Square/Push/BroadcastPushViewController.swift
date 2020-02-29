@@ -167,7 +167,8 @@ class BroadcastPushViewController: BasePushViewController, UITableViewDelegate, 
             titleTextField.inputAccessoryView = finishToolBar
             
             cell.selectionStyle = .none
-            cell.backgroundColor = .secondarySystemBackground
+//            cell.backgroundColor = .secondarySystemBackground
+            cell.backgroundColor = .tertiarySystemBackground
             cell.addSubview(titleTextField)
             
             let separater = UIView(frame: CGRect(x: padding, y: rowHeight[0] - 1, width: ScreenWidth - padding*2, height: 1))
@@ -181,7 +182,8 @@ class BroadcastPushViewController: BasePushViewController, UITableViewDelegate, 
             let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
             contentTextView = UITextView(frame: CGRect(x: padding, y: padding, width: ScreenWidth - padding*2, height: contentTextViewHeight))
             contentTextView.font = .systemFont(ofSize: contentFontSize)
-            contentTextView.backgroundColor = .secondarySystemBackground
+//            contentTextView.backgroundColor = .secondarySystemBackground
+            contentTextView.backgroundColor = .tertiarySystemBackground
             contentTextView.delegate = self
             contentTextView.text = textContent
             contentTextView.returnKeyType = .default
@@ -195,7 +197,8 @@ class BroadcastPushViewController: BasePushViewController, UITableViewDelegate, 
             contentTextView.addSubview(contentTextViewPlaceHolder)
             
             cell.selectionStyle = .none
-            cell.backgroundColor = .secondarySystemBackground
+//            cell.backgroundColor = .secondarySystemBackground
+            cell.backgroundColor = .tertiarySystemBackground
             cell.addSubview(contentTextView)
             
             contentTextViewCountLabel = UILabel(frame: CGRect(x: ScreenWidth - padding - contentTextViewCountLabelWidth, y: contentTextView.frame.maxY + 5, width: contentTextViewCountLabelWidth, height: contentTextViewCountLabelHeight))

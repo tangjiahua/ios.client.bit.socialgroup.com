@@ -21,7 +21,8 @@ class NetworkManager{
     static let SQUARE_PUSH_API:String = "https://www.bitsocialgroup.com/api/square/push"
     static let SQUARE_FETCH_DETAIL_API:String = "https://www.bitsocialgroup.com/api/square/fetch_detail"
     static let SQUARE_COMMENT_API:String = "https://www.bitsocialgroup.com/api/square/comment"
-    
+    static let SQUARE_FETCH_DETAIL_REPLY:String = "https://www.bitsocialgroup.com/api/square/fetch_detail_reply"
+    static let SQUARE_REPLY_API:String = "https://www.bitsocialgroup.com/api/square/reply"
     
     
     static let manager:NetworkReachabilityManager! = NetworkReachabilityManager(host: "https://www.bitsocialgroup.com")

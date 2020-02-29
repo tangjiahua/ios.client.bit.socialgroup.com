@@ -77,6 +77,10 @@
 		E98CE4F623F520A900BAF41F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F523F520A900BAF41F /* BaseViewController.swift */; };
 		E98CE4F823F5218A00BAF41F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F723F5218A00BAF41F /* NetworkManager.swift */; };
 		E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */; };
+		E9F9C8B4240A799C00F9CA52 /* SquareReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F9C8B3240A799C00F9CA52 /* SquareReplyViewController.swift */; };
+		E9F9C8B6240A79A500F9CA52 /* SquareReplyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F9C8B5240A79A500F9CA52 /* SquareReplyItem.swift */; };
+		E9F9C8B8240A7A5700F9CA52 /* SquareReplyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F9C8B7240A7A5700F9CA52 /* SquareReplyManager.swift */; };
+		E9F9C8BA240A80BA00F9CA52 /* SquareReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F9C8B9240A80BA00F9CA52 /* SquareReplyTableViewCell.swift */; };
 		E9FFD9C62406D53E0009BCD7 /* SquareCommentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FFD9C52406D53E0009BCD7 /* SquareCommentManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -149,6 +153,10 @@
 		E98CE4F523F520A900BAF41F /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		E98CE4F723F5218A00BAF41F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSocialGroupViewController.swift; sourceTree = "<group>"; };
+		E9F9C8B3240A799C00F9CA52 /* SquareReplyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareReplyViewController.swift; sourceTree = "<group>"; };
+		E9F9C8B5240A79A500F9CA52 /* SquareReplyItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareReplyItem.swift; sourceTree = "<group>"; };
+		E9F9C8B7240A7A5700F9CA52 /* SquareReplyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareReplyManager.swift; sourceTree = "<group>"; };
+		E9F9C8B9240A80BA00F9CA52 /* SquareReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareReplyTableViewCell.swift; sourceTree = "<group>"; };
 		E9FFD9C52406D53E0009BCD7 /* SquareCommentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCommentManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -197,6 +205,10 @@
 		E944DC97240562F200ED770A /* Reply */ = {
 			isa = PBXGroup;
 			children = (
+				E9F9C8B3240A799C00F9CA52 /* SquareReplyViewController.swift */,
+				E9F9C8B9240A80BA00F9CA52 /* SquareReplyTableViewCell.swift */,
+				E9F9C8B7240A7A5700F9CA52 /* SquareReplyManager.swift */,
+				E9F9C8B5240A79A500F9CA52 /* SquareReplyItem.swift */,
 			);
 			path = Reply;
 			sourceTree = "<group>";
@@ -576,6 +588,7 @@
 				E92F7BB22407807500212167 /* SquareCommentItem.swift in Sources */,
 				E98264BF23F66D41009CE123 /* ProfileModel.swift in Sources */,
 				E98264D123F979FC009CE123 /* UserListViewController.swift in Sources */,
+				E9F9C8B8240A7A5700F9CA52 /* SquareReplyManager.swift in Sources */,
 				E98264CC23F6D89D009CE123 /* MyProfileViewController.swift in Sources */,
 				E98264CF23F96D14009CE123 /* SettingViewController.swift in Sources */,
 				E97E892A24000CC000E32811 /* BroadcastViewController.swift in Sources */,
@@ -589,12 +602,15 @@
 				E98264E123FA846F009CE123 /* EditTextDetailViewController.swift in Sources */,
 				E98CE4DB23F177B600BAF41F /* UIDevice.swift in Sources */,
 				E98264EB23FBBE69009CE123 /* HGImagePickerCell.swift in Sources */,
+				E9F9C8B4240A799C00F9CA52 /* SquareReplyViewController.swift in Sources */,
+				E9F9C8BA240A80BA00F9CA52 /* SquareReplyTableViewCell.swift in Sources */,
 				E942E627240A4D2D004035D6 /* SquareJudgeItem.swift in Sources */,
 				E98264EA23FBBE69009CE123 /* HGImageCollectionViewController.swift in Sources */,
 				E98264D423F97A44009CE123 /* UserListManager.swift in Sources */,
 				E944DC9C2405634B00ED770A /* BroadcastPushViewController.swift in Sources */,
 				E97E893624005C1300E32811 /* CircleItem.swift in Sources */,
 				E98CE4B523F14CC600BAF41F /* SceneDelegate.swift in Sources */,
+				E9F9C8B6240A79A500F9CA52 /* SquareReplyItem.swift in Sources */,
 				E928C72623FE65A4004D75E0 /* ImageBrowserSubView.swift in Sources */,
 				E97E892624000BFC00E32811 /* BaseSquareScrollViewController.swift in Sources */,
 				E97E893824010D4500E32811 /* CircleManager.swift in Sources */,

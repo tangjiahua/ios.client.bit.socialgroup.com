@@ -11,7 +11,8 @@ import Alamofire
 //
 protocol WriteViewControllerDelegate: NSObjectProtocol {
     func pushComment(content:String)
-    func pushReply()
+    func pushReplyToComment(content:String, item:SquareCommentItem)
+    func pushReplyToReply(content:String, item:SquareReplyItem)
 }
 
 class WriteViewController: BaseViewController, UITextViewDelegate {
@@ -22,14 +23,12 @@ class WriteViewController: BaseViewController, UITextViewDelegate {
     var rightButton:UIBarButtonItem!
     
     var limit:Int!
+    var writeType:String!
     
-    var writeType:String! // comment or reply
     
-    //comment
-    var square_item_id:String!
-    var square_item_type:String!
-    var content:String!
-    
+    //when reply
+    var squareCommentItem:SquareCommentItem!
+    var squareReplyItem:SquareReplyItem!
     
 
     override func viewDidLoad() {
@@ -43,32 +42,74 @@ class WriteViewController: BaseViewController, UITextViewDelegate {
         navigationItem.leftBarButtonItem = leftButton
     }
     
-    func initTextView(limit:Int, writeType:String, square_item_type:String, square_item_id:String){
-        
-        self.writeType = writeType
+    deinit{
+        print("deinit")
+    }
+    
+    func initCommentTextView(limit:Int){
+        self.writeType = "comment"
         self.limit = limit
-        self.square_item_id = square_item_id
-        self.square_item_type = square_item_type
         
-        
-        navigationItem.title = "撰写"
         textView = UITextView(frame: CGRect(x: 0, y: 0, width: UIDevice.SCREEN_WIDTH, height: 300), textContainer: .none)
         textView.backgroundColor = .tertiarySystemBackground
         textView.becomeFirstResponder()
         textView.font = .systemFont(ofSize: 18)
         view.addSubview(textView)
         
-        if(writeType.equals(str: "comment")){
-            rightButton = UIBarButtonItem(title: "评论", style: .done, target: self, action: #selector(pushTextViewButtonTapped))
-        }else if(writeType.equals(str: "reply")){
-            rightButton = UIBarButtonItem(title: "回复", style: .done, target: self, action: #selector(pushTextViewButtonTapped))
-        }
+        rightButton = UIBarButtonItem(title: "评论", style: .done, target: self, action: #selector(pushTextViewButtonTapped))
+        self.title = "撰写评论"
+
         rightButton.isEnabled = false
         rightButton.tintColor = .systemGray
         navigationItem.rightBarButtonItem = rightButton
         
         textView.delegate = self
     }
+    
+    func initReplyToCommentTextView(limit:Int, squareCommentItem:SquareCommentItem){
+        self.squareCommentItem = squareCommentItem
+        self.writeType = "reply_to_comment"
+        self.limit = limit
+                
+        textView = UITextView(frame: CGRect(x: 0, y: 0, width: UIDevice.SCREEN_WIDTH, height: 300), textContainer: .none)
+        textView.backgroundColor = .tertiarySystemBackground
+        textView.becomeFirstResponder()
+        textView.font = .systemFont(ofSize: 18)
+        view.addSubview(textView)
+        
+        self.title = "回复  " + self.squareCommentItem.user_nickname
+        rightButton = UIBarButtonItem(title: "回复", style: .done, target: self, action: #selector(pushTextViewButtonTapped))
+        
+        rightButton.isEnabled = false
+        rightButton.tintColor = .systemGray
+        navigationItem.rightBarButtonItem = rightButton
+        
+        textView.delegate = self
+    }
+    
+    func initReplyToReplyTextView(limit:Int, squareReplyItem:SquareReplyItem){
+        self.squareReplyItem = squareReplyItem
+        
+        self.writeType = "reply_to_reply"
+        self.limit = limit
+                
+        textView = UITextView(frame: CGRect(x: 0, y: 0, width: UIDevice.SCREEN_WIDTH, height: 300), textContainer: .none)
+        textView.backgroundColor = .tertiarySystemBackground
+        textView.becomeFirstResponder()
+        textView.font = .systemFont(ofSize: 18)
+        view.addSubview(textView)
+        
+        self.title = "回复  " + squareReplyItem.nickname
+        rightButton = UIBarButtonItem(title: "回复", style: .done, target: self, action: #selector(pushTextViewButtonTapped))
+        
+        rightButton.isEnabled = false
+        rightButton.tintColor = .systemGray
+        navigationItem.rightBarButtonItem = rightButton
+        
+        textView.delegate = self
+    }
+    
+    
     
     //MARK:- tableview
 
@@ -96,8 +137,10 @@ class WriteViewController: BaseViewController, UITextViewDelegate {
         self.dismiss(animated: true, completion: nil)
         if(writeType.equals(str: "comment")){
             self.delegate?.pushComment(content: textView.text!)
-        }else if(writeType.equals(str: "reply")){
-            self.delegate?.pushReply()
+        }else if(writeType.equals(str: "reply_to_comment")){
+            self.delegate?.pushReplyToComment(content: textView.text!, item: squareCommentItem)
+        }else if(writeType.equals(str: "reply_to_reply")){
+            self.delegate?.pushReplyToReply(content: textView.text!, item: squareReplyItem)
         }
         
     }

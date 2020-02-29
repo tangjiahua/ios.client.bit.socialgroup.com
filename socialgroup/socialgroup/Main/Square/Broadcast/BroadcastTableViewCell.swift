@@ -14,6 +14,7 @@ protocol BroadcastTableViewCellDelegate:NSObjectProtocol {
     func commentButtonTappedBroadcast(item:BroadcastItem)
     func dislikeButtonTappedBroadcast(item:BroadcastItem)
     func moreButtonTappedBroadcast(item:BroadcastItem)
+    
 }
 
 class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -29,12 +30,12 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
     var singleImageView:UIImageView!
     var interactionView:UIView!
     var likeButton:UIButton!
-    var likeCountLabel:UILabel!
+    var likeCountLabel:InteractionLabel!
     var commentButton:UIButton!
-    var commentCountLabel:UILabel!
+    var commentCountLabel:InteractionLabel!
     var dislikeButton:UIButton!
-    var dislikeCountLabel:UILabel!
-    var moreButton:UIButton!
+    var dislikeCountLabel:InteractionLabel!
+    var moreButton:InteractionButton!
     
     
     override var frame:CGRect{
@@ -178,6 +179,8 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
             
             self.addSubview(collectionView)
             
+            //
+            
             
         }
         
@@ -215,10 +218,11 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
     
         
-            likeCountLabel = UILabel(frame: CGRect(x: likeButton.frame.maxX + padding, y: 0, width: interactionItemWidth - interactionButtonHeight - padding, height: interactionCountLabelHeight))
+            likeCountLabel = InteractionLabel(frame: CGRect(x: likeButton.frame.maxX, y: 0, width: interactionItemWidth - interactionButtonHeight, height: interactionCountLabelHeight))
             if(item.like_count != 0){
                 likeCountLabel.text = String(item.like_count)
             }
+        
             likeCountLabel.font = .systemFont(ofSize: interactionCountLabelFontSize, weight: .light)
             likeCountLabel.textColor = .systemGray
             likeCountLabel.isUserInteractionEnabled = true
@@ -237,7 +241,7 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         commentButton.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
         
         
-            commentCountLabel = UILabel(frame: CGRect(x: commentButton.frame.maxX + padding, y: 0, width: interactionItemWidth - interactionButtonHeight - padding, height: interactionCountLabelHeight))
+            commentCountLabel = InteractionLabel(frame: CGRect(x: commentButton.frame.maxX, y: 0, width: interactionItemWidth - interactionButtonHeight, height: interactionCountLabelHeight))
             if(item.comment_count != 0){
                 commentCountLabel.text = String(item.comment_count)
             }
@@ -266,7 +270,7 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         dislikeButton.addTarget(self, action: #selector(dislikeButtonTapped), for: .touchUpInside)
         
         
-            dislikeCountLabel = UILabel(frame: CGRect(x: dislikeButton.frame.maxX + padding, y: 0, width: interactionItemWidth - interactionButtonHeight - padding, height: interactionCountLabelHeight))
+            dislikeCountLabel = InteractionLabel(frame: CGRect(x: dislikeButton.frame.maxX, y: 0, width: interactionItemWidth - interactionButtonHeight, height: interactionCountLabelHeight))
             if(item.dislike_count != 0){
                 dislikeCountLabel.text = String(item.dislike_count)
             }
@@ -280,9 +284,10 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
         
         
         // more
-        moreButton = UIButton(frame: CGRect(x: interactionItemWidth*3, y: 0, width: interactionButtonHeight, height: interactionButtonHeight))
+        moreButton = InteractionButton(frame: CGRect(x: interactionItemWidth*3, y: 0, width: interactionItemWidth, height: interactionButtonHeight))
         moreButton.setImage(UIImage(named: "square-more"), for: .normal)
         moreButton.imageView?.contentMode = .scaleAspectFill
+        moreButton.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: interactionItemWidth - interactionButtonHeight)
         interactionView.addSubview(moreButton)
         
         moreButton.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
@@ -291,6 +296,7 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
             view.alpha = 0.7
         }
     }
+    
 
 }
 
@@ -363,4 +369,23 @@ extension BroadcastTableViewCell{
     @objc func moreButtonTapped(){
         delegate?.moreButtonTappedBroadcast(item: item)
     }
+    
+    
+}
+
+class InteractionLabel:UILabel{
+    override func drawText(in rect: CGRect) {
+        let padding:CGFloat = 10
+        let newRec = CGRect(x: rect.minX + padding, y: rect.minY, width: rect.width - padding, height: rect.height)
+        super.drawText(in: newRec)
+    }
+}
+
+class InteractionButton:UIButton{
+    
+//    override func draw(_ rect: CGRect) {
+//        let interactionCountLabelHeight:CGFloat = 25
+//        let newRec = CGRect(x: 0, y: 0, width: interactionCountLabelHeight, height: interactionCountLabelHeight)
+//        super.draw(newRec)
+//    }
 }

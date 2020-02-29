@@ -8,9 +8,7 @@
 
 import UIKit
 
-class SquareCommentViewController: BaseViewController, UINavigationControllerDelegate, BroadcastTableViewCellDelegate, UITableViewDelegate, UITableViewDataSource, SquareCommentManagerDelegate, SquareCommentTableViewCellDelegate, SquareJudgeTableViewCellDelegate, WriteViewControllerDelegate {
-    
-    
+class SquareCommentViewController: BaseViewController, UINavigationControllerDelegate, BroadcastTableViewCellDelegate, UITableViewDelegate, UITableViewDataSource, SquareCommentManagerDelegate, SquareCommentTableViewCellDelegate, SquareJudgeTableViewCellDelegate, WriteViewControllerDelegate, SquareReplyManagerDelegate, BroadcastManagerDelegate {
     
     
     
@@ -155,6 +153,8 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
 
 extension SquareCommentViewController{
     
+    // MARK:- tableview delegate
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         // 原square item高度
@@ -183,7 +183,6 @@ extension SquareCommentViewController{
     }
     
     
-    // MARK:- tableview delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(interactionSegmentIndex == 0){
             return 2 + manager.squareLikeItems.count
@@ -227,6 +226,12 @@ extension SquareCommentViewController{
                         cell?.delegate = self
                         cell?.initUI(item: manager.squareCommentItems[indexPath.row-2])
                         cell?.selectionStyle = .none
+                    }else{
+                        for view in cell!.subviews{
+                            view.removeFromSuperview()
+                        }
+                        
+                        cell?.initUI(item: manager.squareCommentItems[indexPath.row-2])
                     }
                     return cell!
                 case 2:
@@ -262,6 +267,12 @@ extension SquareCommentViewController{
             cell?.delegate = self
             cell?.initUI(item: broadcastItem)
             cell?.selectionStyle = .none
+        }else{
+            for view in cell!.subviews{
+                view.removeFromSuperview()
+            }
+            
+            cell?.initUI(item: broadcastItem)
         }
         return cell!
     }
@@ -292,6 +303,13 @@ extension SquareCommentViewController{
         return cell!
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+    }
+    
+    
+    
     
     // MARK:- @objc functions
     @objc func segmentDidChange(_ sender: UISegmentedControl){
@@ -310,7 +328,7 @@ extension SquareCommentViewController{
     @objc func writeComment(){
         print("write comment")
         let writeCommentVC = WriteViewController()
-        writeCommentVC.initTextView(limit: 200, writeType: "comment", square_item_type: manager.square_item_type, square_item_id: manager.square_item_id)
+        writeCommentVC.initCommentTextView(limit: 200)
         writeCommentVC.delegate = self
         let nc = UINavigationController(rootViewController: writeCommentVC)
         self.present(nc, animated: true, completion: nil)
@@ -331,33 +349,98 @@ extension SquareCommentViewController{
     
     
     // MARK:- original broadcast cell delegate
+    // 点赞 评论 问号 更多四个图标的代理方法
     func likeButtonTappedBroadcast(item: BroadcastItem) {
-        
+        let broadcastManager = BroadcastManager()
+        broadcastManager.delegate = self
+        if(item.isLiked){
+            let alert = UIAlertController(title: "提示", message: "您已点赞过，是否取消点赞？", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "确定", style: .default, handler: {action in
+                broadcastManager.likeItem(item: item, isToCancel: true)
+                
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
+                
+            }
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            broadcastManager.likeItem(item: item, isToCancel: false)
+        }
     }
     
     func commentButtonTappedBroadcast(item: BroadcastItem) {
-        
+        writeComment()
     }
     
     func dislikeButtonTappedBroadcast(item: BroadcastItem) {
-        
+        let broadcastManager = BroadcastManager()
+        broadcastManager.delegate = self
+        if(item.isDisliked){
+            let alert = UIAlertController(title: "提示", message: "您已表示疑惑过，是否取消表示疑惑？", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "确定", style: .default, handler: {action in
+                broadcastManager.dislikeItem(item: item, isToCancel: true)
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
+                
+            }
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            broadcastManager.dislikeItem(item: item, isToCancel: false)
+        }
     }
     
     func moreButtonTappedBroadcast(item: BroadcastItem) {
-        
+        let broadcastManager = BroadcastManager()
+        broadcastManager.delegate = self
+        let pushTappedSheet = UIAlertController.init(title: "更多", message: nil, preferredStyle: .actionSheet)
+        self.present(pushTappedSheet, animated: true, completion: nil)
+        pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
+            broadcastManager.reportItem(item: item)
+        } ))
+        pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
     }
+    
     
     // MARK:- comment cell delegate
     func avatarTappedComment(item: SquareCommentItem) {
-        
+        print("avatar tapped")
+        let otherProfileVC = OtherProfileViewController()
+        otherProfileVC.profileModel = ProfileModel()
+        otherProfileVC.profileModel.otherProfileModelDelegate = otherProfileVC
+        otherProfileVC.profileModel.setBasicModel()
+        otherProfileVC.getProfile(user_id: Int(item.user_id)!)
+        otherProfileVC.modalPresentationStyle = .fullScreen
+        self.present(otherProfileVC, animated: true, completion: nil)
     }
     
     func seeMoreReply(item: SquareCommentItem) {
-        
+        print("see more reply tapped")
+        let replyVC = SquareReplyViewController()
+        replyVC.initData(commentItem: item)
+        self.navigationController?.pushViewController(replyVC, animated: true)
+    }
+    
+    func replyToComment(item:SquareCommentItem){
+        let writeReplyVC = WriteViewController()
+        writeReplyVC.initReplyToCommentTextView(limit: 200, squareCommentItem: item)
+        writeReplyVC.delegate = self
+        let nc = UINavigationController(rootViewController: writeReplyVC)
+        self.present(nc, animated: true, completion: nil)
     }
     
     // MARK: - judge cell delegate
     func SquareJudgeTableViewCellAvatarTapped(item: SquareJudgeItem) {
+        let otherProfileVC = OtherProfileViewController()
+        otherProfileVC.profileModel = ProfileModel()
+        otherProfileVC.profileModel.otherProfileModelDelegate = otherProfileVC
+        otherProfileVC.profileModel.setBasicModel()
+        otherProfileVC.getProfile(user_id: Int(item.user_id)!)
+        otherProfileVC.modalPresentationStyle = .fullScreen
+        self.present(otherProfileVC, animated: true, completion: nil)
         print("avatar tapped")
     }
     
@@ -370,6 +453,7 @@ extension SquareCommentViewController{
     
     func fetchSquareCommentItemsFail() {
         print("fetchFail")
+        self.showTempAlert(info: "fetch fail")
     }
     
     func fetchSquareLikeItemsSuccess() {
@@ -380,6 +464,7 @@ extension SquareCommentViewController{
     
     func fetchSquareLikeItemsFail() {
         print("fetch fail")
+        self.showTempAlert(info: "fetch fail")
     }
     
     func fetchSquareDislikeItemsSuccess() {
@@ -390,15 +475,39 @@ extension SquareCommentViewController{
     
     func fetchSquareDislikeItemsFail() {
         print("fetch fail")
+        self.showTempAlert(info: "fetch fail")
     }
     
     func pushCommentSuccess() {
-//        manager.fetchSquareCommentItems()
+        manager.fetchSquareCommentItems()
         self.showTempAlert(info: "评论成功")
     }
     
     func pushCommentFail() {
         self.showTempAlert(info: "评论失败")
+    }
+    
+    //MARK:- Square reply manager delegate
+    func fetchSquareReplySuccess() {
+        print("fetch reply success in squareCommentViewCOntroller")
+        // no need
+    }
+    
+    func fetchSquareReplyFail() {
+        print("fetch push reply fail in squareCommentViewcontroller")
+        self.showTempAlert(info: "fetch fail")
+        // no need
+    }
+    
+    func pushReplySuccess() {
+        manager.fetchSquareCommentItems()
+        self.showTempAlert(info: "回复成功")
+        
+    }
+    
+    func pushReplyFail() {
+        self.showTempAlert(info: "回复失败")
+        
     }
     
     
@@ -407,8 +516,67 @@ extension SquareCommentViewController{
         manager.pushComment(content: content)
     }
     
-    func pushReply() {
+    func pushReplyToComment(content: String, item: SquareCommentItem) {
+        let replyManager = SquareReplyManager()
+        replyManager.initSquareReplyManger(squareCommentItem: item)
+        replyManager.pushReplyToComment(content: content)
+        replyManager.delegate = self
         print("push reply in SquareCommentViewController")
+    }
+    
+    func pushReplyToReply(content: String, item: SquareReplyItem) {
+        print("push reply to reply in SquareCommentViewController")
+        // no need
+    }
+    
+    
+    // MARK:- BroadcastManager delegate
+    func BroadcastFetchSuccess(result: String, info: String) {
+        // no need
+    }
+    
+    func BroadcastFetchFail(result: String, info: String) {
+        // no need
+    }
+    
+    func likeItemSuccess(item:BroadcastItem, isToCancel: Bool) {
+        print("likeItem succuess")
+        if(isToCancel){
+            broadcastItem.isLiked = false
+            broadcastItem.like_count -= 1
+        }else{
+            broadcastItem.isLiked = true
+            broadcastItem.like_count += 1
+        }
+        tableView.reloadData()
+    }
+    
+    func likeItemFail(result: String, info: String, isToCancel: Bool) {
+        print("likeItem FAil maybe istocancel??")
+    }
+    
+    func dislikeItemFail(result: String, info: String, isToCancel: Bool) {
+        print("dislikeItem FAil maybe istocancel??")
+    }
+    
+    func dislikeItemSuccess(item:BroadcastItem, isToCancel: Bool) {
+        print("dislikeItem succuess")
+        if(isToCancel){
+            broadcastItem.isDisliked = false
+            broadcastItem.dislike_count -= 1
+        }else{
+            broadcastItem.isDisliked = true
+            broadcastItem.dislike_count += 1
+        }
+        tableView.reloadData()
+    }
+    
+    func reportItemSuccess(item: BroadcastItem) {
+        self.showTempAlert(info: "举报成功")
+    }
+    
+    func reportItemFail(result: String, info: String) {
+        self.showTempAlertWithOneSecond(info: "举报失败，可能因为您已经举报过了")
     }
     
 }

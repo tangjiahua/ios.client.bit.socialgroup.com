@@ -152,7 +152,7 @@ class SquareCommentManager{
                                 let content = item["content"].string!
                                 let create_date = item["create_date"].string!
                                 let reply_count = item["reply_count"].string!
-                                let squareItem = SquareCommentItem(square_item_type: self.square_item_type, comment_id: comment_id, user_id: user_id, user_nickname: user_nickname, user_avatar: user_avatar, content: content, create_date: create_date, reply_count: reply_count)
+                                let squareItem = SquareCommentItem(square_item_id:self.square_item_id, square_item_type: self.square_item_type, comment_id: comment_id, user_id: user_id, user_nickname: user_nickname, user_avatar: user_avatar, content: content, create_date: create_date, reply_count: reply_count)
                                 self.squareCommentItems.append(squareItem)
                             }
                             self.delegate?.fetchSquareCommentItemsSuccess()
@@ -196,6 +196,8 @@ class SquareCommentManager{
             }
         }
     }
+    
+    
     
 
 }
