@@ -217,7 +217,7 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
         backgroundView.setNeedsDisplay()
         
         stickCountLabel.text = profileModel.stickCount
-        
+        stickCountLabel.setNeedsDisplay()
         
         tableView?.reloadData()
         view.setNeedsDisplay()
