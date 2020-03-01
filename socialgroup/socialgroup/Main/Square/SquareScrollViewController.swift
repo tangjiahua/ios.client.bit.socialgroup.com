@@ -11,9 +11,6 @@ import UIKit
 class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewControllerDelegate, CircleViewControllerDelegate, BasePushViewControllerDelegate {
     
     
-    
-    
-    
     var broadcastVC: BroadcastViewController!
     var circleVC: CircleViewController!
     
@@ -40,14 +37,19 @@ class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewC
         self.addChild(self.broadcastVC)
         self.addChild(self.circleVC)
         
-        // 发布button
+        // right buttons
         initPushButton()
+        // left buttons
+        initSocialGroupView()
         
     }
     
     func initPushButton(){
         let pushButtom = UIBarButtonItem(image: UIImage(named: "push-black"), style: .plain, target: self, action: #selector(push))
         self.navigationItem.rightBarButtonItems = [pushButtom]
+    }
+    
+    func initSocialGroupView(){
     }
     
     @objc func push(){

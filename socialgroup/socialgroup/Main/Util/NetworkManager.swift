@@ -24,13 +24,13 @@ class NetworkManager{
     static let SQUARE_FETCH_DETAIL_REPLY:String = "https://www.bitsocialgroup.com/api/square/fetch_detail_reply"
     static let SQUARE_REPLY_API:String = "https://www.bitsocialgroup.com/api/square/reply"
     static let PROFILE_STICK_API:String = "https://www.bitsocialgroup.com/api/profile/stick"
-    
+    static let WALL_FETCH_API:String = "https://www.bitsocialgroup.com/api/wall/fetch"
     
     
     static let manager:NetworkReachabilityManager! = NetworkReachabilityManager(host: "https://www.bitsocialgroup.com")
     
     static let SERVER_RESOURCE_URL:String = "https://www.bitsocialgroup.com/resource/"
-    
+    static let SOCIALGROUP_AVATAR_RESOURCE:String = "https://www.bitsocialgroup.com/resource/socialgroup_system/avatar/"
     
     
     static func isNetworking() -> Bool{

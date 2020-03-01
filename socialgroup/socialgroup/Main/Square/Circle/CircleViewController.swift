@@ -17,18 +17,20 @@ class CircleViewController: BaseViewController, UITableViewDelegate, UITableView
     
     
     
-    
-    
-    var tableView:UITableView!
-    
+    // manager
     var manager:CircleManager!
+
+    // view
+    var tableView:UITableView!
     var refresher:UIRefreshControl!
+    
+    //delegate
     var delegate:CircleViewControllerDelegate?
+    
+    //ui
     let titleScrollHeight:CGFloat = 40.0
     let singleImageViewHeight:CGFloat = UIDevice.SCREEN_WIDTH*2/3
     var lastContentOffset:CGFloat = .zero
-    
-    // tableView height calculator
     let padding:CGFloat = 10
     let avatarImageViewHeight:CGFloat = 40
     let nicknameLabelHeight:CGFloat = 20
@@ -42,9 +44,7 @@ class CircleViewController: BaseViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        
+                
         // model
         manager = CircleManager()
         manager.delegate = self
@@ -120,6 +120,14 @@ extension CircleViewController{
         return calculateHeightForRow(row: indexPath.row)
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let commentVC = SquareCommentViewController()
+        commentVC.circleItem = manager.circleItems[indexPath.row]
+        commentVC.square_item_type = "circle"
+        commentVC.square_item_id = String(manager.circleItems[indexPath.row].circle_id)
+        commentVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(commentVC, animated: true)
+    }
     
     func calculateHeightForRow(row: Int) -> CGFloat{
         let cellWidth = CircleTableViewCell().bounds.width
@@ -178,18 +186,48 @@ extension CircleViewController{
     // MARK:- circle Manager delegate
     func CircleFetchSuccess(result: String, info: String) {
         tableView.refreshControl?.endRefreshing()
-        
         tableView.reloadData()
     }
     
     func CircleFetchFail(result: String, info: String) {
         print("no more")
     }
+    
+    // delegate
+    
+    func likeItemSuccess(item: CircleItem, isToCancel: Bool) {
+        print("likeItem succuess")
+        if(isToCancel){
+            item.isLiked = false
+            item.like_count -= 1
+        }else{
+            item.isLiked = true
+            item.like_count += 1
+        }
+        tableView.reloadData()
+    }
+    
+    func reportItemSuccess(item: CircleItem) {
+        self.showTempAlert(info: "举报成功")
+    }
+    
+    
+    
+    func likeItemFail(result: String, info: String, isToCancel: Bool) {
+        print("likeItem FAil maybe istocancel??")
+    }
+    
+    
+    func reportItemFail(result: String, info: String) {
+        self.showTempAlertWithOneSecond(info: "举报失败，可能因为您已经举报过了")
+    }
+    
+    
 }
 
 
 extension CircleViewController{
-    // MARK:- circle tableviewCell delegate
+    // MARK:- circle tableview Cell delegate
     func avatarTappedCircle(item: CircleItem) {
         let otherProfileVC = OtherProfileViewController()
         otherProfileVC.profileModel = ProfileModel()
@@ -199,4 +237,50 @@ extension CircleViewController{
         otherProfileVC.modalPresentationStyle = .fullScreen
         self.present(otherProfileVC, animated: true, completion: nil)
     }
+    
+    func likeButtonTappedCircle(item: CircleItem) {
+        if(item.isLiked){
+            let alert = UIAlertController(title: "提示", message: "您已点赞过，是否取消点赞？", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "确定", style: .default, handler: {action in
+                self.manager.likeItem(item: item, isToCancel: true)
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
+                
+            }
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            self.manager.likeItem(item: item, isToCancel: false)
+        }
+    }
+    
+    func commentButtonTappedCircle(item: CircleItem) {
+        print("commentr")
+        let commentVC = SquareCommentViewController()
+        commentVC.circleItem = item
+        commentVC.square_item_type = "circle"
+        commentVC.square_item_id = String(item.circle_id)
+        commentVC.hidesBottomBarWhenPushed = true
+        
+        self.navigationController?.pushViewController(commentVC, animated: true)
+        
+        if(item.comment_count == 0){
+            commentVC.writeComment()
+        }
+    }
+    
+    
+    
+    func moreButtonTappedCircle(item: CircleItem) {
+        let pushTappedSheet = UIAlertController.init(title: "更多", message: nil, preferredStyle: .actionSheet)
+        self.present(pushTappedSheet, animated: true, completion: nil)
+        pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
+            self.manager.reportItem(item: item)
+        } ))
+        pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
+    }
+    
+    
+    
 }

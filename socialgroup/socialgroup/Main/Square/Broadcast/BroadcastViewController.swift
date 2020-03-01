@@ -15,26 +15,20 @@ protocol BroadcastViewControllerDelegate:NSObjectProtocol {
 
 class BroadcastViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, BroadcastManagerDelegate, BroadcastTableViewCellDelegate{
     
-    
-    
-    
-    
-    
+    //manager
     var manager:BroadcastManager!
     
+    //view
     var tableView:UITableView!
     var refresher:UIRefreshControl!
     
+    //delegate
     var delegate:BroadcastViewControllerDelegate?
     
-    
+    //ui
     let titleScrollHeight:CGFloat = 40.0
     let singleImageViewHeight:CGFloat = UIDevice.SCREEN_WIDTH*2/3
-    
     var lastContentOffset:CGFloat = .zero
-    
-    
-    // tableView height calculator
     let cellInitPadding:CGFloat = 10
     let padding:CGFloat = 10
     let titleLabelHeight:CGFloat = 20
@@ -110,7 +104,6 @@ extension BroadcastViewController{
             cell?.initUI(item: manager.broadcastItems[indexPath.row])
             cell?.selectionStyle = .none
             // calculate height for row
-//            heightForRows.append(calculateHeightForRow(row: indexPath.row))
         }else{
             for view in cell!.subviews{
                 view.removeFromSuperview()

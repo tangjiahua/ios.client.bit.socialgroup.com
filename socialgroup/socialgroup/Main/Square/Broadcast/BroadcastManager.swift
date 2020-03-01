@@ -193,10 +193,10 @@ class BroadcastManager {
         }
     }
     
-    // comment
-    func commentItem(item:BroadcastItem){
-        
-    }
+//    // comment
+//    func commentItem(item:BroadcastItem){
+//
+//    }
     
     // dislike
     func dislikeItem(item:BroadcastItem, isToCancel:Bool){

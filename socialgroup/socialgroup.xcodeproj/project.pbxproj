@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		E90DA882240AF0E60070B462 /* OtherProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA881240AF0E60070B462 /* OtherProfileManager.swift */; };
+		E90DA885240BA6FD0070B462 /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA884240BA6FD0070B462 /* PosterCell.swift */; };
+		E90DA887240BA70C0070B462 /* WallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA886240BA70C0070B462 /* WallManager.swift */; };
+		E90DA88A240BA7350070B462 /* PosterPushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA889240BA7350070B462 /* PosterPushViewController.swift */; };
+		E90DA88C240BA7740070B462 /* WallModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA88B240BA7740070B462 /* WallModels.swift */; };
+		E90DA892240BD46F0070B462 /* PosterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA891240BD46F0070B462 /* PosterDetailViewController.swift */; };
 		E928C71E23FE60F3004D75E0 /* ImageBrowserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C71D23FE60F3004D75E0 /* ImageBrowserManager.swift */; };
 		E928C72223FE64F5004D75E0 /* ImageBrowserMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72123FE64F5004D75E0 /* ImageBrowserMainView.swift */; };
 		E928C72623FE65A4004D75E0 /* ImageBrowserSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72523FE65A4004D75E0 /* ImageBrowserSubView.swift */; };
@@ -87,6 +92,11 @@
 
 /* Begin PBXFileReference section */
 		E90DA881240AF0E60070B462 /* OtherProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileManager.swift; sourceTree = "<group>"; };
+		E90DA884240BA6FD0070B462 /* PosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
+		E90DA886240BA70C0070B462 /* WallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallManager.swift; sourceTree = "<group>"; };
+		E90DA889240BA7350070B462 /* PosterPushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterPushViewController.swift; sourceTree = "<group>"; };
+		E90DA88B240BA7740070B462 /* WallModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallModels.swift; sourceTree = "<group>"; };
+		E90DA891240BD46F0070B462 /* PosterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterDetailViewController.swift; sourceTree = "<group>"; };
 		E928C71B23FE5F3F004D75E0 /* BridgeHeaderFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeaderFile.h; sourceTree = "<group>"; };
 		E928C71D23FE60F3004D75E0 /* ImageBrowserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserManager.swift; sourceTree = "<group>"; };
 		E928C72123FE64F5004D75E0 /* ImageBrowserMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserMainView.swift; sourceTree = "<group>"; };
@@ -178,6 +188,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E90DA883240BA6D00070B462 /* Poster */ = {
+			isa = PBXGroup;
+			children = (
+				E90DA884240BA6FD0070B462 /* PosterCell.swift */,
+				E90DA891240BD46F0070B462 /* PosterDetailViewController.swift */,
+			);
+			path = Poster;
+			sourceTree = "<group>";
+		};
+		E90DA888240BA7180070B462 /* Push */ = {
+			isa = PBXGroup;
+			children = (
+				E90DA889240BA7350070B462 /* PosterPushViewController.swift */,
+			);
+			path = Push;
+			sourceTree = "<group>";
+		};
 		E928C71C23FE607F004D75E0 /* ImageBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,6 +468,10 @@
 			isa = PBXGroup;
 			children = (
 				E98CE4D223F1508800BAF41F /* WallViewController.swift */,
+				E90DA886240BA70C0070B462 /* WallManager.swift */,
+				E90DA88B240BA7740070B462 /* WallModels.swift */,
+				E90DA888240BA7180070B462 /* Push */,
+				E90DA883240BA6D00070B462 /* Poster */,
 			);
 			path = Wall;
 			sourceTree = "<group>";
@@ -552,6 +583,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E97E893424005BC300E32811 /* BroadcastItem.swift in Sources */,
+				E90DA88C240BA7740070B462 /* WallModels.swift in Sources */,
 				E944DC95240550ED00ED770A /* SquareCommentViewController.swift in Sources */,
 				E98264D623FA16BF009CE123 /* EditProfileViewController.swift in Sources */,
 				E97E893F24024A4E00E32811 /* OtherProfileViewController.swift in Sources */,
@@ -559,6 +591,7 @@
 				E97E892C24000CC800E32811 /* CircleViewController.swift in Sources */,
 				E98CE4F623F520A900BAF41F /* BaseViewController.swift in Sources */,
 				E944DC9A2405630A00ED770A /* BasePushViewController.swift in Sources */,
+				E90DA885240BA6FD0070B462 /* PosterCell.swift in Sources */,
 				E98CE4EF23F2BC7000BAF41F /* Util.swift in Sources */,
 				E98CE4B323F14CC600BAF41F /* AppDelegate.swift in Sources */,
 				E98CE4EB23F2AB3A00BAF41F /* RegisterViewController.swift in Sources */,
@@ -575,12 +608,14 @@
 				E97E893224005BAF00E32811 /* BroadcastManager.swift in Sources */,
 				E98264ED23FBBE69009CE123 /* HGImageCollectionViewCell.swift in Sources */,
 				E98CE4D923F1567E00BAF41F /* LoginViewController.swift in Sources */,
+				E90DA88A240BA7350070B462 /* PosterPushViewController.swift in Sources */,
 				E98264D823FA1706009CE123 /* AboutViewController.swift in Sources */,
 				E98264F023FBBE69009CE123 /* HGImagePickerController.swift in Sources */,
 				E90DA882240AF0E60070B462 /* OtherProfileManager.swift in Sources */,
 				E928C72823FE6638004D75E0 /* ImageBroserModel.swift in Sources */,
 				E928C72A23FE84F2004D75E0 /* ImageBrowserTranslation.swift in Sources */,
 				E98264DB23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift in Sources */,
+				E90DA892240BD46F0070B462 /* PosterDetailViewController.swift in Sources */,
 				E98CE4D723F1509D00BAF41F /* BaseProfileViewController.swift in Sources */,
 				E969D04023F57CC500CEEDC8 /* ChooseSocialGroupModel.swift in Sources */,
 				E98CE4F123F319E400BAF41F /* RegisterAndLoginModel.swift in Sources */,
@@ -609,6 +644,7 @@
 				E9F9C8B4240A799C00F9CA52 /* SquareReplyViewController.swift in Sources */,
 				E9F9C8BA240A80BA00F9CA52 /* SquareReplyTableViewCell.swift in Sources */,
 				E942E627240A4D2D004035D6 /* SquareJudgeItem.swift in Sources */,
+				E90DA887240BA70C0070B462 /* WallManager.swift in Sources */,
 				E98264EA23FBBE69009CE123 /* HGImageCollectionViewController.swift in Sources */,
 				E98264D423F97A44009CE123 /* UserListManager.swift in Sources */,
 				E944DC9C2405634B00ED770A /* BroadcastPushViewController.swift in Sources */,

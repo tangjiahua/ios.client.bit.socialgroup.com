@@ -10,6 +10,9 @@ import UIKit
 
 protocol CircleTableViewCellDelegate:NSObjectProtocol {
     func avatarTappedCircle(item: CircleItem)
+    func likeButtonTappedCircle(item:CircleItem)
+    func commentButtonTappedCircle(item:CircleItem)
+    func moreButtonTappedCircle(item:CircleItem)
 }
 
 class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -208,44 +211,63 @@ class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         let interactionItemWidth = interactionView.frame.width / 3
         
         // like
-        likeButton = UIButton(frame: CGRect(x: 0, y: 0, width: interactionButtonHeight, height: interactionButtonHeight))
-        if(item.isLiked){
-            likeButton.setImage(UIImage(named: "square-like-fill"), for: .normal)
-        }else{
-            likeButton.setImage(UIImage(named: "square-like"), for: .normal)
-        }
-        likeButton.imageView?.contentMode = .scaleAspectFill
-        interactionView.addSubview(likeButton)
-        
-        if(item.like_count != 0){
-            likeCountLabel = UILabel(frame: CGRect(x: likeButton.frame.maxX + padding, y: 0, width: interactionItemWidth - interactionButtonHeight - padding, height: interactionCountLabelHeight))
-            likeCountLabel.text = String(item.like_count)
-            likeCountLabel.font = .systemFont(ofSize: interactionCountLabelFontSize, weight: .light)
-            likeCountLabel.textColor = .systemGray
+            likeButton = UIButton(frame: CGRect(x: 0, y: 0, width: interactionButtonHeight, height: interactionButtonHeight))
+            if(item.isLiked){
+                likeButton.setImage(UIImage(named: "square-like-fill"), for: .normal)
+            }else{
+                likeButton.setImage(UIImage(named: "square-like"), for: .normal)
+            }
+            likeButton.imageView?.contentMode = .scaleAspectFill
+            interactionView.addSubview(likeButton)
             
-            interactionView.addSubview(likeCountLabel)
-        }
+            likeButton.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         
-        // comment
-        commentButton = UIButton(frame: CGRect(x: interactionItemWidth, y: 0, width: interactionButtonHeight, height: interactionButtonHeight))
-        commentButton.setImage(UIImage(named: "square-comment"), for: .normal)
-        commentButton.imageView?.contentMode = .scaleAspectFill
-        interactionView.addSubview(commentButton)
-        if(item.comment_count != 0){
-            commentCountLabel = UILabel(frame: CGRect(x: commentButton.frame.maxX + padding, y: 0, width: interactionItemWidth - interactionButtonHeight - padding, height: interactionCountLabelHeight))
-            commentCountLabel.text = String(item.comment_count)
-            commentCountLabel.font = .systemFont(ofSize: interactionCountLabelFontSize, weight: .light)
-            commentCountLabel.textColor = .systemGray
             
-            interactionView.addSubview(commentCountLabel)
-        }
+                likeCountLabel = InteractionLabel(frame: CGRect(x: likeButton.frame.maxX, y: 0, width: interactionItemWidth - interactionButtonHeight, height: interactionCountLabelHeight))
+                if(item.like_count != 0){
+                    likeCountLabel.text = String(item.like_count)
+                }
+            
+                likeCountLabel.font = .systemFont(ofSize: interactionCountLabelFontSize, weight: .light)
+                likeCountLabel.textColor = .systemGray
+                likeCountLabel.isUserInteractionEnabled = true
+                let likeTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(likeButtonTapped))
+                likeCountLabel.addGestureRecognizer(likeTapGestureRecognizer)
+
+                interactionView.addSubview(likeCountLabel)
+            
+            
+            // comment
+            commentButton = UIButton(frame: CGRect(x: interactionItemWidth, y: 0, width: interactionButtonHeight, height: interactionButtonHeight))
+            commentButton.setImage(UIImage(named: "square-comment"), for: .normal)
+            commentButton.imageView?.contentMode = .scaleAspectFill
+            interactionView.addSubview(commentButton)
+            
+            commentButton.addTarget(self, action: #selector(commentButtonTapped), for: .touchUpInside)
+            
+            
+                commentCountLabel = InteractionLabel(frame: CGRect(x: commentButton.frame.maxX, y: 0, width: interactionItemWidth - interactionButtonHeight, height: interactionCountLabelHeight))
+                if(item.comment_count != 0){
+                    commentCountLabel.text = String(item.comment_count)
+                }
+                
+                commentCountLabel.font = .systemFont(ofSize: interactionCountLabelFontSize, weight: .light)
+                commentCountLabel.textColor = .systemGray
+                commentCountLabel.isUserInteractionEnabled = true
+                let commentTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(commentButtonTapped))
+                commentCountLabel.addGestureRecognizer(commentTapGestureRecognizer)
+
+                interactionView.addSubview(commentCountLabel)
         
         
-        // more
-        moreButton = UIButton(frame: CGRect(x: interactionItemWidth*2, y: 0, width: interactionButtonHeight, height: interactionButtonHeight))
-        moreButton.setImage(UIImage(named: "square-more"), for: .normal)
-        moreButton.imageView?.contentMode = .scaleAspectFill
-        interactionView.addSubview(moreButton)
+         // more
+               moreButton = InteractionButton(frame: CGRect(x: interactionItemWidth*2, y: 0, width: interactionItemWidth, height: interactionButtonHeight))
+               moreButton.setImage(UIImage(named: "square-more"), for: .normal)
+               moreButton.imageView?.contentMode = .scaleAspectFill
+               moreButton.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: interactionItemWidth - interactionButtonHeight)
+               interactionView.addSubview(moreButton)
+               
+               moreButton.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         
         for view in interactionView.subviews{
             view.alpha = 0.7
@@ -311,4 +333,21 @@ extension CircleTableViewCell{
     }
     
     
+    // MARK:- Interaction Buttons Actions
+    @objc func likeButtonTapped(){
+        
+        delegate?.likeButtonTappedCircle(item: item)
+    }
+    
+    @objc func commentButtonTapped(){
+        delegate?.commentButtonTappedCircle(item: item)
+    }
+    
+    
+    @objc func moreButtonTapped(){
+        delegate?.moreButtonTappedCircle(item: item)
+    }
+    
+    
 }
+

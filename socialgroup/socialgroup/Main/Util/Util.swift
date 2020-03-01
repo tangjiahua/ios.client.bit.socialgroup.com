@@ -76,3 +76,19 @@ extension UITabBarController{
       }
 }
 
+extension UIView{
+    var snapshot: UIImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
+        defer { UIGraphicsEndImageContext() }
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+    
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
+        }
+    }
+}
+

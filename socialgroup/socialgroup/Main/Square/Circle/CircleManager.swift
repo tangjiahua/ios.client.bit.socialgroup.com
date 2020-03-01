@@ -13,6 +13,13 @@ import SwiftyJSON
 protocol CircleManagerDelegate:NSObjectProtocol {
     func CircleFetchSuccess(result:String, info:String)
     func CircleFetchFail(result:String, info:String)
+    
+    func likeItemSuccess(item:CircleItem, isToCancel:Bool)
+    func likeItemFail(result:String, info: String, isToCancel:Bool)
+    
+    
+    func reportItemSuccess(item:CircleItem)
+    func reportItemFail(result:String, info: String)
 }
 
 class CircleManager{
@@ -127,4 +134,74 @@ class CircleManager{
             self.isRequesting = false
         }
     }
+    
+    // MARK:- 互动操作 点赞 评论 疑惑 更多（举报）
+    
+    // like
+    func likeItem(item: CircleItem, isToCancel:Bool){
+        if(isToCancel){
+            let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "square_item_type":"circle", "square_item_id":String(item.circle_id), "judge_type":"1", "is_to_cancel":"1", "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+            Alamofire.request(NetworkManager.SQUARE_JUDGE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                switch response.result{
+                case .success:
+                    if let data = response.result.value{
+                        let json = JSON(data)
+                        if(json["result"].string!.equals(str: "1")){
+                            self.delegate?.likeItemSuccess(item: item, isToCancel: isToCancel)
+                        }else{
+                            self.delegate?.likeItemFail(result: "0", info: json["info"].string!, isToCancel: isToCancel)
+                        }
+                    }
+                case .failure:
+                    self.delegate?.likeItemFail(result: "0", info: "response fail", isToCancel: isToCancel)
+                }
+            }
+        }else{
+            let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "square_item_type":"circle", "square_item_id":String(item.circle_id), "judge_type":"1", "is_to_cancel":"0", "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+            Alamofire.request(NetworkManager.SQUARE_JUDGE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                switch response.result{
+                case .success:
+                    if let data = response.result.value{
+                        let json = JSON(data)
+                        if(json["result"].string!.equals(str: "1")){
+                            self.delegate?.likeItemSuccess(item: item, isToCancel: isToCancel)
+                        }else{
+                            self.delegate?.likeItemFail(result: "0", info: json["info"].string!, isToCancel: isToCancel)
+                        }
+                    }
+                case .failure:
+                    self.delegate?.likeItemFail(result: "0", info: "response fail", isToCancel: isToCancel)
+                }
+            }
+        }
+    }
+    
+    
+    
+    
+    //report
+    func reportItem(item: CircleItem){
+        
+        let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "square_item_type":"circle", "square_item_id":String(item.circle_id), "judge_type":"3", "is_to_cancel":"0", "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        Alamofire.request(NetworkManager.SQUARE_JUDGE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                if let data = response.result.value{
+                    let json = JSON(data)
+                    if(json["result"].string!.equals(str: "1")){
+                        self.delegate?.reportItemSuccess(item: item)
+                    }else{
+                        self.delegate?.reportItemFail(result: "0", info: json["info"].string!)
+                    }
+                }
+            case .failure:
+                self.delegate?.reportItemFail(result: "0", info: "response fail")
+            }
+        }
+        
+    }
+    
+    
+    
+    
 }

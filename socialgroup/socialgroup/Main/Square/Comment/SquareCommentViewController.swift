@@ -8,9 +8,7 @@
 
 import UIKit
 
-class SquareCommentViewController: BaseViewController, UINavigationControllerDelegate, BroadcastTableViewCellDelegate, UITableViewDelegate, UITableViewDataSource, SquareCommentManagerDelegate, SquareCommentTableViewCellDelegate, SquareJudgeTableViewCellDelegate, WriteViewControllerDelegate, SquareReplyManagerDelegate, BroadcastManagerDelegate {
-    
-    
+class SquareCommentViewController: BaseViewController, UINavigationControllerDelegate,  UITableViewDelegate, UITableViewDataSource, BroadcastTableViewCellDelegate,BroadcastManagerDelegate,CircleTableViewCellDelegate, CircleManagerDelegate, SquareCommentManagerDelegate, SquareCommentTableViewCellDelegate, SquareJudgeTableViewCellDelegate,SquareReplyManagerDelegate,  WriteViewControllerDelegate  {
     
     
     
@@ -139,6 +137,33 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
         
     }
     
+    private func calculateHeightForOriginalCircle() -> CGFloat{
+        let cellWidth = ScreenWidth
+        var height = padding + avatarImageViewHeight + padding + UIDevice.getLabHeigh(labelStr: circleItem.content, font: .systemFont(ofSize: contentLabelFontSize), width: cellWidth - padding*2) + padding
+        
+        let pic_count = circleItem.picture_count!
+
+        if(pic_count == 0){
+
+        }else if(pic_count == 1){
+            height += (padding + singleImageViewHeight)
+        }else if(pic_count <= 3){
+            height += (padding + collectionViewItemHeight + padding/2)
+        }else if(pic_count <= 6){
+            height += (padding*2 + collectionViewItemHeight*2)
+        }else{
+            height += (padding*3 + collectionViewItemHeight*3)
+        }
+
+        let interactionHeight:CGFloat = 50
+        // interaction static
+        height += padding + interactionHeight
+        
+        return height
+        
+    }
+    
+    
     private func calculateCommentCellHeight(itemIndex: Int) -> CGFloat{
         var height = padding + avatarImageViewHeight + padding + UIDevice.getLabHeigh(labelStr: manager.squareCommentItems[itemIndex].content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2) + padding*2
         if(!manager.squareCommentItems[itemIndex].reply_count.equals(str: "0")){
@@ -162,7 +187,7 @@ extension SquareCommentViewController{
             if(square_item_type.equals(str: "broadcast")){
                 return calculateHeightForOriginalBroadcast()
             }else{
-                
+                return calculateHeightForOriginalCircle()
             }
         }
     
@@ -197,64 +222,117 @@ extension SquareCommentViewController{
         
         // MARK:- broadcast
         if(square_item_type.equals(str: "broadcast")){
-            // broadcast类型
-            if(indexPath.row == 0){
-                // 原item
-                return initOriginalBroadcastItem()
-            }else if(indexPath.row == 1){
-                // interaction Segment
-                return initInteractionSegment()
-            }else{
-                switch interactionSegmentIndex {
-                case 0:
-                    // 点赞过的人
-                    let identifier = "broadcastLike" + manager.squareLikeItems[indexPath.row-2].judge_id
-                    var cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? SquareJudgeTableViewCell
-                    if(cell == nil){
-                        cell = SquareJudgeTableViewCell(style: .default, reuseIdentifier: identifier)
-                        cell?.delegate = self
-                        cell?.initUI(item: manager.squareLikeItems[indexPath.row-2])
-                        cell?.selectionStyle = .none
-                    }
-                    return cell!
-                case 1:
-                    // 评论区
-                    let identifier = "broadcastComment" + manager.squareCommentItems[indexPath.row-2].comment_id
-                    var cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? SquareCommentTableViewCell
-                    if(cell == nil){
-                        cell = SquareCommentTableViewCell(style: .default, reuseIdentifier: identifier)
-                        cell?.delegate = self
-                        cell?.initUI(item: manager.squareCommentItems[indexPath.row-2])
-                        cell?.selectionStyle = .none
-                    }else{
-                        for view in cell!.subviews{
-                            view.removeFromSuperview()
-                        }
-                        
-                        cell?.initUI(item: manager.squareCommentItems[indexPath.row-2])
-                    }
-                    return cell!
-                case 2:
-                    // dislike过的人
-                    let identifier = "broadcastDislike" + manager.squareDislikeItems[indexPath.row-2].judge_id
-                    var cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? SquareJudgeTableViewCell
-                    if(cell == nil){
-                        cell = SquareJudgeTableViewCell(style: .default, reuseIdentifier: identifier)
-                        cell?.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 200)
-                        cell?.delegate = self
-                        cell?.initUI(item: manager.squareDislikeItems[indexPath.row-2])
-                        cell?.selectionStyle = .none
-                    }
-                    return cell!
-                default:
-                    break
-                }
-            }
-            
+            return initBroadcastTableView(indexPath: indexPath)
+        }else{
+            return initCircleTableView(indexPath: indexPath)
         }
         
+    }
+    
+    
+    private func initBroadcastTableView(indexPath:IndexPath) -> UITableViewCell{
+        // broadcast类型
+        if(indexPath.row == 0){
+            // 原item
+            return initOriginalBroadcastItem()
+        }else if(indexPath.row == 1){
+            // interaction Segment
+            return initInteractionSegment()
+        }else{
+            switch interactionSegmentIndex {
+            case 0:
+                // 点赞过的人
+                let identifier = "broadcastLike" + manager.squareLikeItems[indexPath.row-2].judge_id
+                var cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? SquareJudgeTableViewCell
+                if(cell == nil){
+                    cell = SquareJudgeTableViewCell(style: .default, reuseIdentifier: identifier)
+                    cell?.delegate = self
+                    cell?.initUI(item: manager.squareLikeItems[indexPath.row-2])
+                    cell?.selectionStyle = .none
+                }
+                return cell!
+            case 1:
+                // 评论区
+                let identifier = "broadcastComment" + manager.squareCommentItems[indexPath.row-2].comment_id
+                var cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? SquareCommentTableViewCell
+                if(cell == nil){
+                    cell = SquareCommentTableViewCell(style: .default, reuseIdentifier: identifier)
+                    cell?.delegate = self
+                    cell?.initUI(item: manager.squareCommentItems[indexPath.row-2])
+                    cell?.selectionStyle = .none
+                }else{
+                    for view in cell!.subviews{
+                        view.removeFromSuperview()
+                    }
+                    
+                    cell?.initUI(item: manager.squareCommentItems[indexPath.row-2])
+                }
+                return cell!
+            case 2:
+                // dislike过的人
+                let identifier = "broadcastDislike" + manager.squareDislikeItems[indexPath.row-2].judge_id
+                var cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? SquareJudgeTableViewCell
+                if(cell == nil){
+                    cell = SquareJudgeTableViewCell(style: .default, reuseIdentifier: identifier)
+                    cell?.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 200)
+                    cell?.delegate = self
+                    cell?.initUI(item: manager.squareDislikeItems[indexPath.row-2])
+                    cell?.selectionStyle = .none
+                }
+                return cell!
+            default:
+                break
+            }
+        }
         return UITableViewCell()
     }
+    
+    private func initCircleTableView(indexPath:IndexPath) -> UITableViewCell{
+        // broadcast类型
+        if(indexPath.row == 0){
+            // 原item
+            return initOriginalCircleItem()
+        }else if(indexPath.row == 1){
+            // interaction Segment
+            return initInteractionSegment()
+        }else{
+            switch interactionSegmentIndex {
+            case 0:
+                // 点赞过的人
+                let identifier = "circleLike" + manager.squareLikeItems[indexPath.row-2].judge_id
+                var cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? SquareJudgeTableViewCell
+                if(cell == nil){
+                    cell = SquareJudgeTableViewCell(style: .default, reuseIdentifier: identifier)
+                    cell?.delegate = self
+                    cell?.initUI(item: manager.squareLikeItems[indexPath.row-2])
+                    cell?.selectionStyle = .none
+                }
+                return cell!
+            case 1:
+                // 评论区
+                let identifier = "circleComment" + manager.squareCommentItems[indexPath.row-2].comment_id
+                var cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? SquareCommentTableViewCell
+                if(cell == nil){
+                    cell = SquareCommentTableViewCell(style: .default, reuseIdentifier: identifier)
+                    cell?.delegate = self
+                    cell?.initUI(item: manager.squareCommentItems[indexPath.row-2])
+                    cell?.selectionStyle = .none
+                }else{
+                    for view in cell!.subviews{
+                        view.removeFromSuperview()
+                    }
+                    
+                    cell?.initUI(item: manager.squareCommentItems[indexPath.row-2])
+                }
+                return cell!
+            default:
+                break
+            }
+        }
+        return UITableViewCell()
+
+    }
+    
     
     // 原broadcastitem
     private func initOriginalBroadcastItem() -> UITableViewCell{
@@ -277,6 +355,27 @@ extension SquareCommentViewController{
         return cell!
     }
     
+    // 原circleitem
+    private func initOriginalCircleItem() -> UITableViewCell{
+        let identifier = "circle" + String(circleItem.circle_id)
+        var cell = tableView.dequeueReusableCell(withIdentifier: identifier) as? CircleTableViewCell
+        
+        if(cell == nil){
+            cell = CircleTableViewCell(style: .default, reuseIdentifier: identifier)
+            cell?.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 200)
+            cell?.delegate = self
+            cell?.initUI(item: circleItem)
+            cell?.selectionStyle = .none
+        }else{
+            for view in cell!.subviews{
+                view.removeFromSuperview()
+            }
+            
+            cell?.initUI(item: circleItem)
+        }
+        return cell!
+    }
+    
     //InteractionSegment
     private func initInteractionSegment() ->UITableViewCell{
         let identifier = "segment" + square_item_type
@@ -295,18 +394,24 @@ extension SquareCommentViewController{
                 self.segment?.selectedSegmentIndex = 1
                 self.segment?.addTarget(self, action: #selector(segmentDidChange(_:)), for: .valueChanged)
                 cell?.addSubview(segment)
+            }else if(square_item_type.equals(str: "circle")){
+                cell = UITableViewCell(style: .default, reuseIdentifier: identifier)
+                cell?.frame = CGRect(x: 0, y: 0, width: interactionSegmentItemWidth * 3, height: interactionSegmentHeight)
+                cell?.selectionStyle = .none
+                cell?.backgroundColor = .clear
+                let tags = ["点赞","评论"]
+                segment = UISegmentedControl(items: tags)
+                segment.frame = CGRect(x: padding, y: padding/2, width: interactionSegmentItemWidth, height: interactionSegmentHeight)
+                self.segment?.selectedSegmentIndex = 1
+                self.segment?.addTarget(self, action: #selector(segmentDidChange(_:)), for: .valueChanged)
+                cell?.addSubview(segment)
+            }else{
+                print("no such interaction segment")
             }
-            return cell!
-            
-            
         }
         return cell!
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
-    }
     
     
     
@@ -530,6 +635,15 @@ extension SquareCommentViewController{
     }
     
     
+    
+    
+}
+
+
+
+
+
+extension SquareCommentViewController{
     // MARK:- BroadcastManager delegate
     func BroadcastFetchSuccess(result: String, info: String) {
         // no need
@@ -579,4 +693,71 @@ extension SquareCommentViewController{
         self.showTempAlertWithOneSecond(info: "举报失败，可能因为您已经举报过了")
     }
     
+    
+    
+    
+    // MARK:- circle delegate
+    
+    func avatarTappedCircle(item: CircleItem) {
+        self.showOtherProfile(userId: item.user_id)
+    }
+    
+    func likeButtonTappedCircle(item: CircleItem) {
+        let circleManager = CircleManager()
+        circleManager.delegate = self
+        if(item.isLiked){
+            let alert = UIAlertController(title: "提示", message: "您已点赞过，是否取消点赞？", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "确定", style: .default, handler: {action in
+                circleManager.likeItem(item: item, isToCancel: true)
+                
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
+                
+            }
+            alert.addAction(okAction)
+            alert.addAction(cancelAction)
+            self.present(alert, animated: true, completion: nil)
+        }else{
+            circleManager.likeItem(item: item, isToCancel: false)
+        }
+    }
+    
+    func commentButtonTappedCircle(item: CircleItem) {
+        writeComment()
+    }
+    
+    func moreButtonTappedCircle(item: CircleItem) {
+        let circleManager = CircleManager()
+        circleManager.delegate = self
+        let pushTappedSheet = UIAlertController.init(title: "更多", message: nil, preferredStyle: .actionSheet)
+        self.present(pushTappedSheet, animated: true, completion: nil)
+        pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
+            circleManager.reportItem(item: item)
+        } ))
+        pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
+    }
+    
+    func CircleFetchSuccess(result: String, info: String) {
+        // no need
+    }
+    
+    func CircleFetchFail(result: String, info: String) {
+        // no need
+    }
+    
+    func likeItemSuccess(item: CircleItem, isToCancel: Bool) {
+        print("likeItem succuess")
+        if(isToCancel){
+            item.isLiked = false
+            item.like_count -= 1
+        }else{
+            item.isLiked = true
+            item.like_count += 1
+        }
+        tableView.reloadData()
+    }
+    
+    func reportItemSuccess(item: CircleItem) {
+        self.showTempAlert(info: "举报成功")
+    }
 }
