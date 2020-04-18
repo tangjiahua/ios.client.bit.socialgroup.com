@@ -79,13 +79,13 @@ class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewC
     
     
     // MARK:- BroadcastVC delegate
-    func hideTitleScrollView() {
+    override func hideTitleScrollView() {
         UIView.animate(withDuration: 0.2) {
             super.titleScrollView?.alpha = 0
         }
     }
     
-    func showTitleScrollView() {
+    override func showTitleScrollView() {
         UIView.animate(withDuration: 0.2) {
             super.titleScrollView?.alpha = 1
         }

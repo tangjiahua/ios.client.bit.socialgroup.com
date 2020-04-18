@@ -130,7 +130,7 @@ extension BroadcastViewController{
     }
     
     func calculateHeightForRow(row: Int) -> CGFloat{
-        let cellWidth = ScreenWidth
+        let cellWidth = ScreenWidth - 10
         var height = padding + titleLabelHeight + padding + dateLabelHeight + padding + UIDevice.getLabHeigh(labelStr: manager.broadcastItems[row].content, font: .systemFont(ofSize: contentLabelFontSize), width: cellWidth - padding*2) + padding
         
         let pic_count = manager.broadcastItems[row].picture_count!
@@ -161,18 +161,22 @@ extension BroadcastViewController{
         if(scrollView.contentOffset.y <= -TitleHeight){
             self.delegate?.showTitleScrollView()
             return
-        }
-        
-        if (self.lastContentOffset < scrollView.contentOffset.y) {
-            // 向上滚动
+        }else{
             self.delegate?.hideTitleScrollView()
         }
+        
+//        if (self.lastContentOffset < scrollView.contentOffset.y || (self.lastContentOffset > scrollView.contentOffset.y && scrollView.contentOffset.y > -TitleHeight)) {
+//            // 向上滚动
+//            self.delegate?.hideTitleScrollView()
+//        }
+        
+        
         self.lastContentOffset = scrollView.contentOffset.y;
         
     }
     
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        self.delegate?.showTitleScrollView()
+//        self.delegate?.showTitleScrollView()
         return true
     }
     

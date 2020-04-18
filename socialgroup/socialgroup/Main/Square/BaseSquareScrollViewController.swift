@@ -180,6 +180,8 @@ class BaseSquareScrollViewController: UIViewController, UIScrollViewDelegate {
         selectButton = sender
     }
     func dealBtnClickAction(sender:UIButton) -> Void {
+        
+        
         let index = sender.tag - ButtonStartTag
         selectTitleButton(sender: sender)
         setupOneChildViewController(index: index)
@@ -192,6 +194,7 @@ class BaseSquareScrollViewController: UIViewController, UIScrollViewDelegate {
         }
         for i in 0..<titleSButtons.count{
             if !(i==index){
+                showTitleScrollView()
                 let noSelectBtn:UIButton = titleSButtons[i] as! UIButton
                 noSelectBtn.setTitleColor(UIColor.secondaryLabel, for: .normal)
             
@@ -256,6 +259,14 @@ class BaseSquareScrollViewController: UIViewController, UIScrollViewDelegate {
         let index:Int = Int(scrollView.contentOffset.x/ScreenWidth)
         let button:UIButton = titleSButtons[index] as! UIButton
         dealBtnClickAction(sender: button)
+        
+    }
+    
+    func showTitleScrollView(){
+        
+    }
+    
+    func hideTitleScrollView(){
         
     }
     

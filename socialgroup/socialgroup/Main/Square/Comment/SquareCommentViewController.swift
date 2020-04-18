@@ -112,7 +112,7 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
     
     // MARK:- calculate Height
     private func calculateHeightForOriginalBroadcast() -> CGFloat{
-        let cellWidth = ScreenWidth
+        let cellWidth = ScreenWidth - 10
         var height = padding + titleLabelHeight + padding + dateLabelHeight + padding + UIDevice.getLabHeigh(labelStr: broadcastItem.content, font: .systemFont(ofSize: contentLabelFontSize), width: cellWidth - padding*2) + padding
         
         let pic_count = broadcastItem.picture_count!

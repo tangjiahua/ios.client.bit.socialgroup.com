@@ -51,4 +51,8 @@ class UserDefaultsManager{
         return userDefaults.string(forKey: "nickname") ?? "暂未填写"
     }
     
+    static public func getRole() -> String{
+        return userDefaults.string(forKey: "role") ?? "0"
+    }
+    
 }

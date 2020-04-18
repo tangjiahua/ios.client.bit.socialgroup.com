@@ -160,18 +160,20 @@ extension CircleViewController{
         if(scrollView.contentOffset.y <= -TitleHeight){
             self.delegate?.showTitleScrollView()
             return
-        }
-        
-        if (self.lastContentOffset < scrollView.contentOffset.y) {
-            // 向上滚动
+        }else{
             self.delegate?.hideTitleScrollView()
         }
+        
+//        if (self.lastContentOffset < scrollView.contentOffset.y) {
+//            // 向上滚动
+//            self.delegate?.hideTitleScrollView()
+//        }
         self.lastContentOffset = scrollView.contentOffset.y;
         
     }
     
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
-        self.delegate?.showTitleScrollView()
+//        self.delegate?.showTitleScrollView()
         return true
     }
     
