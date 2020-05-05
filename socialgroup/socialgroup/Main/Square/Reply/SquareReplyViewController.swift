@@ -42,6 +42,9 @@ class SquareReplyViewController: BaseViewController, UITableViewDelegate, UITabl
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //view
+        view.backgroundColor = .secondarySystemBackground
+        
         self.title = "回复"
         // Do any additional setup after loading the view.
         
@@ -61,8 +64,7 @@ class SquareReplyViewController: BaseViewController, UITableViewDelegate, UITabl
         manager.delegate = self
         manager.initSquareReplyManger(squareCommentItem: commentItem)
         
-        //view
-        view.backgroundColor = .secondarySystemBackground
+        
         
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight), style: .plain)
         tableView.delegate = self

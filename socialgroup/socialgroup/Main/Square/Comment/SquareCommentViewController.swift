@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SquareCommentViewController: BaseViewController, UINavigationControllerDelegate,  UITableViewDelegate, UITableViewDataSource, BroadcastTableViewCellDelegate,BroadcastManagerDelegate,CircleTableViewCellDelegate, CircleManagerDelegate, SquareCommentManagerDelegate, SquareCommentTableViewCellDelegate, SquareJudgeTableViewCellDelegate,SquareReplyManagerDelegate,  WriteViewControllerDelegate  {
+class SquareCommentViewController: BaseViewController, UINavigationControllerDelegate,  UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate,BroadcastTableViewCellDelegate,BroadcastManagerDelegate,CircleTableViewCellDelegate, CircleManagerDelegate, SquareCommentManagerDelegate, SquareCommentTableViewCellDelegate, SquareJudgeTableViewCellDelegate,SquareReplyManagerDelegate,  WriteViewControllerDelegate  {
     
     
     
@@ -53,9 +53,26 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
+//        navigationController?.navigationBar.barTintColor = .secondarySystemBackground
         self.title = "详情"
         
         initUI()
+        
+        // pop Gesture
+        let popGesture = self.navigationController!.interactivePopGestureRecognizer
+        let popTarget = popGesture?.delegate
+        let popView = popGesture!.view!
+        popGesture?.isEnabled = false
+        
+        let popSelector = NSSelectorFromString("handleNavigationTransition:")
+        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+        fullScreenPoGesture.delegate = self
+        
+        popView.addGestureRecognizer(fullScreenPoGesture)
+    }
+    
+    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+       return true
     }
     
 
@@ -67,7 +84,7 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
         manager.initSquareCommentManager(square_item_type: square_item_type, square_item_id: square_item_id)
 
         // view
-        view.backgroundColor = .secondarySystemBackground
+        
 
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIDevice.SCREEN_WIDTH, height: UIDevice.SCREEN_HEIGHT), style: .plain)
         tableView.contentInset = .init(top: 0, left: 0, bottom: toolBarHeight + padding/2, right: 0)
@@ -91,6 +108,7 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
         commentButton.addTarget(self, action: #selector(writeComment), for: .touchUpInside)
         
         commentToolbar = UIToolbar(frame: CGRect(x: 0, y: UIDevice.SCREEN_HEIGHT - toolBarHeight - UIDevice.HEIGHT_OF_ADDITIONAL_FOOTER, width: UIDevice.SCREEN_WIDTH, height: toolBarHeight))
+        commentToolbar.barTintColor = .secondarySystemBackground
         commentToolbar.addSubview(commentButton)
         view.addSubview(commentToolbar)
         

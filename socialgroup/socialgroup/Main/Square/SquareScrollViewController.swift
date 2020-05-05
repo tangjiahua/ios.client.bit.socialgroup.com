@@ -19,7 +19,7 @@ class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewC
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
-        
+        navigationController?.navigationBar.barTintColor = .secondarySystemBackground
         
         self.title = "广场"
         

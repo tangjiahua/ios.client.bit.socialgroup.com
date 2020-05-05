@@ -47,10 +47,18 @@ class PosterDetailViewController: BaseViewController, UITableViewDelegate, UITab
     
 
     override func viewDidLoad() {
+        
+        
         super.viewDidLoad()
         initUI()
         
+        
+        
+        
     }
+    
+    
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -253,6 +261,7 @@ extension PosterDetailViewController{
         linkLabel.textColor = .systemBlue
         linkLabel.font = .systemFont(ofSize: infoLabelFontSize)
         linkLabel.textAlignment = .right
+        linkLabel.isUserInteractionEnabled = true
         let linkLabelTappedGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(linkLabelTapped))
         linkLabel.addGestureRecognizer(linkLabelTappedGestureRecognizer)
         
@@ -277,7 +286,8 @@ extension PosterDetailViewController{
             print("手势开始---")
             let currentPoint = sender.location(in: tableView)
             startPointX = currentPoint.x
-            isHorizontal = (startPointX > CGFloat(50)) ? false : true
+//            isHorizontal = (startPointX > CGFloat(200)) ? false : true
+            isHorizontal = true
             break
         case .changed:
             print("拖动中----")
