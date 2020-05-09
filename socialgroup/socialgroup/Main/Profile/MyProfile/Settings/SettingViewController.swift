@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
     
     
     var tableView:UITableView!
@@ -32,8 +32,24 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
         
         
         view.addSubview(tableView)
+        
+        // pop Gesture
+        let popGesture = self.navigationController!.interactivePopGestureRecognizer
+        let popTarget = popGesture?.delegate
+        let popView = popGesture!.view!
+        popGesture?.isEnabled = false
+        
+        let popSelector = NSSelectorFromString("handleNavigationTransition:")
+        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+        fullScreenPoGesture.delegate = self
+        
+        popView.addGestureRecognizer(fullScreenPoGesture)
 
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+       return true
     }
     
     

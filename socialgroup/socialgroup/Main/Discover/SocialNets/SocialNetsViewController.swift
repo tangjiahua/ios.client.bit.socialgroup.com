@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 
-class UserListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UserListManagerDelegate {
+class SocialNetsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UserListManagerDelegate {
     
     
     
@@ -29,7 +29,7 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navigationItem.title = "谁戳过我"
+        self.navigationItem.title = "社交网络"
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         tableView = UITableView(frame: view.bounds)
@@ -43,7 +43,7 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
         
         userListManager = UserListManager()
         userListManager.delegate = self
-        userListManager.fetchStickToMeList()
+        userListManager.fetchSocialNetsList()
     }
     
     
@@ -108,13 +108,13 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
     
     func fetchStickToMeListSuccess(count:Int) {
         if(count == 0){
-            self.showTempAlert(info: "😢还没有人戳过你")
+            self.showTempAlert(info: "😢本社群的社交网络竟然还没有构建起来")
         }
         tableView.reloadData()
     }
     
     func fetchStickToMeListFail(info: String) {
-        self.showTempAlert(info: "拉取“谁戳了我”失败")
+        self.showTempAlert(info: "拉取社交网络失败！怎么可能！")
         self.navigationController?.popViewController(animated: true)
     }
 

@@ -9,9 +9,9 @@
 import UIKit
 import SDWebImage
 
-class UserListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UserListManagerDelegate {
+class FindUserViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UserListManagerDelegate {
     
-    
+    var findByRealName:String!
     
     var userListManager:UserListManager!
     var tableView:UITableView!
@@ -29,7 +29,7 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navigationItem.title = "谁戳过我"
+        self.navigationItem.title = "寻人启事"
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         tableView = UITableView(frame: view.bounds)
@@ -43,7 +43,11 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
         
         userListManager = UserListManager()
         userListManager.delegate = self
-        userListManager.fetchStickToMeList()
+        userListManager.fetchFindUserListByRealName(realName: findByRealName)
+    }
+    
+    func setFindBy(realName:String){
+        findByRealName = realName
     }
     
     
@@ -108,13 +112,13 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
     
     func fetchStickToMeListSuccess(count:Int) {
         if(count == 0){
-            self.showTempAlert(info: "😢还没有人戳过你")
+            self.showTempAlert(info: "😢没有查到任何人")
         }
         tableView.reloadData()
     }
     
     func fetchStickToMeListFail(info: String) {
-        self.showTempAlert(info: "拉取“谁戳了我”失败")
+        self.showTempAlert(info: "拉取查找结果失败！怎么可能！")
         self.navigationController?.popViewController(animated: true)
     }
 
