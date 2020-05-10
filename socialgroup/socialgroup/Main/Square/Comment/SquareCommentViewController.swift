@@ -8,9 +8,14 @@
 
 import UIKit
 
+protocol SquareCommentViewControllerDelegate:NSObjectProtocol {
+    func popDeletedCircleItem(item:CircleItem)
+}
+
 class SquareCommentViewController: BaseViewController, UINavigationControllerDelegate,  UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate,BroadcastTableViewCellDelegate,BroadcastManagerDelegate,CircleTableViewCellDelegate, CircleManagerDelegate, SquareCommentManagerDelegate, SquareCommentTableViewCellDelegate, SquareJudgeTableViewCellDelegate,SquareReplyManagerDelegate,  WriteViewControllerDelegate  {
     
-    
+    //delegate
+    var delegate:SquareCommentViewControllerDelegate?
     
     var square_item_id:String!
     var broadcastItem:BroadcastItem!
@@ -753,6 +758,12 @@ extension SquareCommentViewController{
             circleManager.reportItem(item: item)
         } ))
         pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
+        if(item.user_id == Int(UserDefaultsManager.getUserId())){
+            // 说明是我自己发的内容
+            pushTappedSheet.addAction(.init(title: "删除我的动态", style: .default, handler:{(action: UIAlertAction) in
+                circleManager.deleteItem(item: item)
+            } ))
+        }
     }
     
     func CircleFetchSuccess(result: String, info: String) {
@@ -778,4 +789,15 @@ extension SquareCommentViewController{
     func reportItemSuccess(item: CircleItem) {
         self.showTempAlert(info: "举报成功")
     }
+    
+    func deleteItemSuccess(item: CircleItem) {
+        self.navigationController?.popViewController(animated: true)
+        self.delegate?.popDeletedCircleItem(item: item)
+        
+    }
+    
+    func deleteItemFail(result: String, info: String) {
+        self.showTempAlert(info: "删除失败，出bug了")
+    }
+    
 }

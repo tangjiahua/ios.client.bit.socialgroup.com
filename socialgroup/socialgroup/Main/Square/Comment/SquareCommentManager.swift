@@ -22,6 +22,9 @@ protocol SquareCommentManagerDelegate:NSObjectProtocol {
     
     func pushCommentSuccess()
     func pushCommentFail()
+    
+    
+    
 }
 
 class SquareCommentManager{
@@ -196,6 +199,8 @@ class SquareCommentManager{
             }
         }
     }
+    
+    
     
     
     

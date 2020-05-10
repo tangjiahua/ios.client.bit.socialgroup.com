@@ -14,7 +14,7 @@
 		E90DA885240BA6FD0070B462 /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA884240BA6FD0070B462 /* PosterCell.swift */; };
 		E90DA887240BA70C0070B462 /* WallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA886240BA70C0070B462 /* WallManager.swift */; };
 		E90DA88A240BA7350070B462 /* PosterPushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA889240BA7350070B462 /* PosterPushViewController.swift */; };
-		E90DA88C240BA7740070B462 /* WallModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA88B240BA7740070B462 /* WallModels.swift */; };
+		E90DA88C240BA7740070B462 /* PosterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA88B240BA7740070B462 /* PosterModel.swift */; };
 		E90DA892240BD46F0070B462 /* PosterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA891240BD46F0070B462 /* PosterDetailViewController.swift */; };
 		E928C71E23FE60F3004D75E0 /* ImageBrowserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C71D23FE60F3004D75E0 /* ImageBrowserManager.swift */; };
 		E928C72223FE64F5004D75E0 /* ImageBrowserMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72123FE64F5004D75E0 /* ImageBrowserMainView.swift */; };
@@ -86,6 +86,7 @@
 		E98CE4F623F520A900BAF41F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F523F520A900BAF41F /* BaseViewController.swift */; };
 		E98CE4F823F5218A00BAF41F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F723F5218A00BAF41F /* NetworkManager.swift */; };
 		E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */; };
+		E9ECF1862467D9A80048EBF3 /* NotificationPushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ECF1852467D9A80048EBF3 /* NotificationPushManager.swift */; };
 		E9F9C8B4240A799C00F9CA52 /* SquareReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F9C8B3240A799C00F9CA52 /* SquareReplyViewController.swift */; };
 		E9F9C8B6240A79A500F9CA52 /* SquareReplyItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F9C8B5240A79A500F9CA52 /* SquareReplyItem.swift */; };
 		E9F9C8B8240A7A5700F9CA52 /* SquareReplyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F9C8B7240A7A5700F9CA52 /* SquareReplyManager.swift */; };
@@ -101,7 +102,7 @@
 		E90DA884240BA6FD0070B462 /* PosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
 		E90DA886240BA70C0070B462 /* WallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallManager.swift; sourceTree = "<group>"; };
 		E90DA889240BA7350070B462 /* PosterPushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterPushViewController.swift; sourceTree = "<group>"; };
-		E90DA88B240BA7740070B462 /* WallModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallModels.swift; sourceTree = "<group>"; };
+		E90DA88B240BA7740070B462 /* PosterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterModel.swift; sourceTree = "<group>"; };
 		E90DA891240BD46F0070B462 /* PosterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterDetailViewController.swift; sourceTree = "<group>"; };
 		E928C71B23FE5F3F004D75E0 /* BridgeHeaderFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeaderFile.h; sourceTree = "<group>"; };
 		E928C71D23FE60F3004D75E0 /* ImageBrowserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserManager.swift; sourceTree = "<group>"; };
@@ -171,6 +172,7 @@
 		E98CE4F523F520A900BAF41F /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		E98CE4F723F5218A00BAF41F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSocialGroupViewController.swift; sourceTree = "<group>"; };
+		E9ECF1852467D9A80048EBF3 /* NotificationPushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPushManager.swift; sourceTree = "<group>"; };
 		E9F9C8B3240A799C00F9CA52 /* SquareReplyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareReplyViewController.swift; sourceTree = "<group>"; };
 		E9F9C8B5240A79A500F9CA52 /* SquareReplyItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareReplyItem.swift; sourceTree = "<group>"; };
 		E9F9C8B7240A7A5700F9CA52 /* SquareReplyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareReplyManager.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				E90DA889240BA7350070B462 /* PosterPushViewController.swift */,
+				E9ECF1852467D9A80048EBF3 /* NotificationPushManager.swift */,
 			);
 			path = Push;
 			sourceTree = "<group>";
@@ -491,7 +494,7 @@
 			children = (
 				E98CE4D223F1508800BAF41F /* WallViewController.swift */,
 				E90DA886240BA70C0070B462 /* WallManager.swift */,
-				E90DA88B240BA7740070B462 /* WallModels.swift */,
+				E9ECF1872467DE750048EBF3 /* NotificationModels */,
 				E90DA888240BA7180070B462 /* Push */,
 				E90DA883240BA6D00070B462 /* Poster */,
 			);
@@ -520,6 +523,14 @@
 				E98264D223F97A0F009CE123 /* UserList */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		E9ECF1872467DE750048EBF3 /* NotificationModels */ = {
+			isa = PBXGroup;
+			children = (
+				E90DA88B240BA7740070B462 /* PosterModel.swift */,
+			);
+			path = NotificationModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -608,7 +619,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E97E893424005BC300E32811 /* BroadcastItem.swift in Sources */,
-				E90DA88C240BA7740070B462 /* WallModels.swift in Sources */,
+				E90DA88C240BA7740070B462 /* PosterModel.swift in Sources */,
 				E944DC95240550ED00ED770A /* SquareCommentViewController.swift in Sources */,
 				E98264D623FA16BF009CE123 /* EditProfileViewController.swift in Sources */,
 				E97E893F24024A4E00E32811 /* OtherProfileViewController.swift in Sources */,
@@ -625,6 +636,7 @@
 				E98264BD23F5C0BB009CE123 /* UserDefaultsManager.swift in Sources */,
 				E98CE4D123F1502000BAF41F /* SquareScrollViewController.swift in Sources */,
 				E969D03E23F5771D00CEEDC8 /* LoadingUI.swift in Sources */,
+				E9ECF1862467D9A80048EBF3 /* NotificationPushManager.swift in Sources */,
 				E92F7BB4240787FB00212167 /* SquareCommentTableViewCell.swift in Sources */,
 				E98264DF23FA1D5A009CE123 /* EditWallViewController.swift in Sources */,
 				E97E893A2401184600E32811 /* BroadcastTableViewCell.swift in Sources */,

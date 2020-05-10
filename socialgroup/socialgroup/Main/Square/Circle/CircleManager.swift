@@ -20,6 +20,9 @@ protocol CircleManagerDelegate:NSObjectProtocol {
     
     func reportItemSuccess(item:CircleItem)
     func reportItemFail(result:String, info: String)
+    
+    func deleteItemSuccess(item:CircleItem)
+    func deleteItemFail(result:String, info: String)
 }
 
 class CircleManager{
@@ -201,6 +204,27 @@ class CircleManager{
         
     }
     
+    // delete
+    func deleteItem(item: CircleItem){
+        
+        let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "square_item_type":"circle","delete_type":"1", "correspond_id":String(item.circle_id), "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        Alamofire.request(NetworkManager.SQUARE_DELETE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                if let data = response.result.value{
+                    let json = JSON(data)
+                    if(json["result"].string!.equals(str: "1")){
+                        self.delegate?.deleteItemSuccess(item: item)
+                    }else{
+                        self.delegate?.deleteItemFail(result: "0", info: json["info"].string!)
+                    }
+                }
+            case .failure:
+                self.delegate?.deleteItemFail(result: "0", info: "response fail")
+            }
+        }
+        
+    }
     
     
     

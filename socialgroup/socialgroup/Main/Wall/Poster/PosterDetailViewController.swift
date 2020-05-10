@@ -272,7 +272,7 @@ extension PosterDetailViewController{
     }
     
     @objc func linkLabelTapped(){
-        print("link button tapped")
+        UIApplication.shared.open(URL(string: model.link)!, options: [:], completionHandler: nil)
     }
 }
 

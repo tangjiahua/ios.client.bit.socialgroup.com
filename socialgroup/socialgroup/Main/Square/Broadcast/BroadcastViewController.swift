@@ -298,6 +298,7 @@ extension BroadcastViewController{
         pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
             self.manager.reportItem(item: item)
         } ))
+        
         pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
     }
     

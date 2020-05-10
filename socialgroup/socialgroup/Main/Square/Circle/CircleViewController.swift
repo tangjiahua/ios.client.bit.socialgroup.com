@@ -13,7 +13,9 @@ protocol CircleViewControllerDelegate:NSObjectProtocol {
     func showTitleScrollView()
 }
 
-class CircleViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, CircleManagerDelegate, CircleTableViewCellDelegate{
+class CircleViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, CircleManagerDelegate, CircleTableViewCellDelegate, SquareCommentViewControllerDelegate{
+    
+    
     
     
     
@@ -125,6 +127,7 @@ extension CircleViewController{
         commentVC.circleItem = manager.circleItems[indexPath.row]
         commentVC.square_item_type = "circle"
         commentVC.square_item_id = String(manager.circleItems[indexPath.row].circle_id)
+        commentVC.delegate = self
         commentVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(commentVC, animated: true)
     }
@@ -224,6 +227,16 @@ extension CircleViewController{
         self.showTempAlertWithOneSecond(info: "举报失败，可能因为您已经举报过了")
     }
     
+    // delete delegate
+    func deleteItemSuccess(item: CircleItem) {
+        self.showTempAlert(info: "删除成功")
+        self.refreshCircle()
+    }
+    
+    func deleteItemFail(result: String, info: String) {
+        self.showTempAlertWithOneSecond(info: "删除失败，出bug了")
+    }
+    
     
 }
 
@@ -277,12 +290,25 @@ extension CircleViewController{
     func moreButtonTappedCircle(item: CircleItem) {
         let pushTappedSheet = UIAlertController.init(title: "更多", message: nil, preferredStyle: .actionSheet)
         self.present(pushTappedSheet, animated: true, completion: nil)
-        pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
+            pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
             self.manager.reportItem(item: item)
         } ))
         pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
+        if(item.user_id == Int(UserDefaultsManager.getUserId())){
+            // 说明是我自己发的内容
+            pushTappedSheet.addAction(.init(title: "删除我的动态", style: .default, handler:{(action: UIAlertAction) in
+                self.manager.deleteItem(item: item)
+            } ))
+        }
     }
     
     
     
+}
+
+// MARK:- SquareCommentViewController Delegate
+extension CircleViewController{
+    func popDeletedCircleItem(item: CircleItem) {
+        manager.deleteItem(item: item)
+    }
 }

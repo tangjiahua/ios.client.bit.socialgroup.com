@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WallViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, WallManagerDelegate {
+class WallViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, WallManagerDelegate, PosterPushViewControllerDelegate {
     
     
     
@@ -294,18 +294,22 @@ extension WallViewController{
     // external settings
     @objc func pushClick(){
         
-//        print("pushCLicked")
-//        let pushClickSheet = UIAlertController.init(title: "选择发布类型", message: nil, preferredStyle: .actionSheet)
-//        self.present(pushClickSheet, animated: true)
-//        pushClickSheet.addAction(.init(title: "上传海报", style: .default, handler: { (UIAlertAction) in
-//            let pushPosterVC = PosterPushViewController()
-//            pushPosterVC.modalPresentationStyle = .fullScreen
-//            pushPosterVC.setUpViews(type: 1)
-//            self.present(pushPosterVC, animated: true, completion: nil)
-//        }))
-//        pushClickSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
+        print("pushCLicked")
+        let pushClickSheet = UIAlertController.init(title: "选择发布类型", message: nil, preferredStyle: .actionSheet)
+        self.present(pushClickSheet, animated: true)
+        pushClickSheet.addAction(.init(title: "上传海报", style: .default, handler: { (UIAlertAction) in
+            let pushPosterVC = PosterPushViewController()
+            pushPosterVC.modalPresentationStyle = .fullScreen
+            pushPosterVC.setUpViews()
+            pushPosterVC.delegate = self
+            self.present(pushPosterVC, animated: true, completion: nil)
+        }))
+        pushClickSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
         
-        
-        
+    }
+    
+    func posterPushSuccess() {
+        self.showTempAlert(info: "发布海报成功")
+        self.refreshLatestWall()
     }
 }
