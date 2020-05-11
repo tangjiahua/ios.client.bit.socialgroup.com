@@ -133,7 +133,7 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
             singleImageView.contentMode = .scaleAspectFill
             singleImageView.layer.cornerRadius = 5
             singleImageView.layer.masksToBounds = true
-            singleImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "placeholder"), options: .refreshCached, context: nil, progress: nil, completed: nil)
+            singleImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .allowInvalidSSLCertificates], context: nil, progress: nil, completed: nil)
             
             // image tap gesture
             singleImageView.isUserInteractionEnabled = true
@@ -314,7 +314,7 @@ extension BroadcastTableViewCell{
         let picThumbnailUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + UserDefaultsManager.getSocialGroupId() + "/square/broadcast/thumbnail/" + String(item.broadcast_id) + "@" + String(indexPath.row + 1) + ".jpg"
         
         let picUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + UserDefaultsManager.getSocialGroupId() + "/square/broadcast/picture/" + String(item.broadcast_id) + "@" + String(indexPath.row + 1) + ".jpg"
-        imageView.sd_setImage(with: URL(string: picThumbnailUrl)!, placeholderImage: UIImage(named: "placeholder"), options: .refreshCached)
+        imageView.sd_setImage(with: URL(string: picThumbnailUrl)!, placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .allowInvalidSSLCertificates])
         
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 5

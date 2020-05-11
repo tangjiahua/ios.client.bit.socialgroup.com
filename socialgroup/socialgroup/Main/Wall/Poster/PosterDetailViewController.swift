@@ -25,7 +25,7 @@ class PosterDetailViewController: BaseViewController, UITableViewDelegate, UITab
     let ScreenWidth = UIDevice.SCREEN_WIDTH
     let ScreenHeight = UIDevice.SCREEN_HEIGHT
     let wallPosterRatio:CGFloat = 1.2
-    let padding:CGFloat = 10
+    let padding:CGFloat = 18
     let headerImageViewRatio:CGFloat = 1.2
     //控件属性
     let staticLabelHeight:CGFloat = 25
@@ -34,6 +34,14 @@ class PosterDetailViewController: BaseViewController, UITableViewDelegate, UITab
     let briefLabelHeight:CGFloat = 35
     let briefLabelWidth:CGFloat = 300
     let briefFontSize:CGFloat = 80
+    
+    let welcomeTextViewRatio:CGFloat = 0.7
+    let holddateTextFieldHeight:CGFloat = 40
+    let holdlocationTextFieldHeight:CGFloat = 40
+    let holderTextFieldHeight:CGFloat = 40
+    let detailTextViewRatio:CGFloat = 1.2
+    let moreTextFieldHeight:CGFloat = 40
+    let postButtonWidth:CGFloat = 80
 
     //gesture handler need
     var cellHeight:CGFloat?
@@ -51,13 +59,14 @@ class PosterDetailViewController: BaseViewController, UITableViewDelegate, UITab
         
         super.viewDidLoad()
         initUI()
-        
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         
     }
     
-    
+    @objc func applicationWillEnterForeground(){
+        self.tabBarController?.hideTabbar(hidden: true)
+    }
     
     
     override func viewDidAppear(_ animated: Bool) {
@@ -66,7 +75,7 @@ class PosterDetailViewController: BaseViewController, UITableViewDelegate, UITab
     }
     
     private func initUI(){
-        view.backgroundColor = .tertiarySystemBackground
+        view.backgroundColor = .secondarySystemBackground
         navigationController?.setNavigationBarHidden(true, animated: true)
         
         // 上一个视图的背景
@@ -83,7 +92,7 @@ class PosterDetailViewController: BaseViewController, UITableViewDelegate, UITab
 //        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: UIDe, right: 0)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .tertiarySystemBackground
+        tableView.backgroundColor = .secondarySystemBackground
         tableView.contentInsetAdjustmentBehavior = .never
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
@@ -115,16 +124,7 @@ class PosterDetailViewController: BaseViewController, UITableViewDelegate, UITab
         posterImageView.contentMode = .scaleAspectFill
         posterImageView.clipsToBounds = true
         
-        posterImageView.sd_setImage(with: URL(string: posterUrlStr), placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached], context: nil)
-//        headerImageView.sd_setImage(with: URL(string: posterUrlStr), placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .avoidAutoSetImage], context: nil, progress: nil) { (image, error, cacheType, imageURL) in
-//            // 裁减图片
-//            let coppedImage = image?.sd_croppedImage(with: CGRect(x: 0, y: 0, width: self.ScreenWidth, height: self.ScreenWidth*self.wallPosterRatio))
-//
-//            DispatchQueue.main.async {
-//                self.headerImageView.image = coppedImage
-//                self.headerImageView.setNeedsLayout()
-//            }
-//        }
+        posterImageView.sd_setImage(with: URL(string: posterUrlStr), placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .allowInvalidSSLCertificates], context: nil)
 
         titleLabel = UILabel(frame: CGRect(x: padding, y: ScreenWidth * headerImageViewRatio - briefLabelHeight - padding, width: briefLabelWidth  , height: briefLabelHeight))
         titleLabel.textColor = UIColor.white
@@ -147,15 +147,15 @@ extension PosterDetailViewController{
     // MARK:-  tableview delegate
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        var height:CGFloat = padding + UIDevice.getLabHeigh(labelStr: model.welcome, font: .systemFont(ofSize: staticLabelFontSize), width: ScreenWidth-padding*2) + padding + staticLabelHeight*3 + padding*3
-        height += UIDevice.getLabHeigh(labelStr: model.holddate, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)// hold date
-        height += UIDevice.getLabHeigh(labelStr: model.holdlocation, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)// hold location
-        height += UIDevice.getLabHeigh(labelStr: model.holder, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)// holder
-        height += padding*3 // dynamic label padding
-        
-        height += UIDevice.getLabHeigh(labelStr: model.detail, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)// detail
-        height += padding + staticLabelHeight + padding // link button
-        
+//        var height:CGFloat = padding + UIDevice.getLabHeigh(labelStr: model.welcome, font: .systemFont(ofSize: staticLabelFontSize), width: ScreenWidth-padding*2) + padding + staticLabelHeight*3 + padding*3
+//        height += UIDevice.getLabHeigh(labelStr: model.holddate, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)// hold date
+//        height += UIDevice.getLabHeigh(labelStr: model.holdlocation, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)// hold location
+//        height += UIDevice.getLabHeigh(labelStr: model.holder, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)// holder
+//        height += padding*3 // dynamic label padding
+//
+//        height += UIDevice.getLabHeigh(labelStr: model.detail, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)// detail
+//        height += padding + staticLabelHeight + padding // link button
+        let height = padding + staticLabelHeight*6 + padding*15  + (ScreenWidth-padding*2)*welcomeTextViewRatio + holddateTextFieldHeight + holdlocationTextFieldHeight + holderTextFieldHeight + (ScreenWidth-padding*2)*detailTextViewRatio
         
         return height
     }
@@ -184,88 +184,187 @@ extension PosterDetailViewController{
         
         let cell = UITableViewCell(style: .default, reuseIdentifier: identifier)
         cell.selectionStyle = .none
-        cell.backgroundColor = .tertiarySystemBackground
+        cell.backgroundColor = .secondarySystemBackground
         
         //welcome
         
-        let welcomeLabel = UILabel(frame: CGRect(x: padding, y: padding, width: ScreenWidth-padding*2, height: UIDevice.getLabHeigh(labelStr: model.welcome, font: .systemFont(ofSize: 17), width: ScreenWidth - padding*2)))
-        welcomeLabel.textColor = .secondaryLabel
-        welcomeLabel.text = model.welcome
-        welcomeLabel.numberOfLines = 0
-        cell.addSubview(welcomeLabel)
+//        let welcomeLabel = UILabel(frame: CGRect(x: padding, y: padding, width: ScreenWidth-padding*2, height: UIDevice.getLabHeigh(labelStr: model.welcome, font: .systemFont(ofSize: 17), width: ScreenWidth - padding*2)))
+//        welcomeLabel.textColor = .secondaryLabel
+//        welcomeLabel.text = model.welcome
+//        welcomeLabel.numberOfLines = 0
+//        cell.addSubview(welcomeLabel)
+        let welcomeStaticLabel = UILabel()
+        welcomeStaticLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        welcomeStaticLabel.textColor = UIColor.label
+        welcomeStaticLabel.text = "引语:"
+        welcomeStaticLabel.numberOfLines = 1
+        welcomeStaticLabel.frame = CGRect(x: padding, y: padding, width: ScreenWidth - padding*2, height: staticLabelHeight)
+        cell.addSubview(welcomeStaticLabel)
+
+        let welcomeTextView = UITextView()
+        welcomeTextView.textColor = UIColor.secondaryLabel
+        welcomeTextView.font = UIFont(name: "PingFangSC-Light", size: 17)!
+        welcomeTextView.backgroundColor = UIColor.tertiarySystemBackground
+        welcomeTextView.frame = CGRect(x: padding, y: welcomeStaticLabel.frame.maxY + padding, width: ScreenWidth-padding*2, height: (ScreenWidth-padding*2)*welcomeTextViewRatio)
+        welcomeTextView.text = model.welcome
+        welcomeTextView.isEditable = false
+        welcomeTextView.layer.cornerRadius = 10
+        welcomeTextView.layer.masksToBounds = true
+        cell.addSubview(welcomeTextView)
         
         
         
         //时间：
-        let dateLabel = UILabel(frame: CGRect(x: padding, y: welcomeLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: staticLabelHeight))
-        dateLabel.font = .boldSystemFont(ofSize: staticLabelFontSize)
-        dateLabel.textColor = .label
-        dateLabel.text = "时间："
-        cell.addSubview(dateLabel)
+//        let dateLabel = UILabel(frame: CGRect(x: padding, y: welcomeLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: staticLabelHeight))
+//        dateLabel.font = .boldSystemFont(ofSize: staticLabelFontSize)
+//        dateLabel.textColor = .label
+//        dateLabel.text = "时间："
+//        cell.addSubview(dateLabel)
+        let holddateStaticLabel = UILabel()
+        holddateStaticLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        holddateStaticLabel.textColor = UIColor.label
+        holddateStaticLabel.text = "时间："
+        holddateStaticLabel.numberOfLines = 1
+        holddateStaticLabel.frame = CGRect(x: padding, y: welcomeTextView.frame.maxY + padding, width: ScreenWidth-padding*2, height: staticLabelHeight)
+        cell.addSubview(holddateStaticLabel)
+
+        let holddateTextField = UITextField()
+        holddateTextField.textColor = UIColor.secondaryLabel
+        holddateTextField.backgroundColor = UIColor.tertiarySystemBackground
+        holddateTextField.frame = CGRect(x: padding, y: holddateStaticLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: holddateTextFieldHeight)
+        holddateTextField.text = model.holddate
+        holddateTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: holddateTextFieldHeight))
+        holddateTextField.leftViewMode = .always
+        holddateTextField.isUserInteractionEnabled = false
+        holddateTextField.layer.cornerRadius = 10
+        holddateTextField.layer.masksToBounds = true
+        cell.addSubview(holddateTextField)
         
-        //holddate
-        let holddateLabel = UILabel(frame: CGRect(x: padding, y: dateLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: model.holddate, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)))
-        holddateLabel.textColor = .secondaryLabel
-        holddateLabel.text = model.holddate
-        holddateLabel.numberOfLines = 0
-        cell.addSubview(holddateLabel)
         
         
         
         //地点：
-        let locationLabel = UILabel(frame: CGRect(x: padding, y: holddateLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: staticLabelHeight))
-        locationLabel.font = .boldSystemFont(ofSize: staticLabelFontSize)
-        locationLabel.textColor = .label
-        locationLabel.text = "地点："
-        cell.addSubview(locationLabel)
-        
-        
-        //holdlocation
-        
-        let holdLocationLabel = UILabel(frame: CGRect(x: padding, y: locationLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: model.holdlocation, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)))
-        holdLocationLabel.textColor = .secondaryLabel
-        holdLocationLabel.numberOfLines = 0
-        holdLocationLabel.text = model.holdlocation
-        cell.addSubview(holdLocationLabel)
+//        let locationLabel = UILabel(frame: CGRect(x: padding, y: holddateLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: staticLabelHeight))
+//        locationLabel.font = .boldSystemFont(ofSize: staticLabelFontSize)
+//        locationLabel.textColor = .label
+//        locationLabel.text = "地点："
+//        cell.addSubview(locationLabel)
+//
+//
+//        //holdlocation
+//
+//        let holdLocationLabel = UILabel(frame: CGRect(x: padding, y: locationLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: model.holdlocation, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)))
+//        holdLocationLabel.textColor = .secondaryLabel
+//        holdLocationLabel.numberOfLines = 0
+//        holdLocationLabel.text = model.holdlocation
+//        cell.addSubview(holdLocationLabel)
+        let holdlocationStaticLabel = UILabel()
+        holdlocationStaticLabel.font = .boldSystemFont(ofSize: 30)
+        holdlocationStaticLabel.textColor = .label
+        holdlocationStaticLabel.text = "地点："
+        holdlocationStaticLabel.numberOfLines = 1
+        holdlocationStaticLabel.frame = CGRect(x: padding, y: holddateTextField.frame.maxY + padding, width: ScreenWidth - padding*2, height: staticLabelHeight)
+        cell.addSubview(holdlocationStaticLabel)
+
+        let holdlocationTextField = UITextField()
+        holdlocationTextField.textColor = .secondaryLabel
+        holdlocationTextField.backgroundColor = .tertiarySystemBackground
+        holdlocationTextField.frame = CGRect(x: padding, y: holdlocationStaticLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: holdlocationTextFieldHeight)
+        holdlocationTextField.text = model.holdlocation
+        holdlocationTextField.isUserInteractionEnabled = false
+        holdlocationTextField.layer.cornerRadius = 10
+        holdlocationTextField.layer.masksToBounds = true
+        holdlocationTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: holddateTextFieldHeight))
+        holdlocationTextField.leftViewMode = .always
+        cell.addSubview(holdlocationTextField)
         
         
         //举办者：
-        let staticHolderLabel = UILabel(frame: CGRect(x: padding, y: holdLocationLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: staticLabelHeight))
-        staticHolderLabel.font = .boldSystemFont(ofSize: staticLabelFontSize)
-        staticHolderLabel.textColor = .label
-        staticHolderLabel.text = "举办者："
-        cell.addSubview(staticHolderLabel)
+//        let staticHolderLabel = UILabel(frame: CGRect(x: padding, y: holdLocationLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: staticLabelHeight))
+//        staticHolderLabel.font = .boldSystemFont(ofSize: staticLabelFontSize)
+//        staticHolderLabel.textColor = .label
+//        staticHolderLabel.text = "举办者："
+//        cell.addSubview(staticHolderLabel)
+//
+//
+//        //holder
+//        let holderLabel = UILabel(frame: CGRect(x: padding, y: staticHolderLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: model.holder, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)))
+//        holderLabel.textColor = .secondaryLabel
+//        holderLabel.numberOfLines = 0
+//        holderLabel.text = model.holder
+//        cell.addSubview(holderLabel)
+        let holderStaticLabel = UILabel()
+        holderStaticLabel.font = .boldSystemFont(ofSize: 30)
+        holderStaticLabel.textColor = .label
+        holderStaticLabel.text = "举办者："
+        holderStaticLabel.numberOfLines = 1
+        holderStaticLabel.frame = CGRect(x: padding, y: holdlocationTextField.frame.maxY + padding, width: ScreenWidth - padding*2, height: staticLabelHeight)
+        cell.addSubview(holderStaticLabel)
+
+        let holderTextField = UITextField()
+        holderTextField.text = model.holder
+        holderTextField.textColor = .secondaryLabel
+        holderTextField.backgroundColor = .tertiarySystemBackground
+        holderTextField.frame = CGRect(x: padding, y: holderStaticLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: holderTextFieldHeight)
+        holderTextField.isUserInteractionEnabled = false
+        holderTextField.layer.cornerRadius = 10
+        holderTextField.layer.masksToBounds = true
+        holderTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: holddateTextFieldHeight))
+        holderTextField.leftViewMode = .always
+        cell.addSubview(holderTextField)
         
         
-        //holder
-        let holderLabel = UILabel(frame: CGRect(x: padding, y: staticHolderLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: model.holder, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth-padding*2)))
-        holderLabel.textColor = .secondaryLabel
-        holderLabel.numberOfLines = 0
-        holderLabel.text = model.holder
-        cell.addSubview(holderLabel)
         
         //detail
         
-        let detailLabel = UILabel(frame: CGRect(x: padding, y: holderLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: model.detail, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth - padding*2)))
-        detailLabel.font = .systemFont(ofSize: infoLabelFontSize)
-        detailLabel.textColor = .secondaryLabel
-        detailLabel.text = model.detail
-        detailLabel.numberOfLines = 0
-        cell.addSubview(detailLabel)
+//        let detailLabel = UILabel(frame: CGRect(x: padding, y: holderLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: model.detail, font: .systemFont(ofSize: infoLabelFontSize), width: ScreenWidth - padding*2)))
+//        detailLabel.font = .systemFont(ofSize: infoLabelFontSize)
+//        detailLabel.textColor = .secondaryLabel
+//        detailLabel.text = model.detail
+//        detailLabel.numberOfLines = 0
+//        cell.addSubview(detailLabel)
+        let detailStaticLabel = UILabel()
+        detailStaticLabel.font = .boldSystemFont(ofSize: 30)
+        detailStaticLabel.textColor = .label
+        detailStaticLabel.numberOfLines = 1
+        detailStaticLabel.text = "简介："
+        detailStaticLabel.frame = CGRect(x: padding, y: holderTextField.frame.maxY + padding, width: ScreenWidth - padding*2, height: staticLabelHeight)
+        cell.addSubview(detailStaticLabel)
+
+        let detailTextView = UITextView()
+        detailTextView.textColor = UIColor.secondaryLabel
+        detailTextView.font = UIFont(name: "PingFangSC-Light", size: 17)!
+        detailTextView.backgroundColor = UIColor.tertiarySystemBackground
+        detailTextView.frame = CGRect(x: padding, y: detailStaticLabel.frame.maxY + padding, width: ScreenWidth-padding*2, height: (ScreenWidth-padding*2)*detailTextViewRatio)
+        detailTextView.text = model.detail
+        detailTextView.isEditable = false
+        detailTextView.layer.cornerRadius = 10
+        detailTextView.layer.masksToBounds = true
+        cell.addSubview(detailTextView)
         
         
         
         //more
-        let linkLabel = UILabel(frame: CGRect(x: padding, y: detailLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: staticLabelHeight))
-        linkLabel.text = "更多详情"
-        linkLabel.textColor = .systemBlue
-        linkLabel.font = .systemFont(ofSize: infoLabelFontSize)
-        linkLabel.textAlignment = .right
-        linkLabel.isUserInteractionEnabled = true
+//        let linkLabel = UILabel(frame: CGRect(x: padding, y: detailLabel.frame.maxY + padding, width: ScreenWidth - padding*2, height: staticLabelHeight))
+//        linkLabel.text = "更多详情"
+//        linkLabel.textColor = .systemBlue
+//        linkLabel.font = .systemFont(ofSize: infoLabelFontSize)
+//        linkLabel.textAlignment = .right
+//        linkLabel.isUserInteractionEnabled = true
+//        let linkLabelTappedGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(linkLabelTapped))
+//        linkLabel.addGestureRecognizer(linkLabelTappedGestureRecognizer)
+//
+//        cell.addSubview(linkLabel)
+        let moreStaticLabel = UILabel()
+        moreStaticLabel.font = .boldSystemFont(ofSize: 18)
+        moreStaticLabel.textColor = .systemBlue
+        moreStaticLabel.numberOfLines = 1
+        moreStaticLabel.text = "更多信息"
+        moreStaticLabel.frame = CGRect(x: padding, y: detailTextView.frame.maxY + padding, width: ScreenWidth - padding*2, height: 20)
+        moreStaticLabel.isUserInteractionEnabled = true
+        cell.addSubview(moreStaticLabel)
         let linkLabelTappedGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(linkLabelTapped))
-        linkLabel.addGestureRecognizer(linkLabelTappedGestureRecognizer)
-        
-        cell.addSubview(linkLabel)
+        moreStaticLabel.addGestureRecognizer(linkLabelTappedGestureRecognizer)
         
         
         return cell

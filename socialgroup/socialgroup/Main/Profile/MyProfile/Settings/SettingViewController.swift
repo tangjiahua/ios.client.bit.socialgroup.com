@@ -23,6 +23,7 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         self.navigationItem.title = "设置"
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.barTintColor = .secondarySystemBackground
         
         tableView = UITableView(frame: view.bounds)
         tableView.backgroundColor = .secondarySystemBackground
@@ -59,7 +60,7 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,6 +72,8 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
             cell.textLabel?.text = "更改资料"
         case 1:
             cell.textLabel?.text = "关于"
+        case 2:
+            cell.textLabel?.text = "退出账号"
         default:
             cell.textLabel?.text = "默认"
         }
@@ -96,6 +99,8 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
         case 1:
             let aboutVC = AboutViewController()
             self.navigationController?.pushViewController(aboutVC, animated: true)
+        case 2:
+            showLogOutWindow()
         default:
             break
         }
@@ -103,5 +108,28 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    /*
+     弹出退出登录确认窗口
+     */
+    private func showLogOutWindow(){
+        let msgAlert = UIAlertController(title: "退出", message: "是否确定退出该账号？", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+            self.logOut()
+        }
+        let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+            print("cancel")
+        }
+        msgAlert.addAction(ok)
+        msgAlert.addAction(cancel)
+        self.present(msgAlert, animated: true, completion: nil)
+    }
     
+    /*
+     确定退出登录
+     */
+    private func logOut(){
+        UserDefaultsManager.deleteUserInfo()
+        
+        UIApplication.shared.windows.first?.rootViewController = UINavigationController(rootViewController: LoginViewController())
+    }
 }

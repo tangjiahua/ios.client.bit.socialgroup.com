@@ -133,7 +133,7 @@ extension CircleViewController{
     }
     
     func calculateHeightForRow(row: Int) -> CGFloat{
-        let cellWidth = CircleTableViewCell().bounds.width
+        let cellWidth = ScreenWidth - 10
         var height = padding + avatarImageViewHeight + padding + UIDevice.getLabHeigh(labelStr: manager.circleItems[row].content, font: .systemFont(ofSize: contentLabelFontSize), width: cellWidth - padding*2) + padding
         
         let pic_count = manager.circleItems[row].picture_count!

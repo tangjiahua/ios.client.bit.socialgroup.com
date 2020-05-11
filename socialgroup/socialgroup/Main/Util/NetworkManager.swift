@@ -33,8 +33,8 @@ class NetworkManager{
     
     static let manager:NetworkReachabilityManager! = NetworkReachabilityManager(host: "https://www.bitsocialgroup.com")
     
-    static let SERVER_RESOURCE_URL:String = "https://www.bitsocialgroup.com/resource/"
-    static let SOCIALGROUP_AVATAR_RESOURCE:String = "https://www.bitsocialgroup.com/resource/socialgroup_system/avatar/"
+    static let SERVER_RESOURCE_URL:String = "https://api.bitsocialgroup.com/resource/"
+    static let SOCIALGROUP_AVATAR_RESOURCE:String = "https://api.bitsocialgroup.com/resource/socialgroup_system/avatar/"
     
     
     static func isNetworking() -> Bool{

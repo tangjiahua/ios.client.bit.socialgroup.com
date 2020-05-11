@@ -49,7 +49,7 @@ class SquareJudgeTableViewCell: UITableViewCell {
         // avatar
         avatarImageView = UIImageView(frame: CGRect(x: padding, y: padding, width: avatarImageViewHeight, height: avatarImageViewHeight))
         let avatarUrlStr = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + UserDefaultsManager.getSocialGroupId() + "/profile/avatar/thumbnail/" + String(item.user_id) + "@" + String(item.user_avatar) + ".jpg"
-        avatarImageView.sd_setImage(with: URL(string: avatarUrlStr), placeholderImage: UIImage(named: "placeholder"), options: .refreshCached, context: nil, progress: nil, completed: nil)
+        avatarImageView.sd_setImage(with: URL(string: avatarUrlStr), placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .allowInvalidSSLCertificates], context: nil, progress: nil, completed: nil)
         avatarImageView.layer.cornerRadius = avatarImageViewHeight/2
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.layer.masksToBounds = true

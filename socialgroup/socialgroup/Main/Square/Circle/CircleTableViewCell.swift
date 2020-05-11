@@ -102,7 +102,7 @@ class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
         // avatar
         avatarImageView = UIImageView(frame: CGRect(x: padding, y: padding, width: avatarImageViewHeight, height: avatarImageViewHeight))
         let avatarUrlStr = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + UserDefaultsManager.getSocialGroupId() + "/profile/avatar/thumbnail/" + String(item.user_id) + "@" + String(item.user_avatar) + ".jpg"
-        avatarImageView.sd_setImage(with: URL(string: avatarUrlStr), placeholderImage: UIImage(named: "placeholder"), options: .refreshCached, context: nil, progress: nil, completed: nil)
+        avatarImageView.sd_setImage(with: URL(string: avatarUrlStr), placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .allowInvalidSSLCertificates], context: nil, progress: nil, completed: nil)
         avatarImageView.layer.cornerRadius = avatarImageViewHeight/2
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.layer.masksToBounds = true
@@ -142,7 +142,7 @@ class CircleTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollecti
             singleImageView.contentMode = .scaleAspectFill
             singleImageView.layer.cornerRadius = 5
             singleImageView.layer.masksToBounds = true
-            singleImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "placeholder"), options: .refreshCached, context: nil, progress: nil, completed: nil)
+            singleImageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .allowInvalidSSLCertificates], context: nil, progress: nil, completed: nil)
             self.addSubview(singleImageView)
             
             // image tap gesture
@@ -296,7 +296,7 @@ extension CircleTableViewCell{
         let picThumbnailUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + UserDefaultsManager.getSocialGroupId() + "/square/circle/thumbnail/" + String(item.circle_id) + "@" + String(indexPath.row + 1) + ".jpg"
         
         let picUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + UserDefaultsManager.getSocialGroupId() + "/square/circle/picture/" + String(item.circle_id) + "@" + String(indexPath.row + 1) + ".jpg"
-        imageView.sd_setImage(with: URL(string: picThumbnailUrl)!, placeholderImage: UIImage(named: "placeholder"), options: .refreshCached)
+        imageView.sd_setImage(with: URL(string: picThumbnailUrl)!, placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .allowInvalidSSLCertificates])
         
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 5

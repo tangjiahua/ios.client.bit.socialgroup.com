@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 
-class UserListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UserListManagerDelegate {
+class UserListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UserListManagerDelegate, UIGestureRecognizerDelegate {
     
     
     
@@ -44,6 +44,22 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
         userListManager = UserListManager()
         userListManager.delegate = self
         userListManager.fetchStickToMeList()
+        
+        // pop Gesture
+        let popGesture = self.navigationController!.interactivePopGestureRecognizer
+        let popTarget = popGesture?.delegate
+        let popView = popGesture!.view!
+        popGesture?.isEnabled = false
+        
+        let popSelector = NSSelectorFromString("handleNavigationTransition:")
+        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+        fullScreenPoGesture.delegate = self
+        
+        popView.addGestureRecognizer(fullScreenPoGesture)
+    }
+    
+    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+       return true
     }
     
     
@@ -69,7 +85,7 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
         
         let avatarImageView = UIImageView(frame: CGRect(x: padding, y: smallPadding, width: avatarHeight, height: avatarHeight))
         let avatarUrlStr:String = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + userDefaults.string(forKey: "socialgroup_id")! + "/profile/avatar/thumbnail/" + userListManager.model[indexPath.row].user_id + "@" + userListManager.model[indexPath.row].avatar + ".jpg"
-        avatarImageView.sd_setImage(with: URL(string: avatarUrlStr), placeholderImage: UIImage(named: "placeholder"), options:[], context: nil)
+        avatarImageView.sd_setImage(with: URL(string: avatarUrlStr), placeholderImage: UIImage(named: "placeholder"), options:[ .allowInvalidSSLCertificates], context: nil)
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.layer.cornerRadius = avatarHeight / 2
         avatarImageView.layer.masksToBounds = true

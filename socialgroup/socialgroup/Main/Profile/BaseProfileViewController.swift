@@ -209,11 +209,11 @@ class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     
     func refreshProfileView(){
         let avatarUrlStr:String = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/avatar/" + profileModel.userid + "@" + profileModel.avatar + ".jpg"
-        avatarView.sd_setImage(with: URL(string: avatarUrlStr), placeholderImage: UIImage(named: "placeholder"), options:[], context: nil)
+        avatarView.sd_setImage(with: URL(string: avatarUrlStr), placeholderImage: UIImage(named: "placeholder"), options:[.refreshCached, .allowInvalidSSLCertificates], context: nil)
         avatarView.setNeedsDisplay()
         
         let backgroundUrlStr = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + profileModel.socialgroup_id + "/profile/background/" + profileModel.userid + "@" + profileModel.background + ".jpg"
-        backgroundView.sd_setImage(with: URL(string: backgroundUrlStr)!, placeholderImage: UIImage(named: "placeholder"), options: [], context: nil)
+        backgroundView.sd_setImage(with: URL(string: backgroundUrlStr)!, placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .allowInvalidSSLCertificates], context: nil)
         backgroundView.setNeedsDisplay()
         
         stickCountLabel.text = profileModel.stickCount

@@ -53,7 +53,6 @@
 		E98264D423F97A44009CE123 /* UserListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264D323F97A44009CE123 /* UserListManager.swift */; };
 		E98264D623FA16BF009CE123 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264D523FA16BF009CE123 /* EditProfileViewController.swift */; };
 		E98264D823FA1706009CE123 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264D723FA1706009CE123 /* AboutViewController.swift */; };
-		E98264DB23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264DA23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift */; };
 		E98264DD23FA1D50009CE123 /* EditTextProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264DC23FA1D50009CE123 /* EditTextProfileViewController.swift */; };
 		E98264DF23FA1D5A009CE123 /* EditWallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264DE23FA1D5A009CE123 /* EditWallViewController.swift */; };
 		E98264E123FA846F009CE123 /* EditTextDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264E023FA846F009CE123 /* EditTextDetailViewController.swift */; };
@@ -142,7 +141,6 @@
 		E98264D323F97A44009CE123 /* UserListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListManager.swift; sourceTree = "<group>"; };
 		E98264D523FA16BF009CE123 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		E98264D723FA1706009CE123 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		E98264DA23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAvatarAndBackgroundViewController.swift; sourceTree = "<group>"; };
 		E98264DC23FA1D50009CE123 /* EditTextProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextProfileViewController.swift; sourceTree = "<group>"; };
 		E98264DE23FA1D5A009CE123 /* EditWallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWallViewController.swift; sourceTree = "<group>"; };
 		E98264E023FA846F009CE123 /* EditTextDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextDetailViewController.swift; sourceTree = "<group>"; };
@@ -351,7 +349,6 @@
 			children = (
 				E98264D523FA16BF009CE123 /* EditProfileViewController.swift */,
 				E98264F123FBCD79009CE123 /* EditTextProfile */,
-				E98264F223FBCD86009CE123 /* Avatar&Background */,
 				E98264F323FBCD93009CE123 /* Wall */,
 			);
 			path = EditProfile;
@@ -378,14 +375,6 @@
 				E98264E023FA846F009CE123 /* EditTextDetailViewController.swift */,
 			);
 			path = EditTextProfile;
-			sourceTree = "<group>";
-		};
-		E98264F223FBCD86009CE123 /* Avatar&Background */ = {
-			isa = PBXGroup;
-			children = (
-				E98264DA23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift */,
-			);
-			path = "Avatar&Background";
 			sourceTree = "<group>";
 		};
 		E98264F323FBCD93009CE123 /* Wall */ = {
@@ -654,7 +643,6 @@
 				E928C72823FE6638004D75E0 /* ImageBroserModel.swift in Sources */,
 				E900B0862466A6CA00D1FB1F /* DIscoverTableViewCell.swift in Sources */,
 				E928C72A23FE84F2004D75E0 /* ImageBrowserTranslation.swift in Sources */,
-				E98264DB23FA1D41009CE123 /* EditAvatarAndBackgroundViewController.swift in Sources */,
 				E90DA892240BD46F0070B462 /* PosterDetailViewController.swift in Sources */,
 				E98CE4D723F1509D00BAF41F /* BaseProfileViewController.swift in Sources */,
 				E969D04023F57CC500CEEDC8 /* ChooseSocialGroupModel.swift in Sources */,

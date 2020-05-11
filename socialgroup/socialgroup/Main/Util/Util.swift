@@ -65,7 +65,7 @@ extension UITabBarController{
           UIView.animate(withDuration: 0.2) {
               if hidden {
                   var frame = self.tabBar.frame
-                frame.origin.y = UIDevice.SCREEN_HEIGHT
+                frame.origin.y = UIDevice.SCREEN_HEIGHT + 2
                   self.tabBar.frame = frame
               } else {
                   var frame = self.tabBar.frame

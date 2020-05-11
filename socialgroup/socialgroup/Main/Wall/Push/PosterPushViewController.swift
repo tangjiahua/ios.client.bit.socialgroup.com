@@ -23,7 +23,7 @@ protocol PosterPushViewControllerDelegate:NSObjectProtocol {
     func posterPushSuccess()
 }
 
-class PosterPushViewController: BaseViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, NotificationPushManagerDelegate {
+class PosterPushViewController: BaseViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate,UIScrollViewDelegate, NotificationPushManagerDelegate {
     
     var delegate:PosterPushViewControllerDelegate?
 
@@ -65,17 +65,19 @@ class PosterPushViewController: BaseViewController, UIImagePickerControllerDeleg
     let pushManager = NotificationPushManager()
     var posterPushModel = PosterPushModel(posterImagePath: "", welcome: "", holddate: "", holdlocation: "", holder: "", detail: "", link: "")
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-    }
-
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         pushManager.delegate = self
 
-
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(keyboardHide))
+        tapGestureRecognizer.cancelsTouchesInView = false
+        scrollView.addGestureRecognizer(tapGestureRecognizer)
+        
     }
+    
 
 
     func setUpViews(){
@@ -88,6 +90,8 @@ class PosterPushViewController: BaseViewController, UIImagePickerControllerDeleg
         scrollView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight)
         scrollView.contentSize = CGSize(width: ScreenWidth, height: ScreenHeight*2)
         scrollView.backgroundColor = UIColor.secondarySystemBackground
+        scrollView.delegate = self
+        scrollView.isUserInteractionEnabled = true
         self.view.addSubview(scrollView)
 
         //dismissButton
@@ -401,3 +405,36 @@ extension PosterPushViewController{
         self.showTempAlert(info: info)
     }
 }
+
+// MARK:- UITextField Delegate
+extension PosterPushViewController {
+    
+    @objc func keyboardHide(tap: UITapGestureRecognizer){
+        welcomeTextView.endEditing(true)
+        holddateTextField.endEditing(true)
+        holdlocationTextField.endEditing(true)
+        holderTextField.endEditing(true)
+        detailTextView.endEditing(true)
+        moreTextField.endEditing(true)
+    }
+    
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        welcomeTextView.endEditing(true)
+        holddateTextField.endEditing(true)
+        holdlocationTextField.endEditing(true)
+        holderTextField.endEditing(true)
+        detailTextView.endEditing(true)
+        moreTextField.endEditing(true)
+    }
+
+
+
+
+   
+
+
+ 
+    
+}
+

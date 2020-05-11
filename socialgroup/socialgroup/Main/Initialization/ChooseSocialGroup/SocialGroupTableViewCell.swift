@@ -48,7 +48,7 @@ class SocialGroupTableViewCell: UITableViewCell {
         //avatar
         let avatarView = UIImageView(frame: CGRect(x: padding, y: padding, width: avatarViewWidth, height: avatarViewHeight))
         let url = URL(string: api + id! + "@" + avatar! + ".jpg")
-        avatarView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached], progress: nil, completed: nil)
+        avatarView.sd_setImage(with: url, placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .allowInvalidSSLCertificates], progress: nil, completed: nil)
         avatarView.layer.cornerRadius = avatarViewHeight / 2
         avatarView.layer.masksToBounds = true
         

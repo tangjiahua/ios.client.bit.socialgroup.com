@@ -23,6 +23,14 @@ class UserDefaultsManager{
         return basicUserInfoDic
     }
     
+    static public func deleteUserInfo(){
+        let dics = userDefaults.dictionaryRepresentation()
+        for key in dics {
+            userDefaults.removeObject(forKey: key.key)
+        }
+        userDefaults.synchronize()
+    }
+    
     static public func getIsLoginInfo() -> Bool{
         return userDefaults.bool(forKey: "isLogin")
     }

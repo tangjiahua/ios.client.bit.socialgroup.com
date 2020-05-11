@@ -122,14 +122,14 @@ class PosterCell: UITableViewCell  {
     
     func setValueForCell(model:PosterModel){
         let avatarUrlStr = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + UserDefaultsManager.getSocialGroupId() + "/profile/avatar/thumbnail/" + String(model.user_id) + "@" + String(model.user_avatar) + ".jpg"
-        self.avatarView?.sd_setImage(with: URL(string: avatarUrlStr)!, placeholderImage: UIImage(named: "placeholder"), options: .refreshCached, context: nil, progress: nil, completed: nil)
+        self.avatarView?.sd_setImage(with: URL(string: avatarUrlStr)!, placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .allowInvalidSSLCertificates], context: nil, progress: nil, completed: nil)
         
         self.publisher?.text = model.user_nickname
         self.titleLabel?.text = model.brief
         
         let posterUrlStr = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + UserDefaultsManager.getSocialGroupId() + "/wall/poster/" + String(model.notification_id) + ".jpg"
         
-        self.bgImageView?.sd_setImage(with: URL(string: posterUrlStr)!, placeholderImage: UIImage(named: "placeholder"), options: .refreshCached, context: nil, progress: nil, completed: nil)
+        self.bgImageView?.sd_setImage(with: URL(string: posterUrlStr)!, placeholderImage: UIImage(named: "placeholder"), options: [.refreshCached, .allowInvalidSSLCertificates], context: nil, progress: nil, completed: nil)
         self.pushdate?.text = model.create_date
     }
     

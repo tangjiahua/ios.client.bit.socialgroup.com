@@ -36,7 +36,7 @@ class EditProfileViewController: BaseViewController, UITableViewDelegate, UITabl
     
     //MARK:- tableview delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -52,9 +52,8 @@ class EditProfileViewController: BaseViewController, UITableViewDelegate, UITabl
         case 0:
             cell.textLabel?.text = "更改个人资料"
         case 1:
-            cell.textLabel?.text = "更改头像与背景"
-        case 2:
             cell.textLabel?.text = "更改照片墙"
+        
         default:
             break
         }
@@ -77,9 +76,6 @@ class EditProfileViewController: BaseViewController, UITableViewDelegate, UITabl
             editTextProfileVC.profileModel = profileModel
            self.navigationController?.pushViewController(editTextProfileVC, animated: true)
         case 1:
-            let editABVC = EditAvatarAndBackgroundViewController()
-            self.navigationController?.pushViewController(editABVC, animated: true)
-        case 2:
             let editWallVC = EditWallViewController()
             editWallVC.profileModel = profileModel
             self.navigationController?.pushViewController(editWallVC, animated: true)
@@ -89,10 +85,14 @@ class EditProfileViewController: BaseViewController, UITableViewDelegate, UITabl
 //                    print(asset)
 //                }
 //            })
+        
         default:
             break
         }
         tableView.deselectRow(at: indexPath, animated: true)
 
     }
+    
+    
+    
 }

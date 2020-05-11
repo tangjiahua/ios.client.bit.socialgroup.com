@@ -71,15 +71,14 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
         settingVC.profileModel = super.profileModel
         
         
-        if(self.navigationController?.viewControllers.count == 1){
-            self.tabBarController?.hideTabbar(hidden: true)
-        }
+        settingVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(settingVC, animated: true)
     }
     
     override func stickButtonTapped(){
         print("stick button tapped")
         let stickListVC = UserListViewController()
+        stickListVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(stickListVC, animated: true)
         
     }
