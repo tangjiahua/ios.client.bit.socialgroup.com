@@ -10,6 +10,7 @@ import UIKit
 
 protocol SquareCommentViewControllerDelegate:NSObjectProtocol {
     func popDeletedCircleItem(item:CircleItem)
+    func popDeletedBroadcastItem(item:BroadcastItem)
 }
 
 class SquareCommentViewController: BaseViewController, UINavigationControllerDelegate,  UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate,BroadcastTableViewCellDelegate,BroadcastManagerDelegate,CircleTableViewCellDelegate, CircleManagerDelegate, SquareCommentManagerDelegate, SquareCommentTableViewCellDelegate, SquareJudgeTableViewCellDelegate,SquareReplyManagerDelegate,  WriteViewControllerDelegate  {
@@ -30,6 +31,7 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
     var manager:SquareCommentManager!
     var interactionSegmentIndex:Int = 1
     
+    var isInMyBroadcast = false
     
     
     
@@ -57,7 +59,11 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .secondarySystemBackground
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = .secondarySystemBackground
+        } else {
+            // Fallback on earlier versions
+        }
 //        navigationController?.navigationBar.barTintColor = .secondarySystemBackground
         self.title = "详情"
         
@@ -96,7 +102,11 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .secondarySystemBackground
+        if #available(iOS 13.0, *) {
+            tableView.backgroundColor = .secondarySystemBackground
+        } else {
+            // Fallback on earlier versions
+        }
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "identifier")
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .none
@@ -529,6 +539,11 @@ extension SquareCommentViewController{
         pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
             broadcastManager.reportItem(item: item)
         } ))
+        if(isInMyBroadcast){
+            pushTappedSheet.addAction(.init(title: "删除该条广播", style: .default, handler:{(action: UIAlertAction) in
+                broadcastManager.deleteItem(item: item)
+            } ))
+        }
         pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
     }
     
@@ -790,6 +805,11 @@ extension SquareCommentViewController{
         self.showTempAlert(info: "举报成功")
     }
     
+    func deleteItemSuccess(item: BroadcastItem) {
+        self.navigationController?.popViewController(animated: true)
+        self.delegate?.popDeletedBroadcastItem(item: item)
+    }
+    
     func deleteItemSuccess(item: CircleItem) {
         self.navigationController?.popViewController(animated: true)
         self.delegate?.popDeletedCircleItem(item: item)
@@ -801,3 +821,4 @@ extension SquareCommentViewController{
     }
     
 }
+

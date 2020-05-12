@@ -60,7 +60,7 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,8 +71,10 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
         case 0:
             cell.textLabel?.text = "更改资料"
         case 1:
-            cell.textLabel?.text = "关于"
+            cell.textLabel?.text = "账号设置"
         case 2:
+            cell.textLabel?.text = "关于"
+        case 3:
             cell.textLabel?.text = "退出账号"
         default:
             cell.textLabel?.text = "默认"
@@ -97,9 +99,12 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
             editProfileVC.profileModel = profileModel
             self.navigationController?.pushViewController(editProfileVC, animated: true)
         case 1:
+            let editAccountVC = EditAccountViewController()
+            self.navigationController?.pushViewController(editAccountVC, animated: true)
+        case 2:
             let aboutVC = AboutViewController()
             self.navigationController?.pushViewController(aboutVC, animated: true)
-        case 2:
+        case 3:
             showLogOutWindow()
         default:
             break

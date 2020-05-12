@@ -8,7 +8,9 @@
 
 import UIKit
 
-class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, EditTextProfileViewControllerDelegate {
+    
+    
     
     var wallEditButton:UIButton!
     var publicIntroduceEditButton:UIButton!
@@ -282,4 +284,12 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
         return UIImage(data: data)!
     }
 
+}
+
+// MARK:- EditTextProfileVC Delegate
+extension MyProfileViewController{
+    func updateProfileSuccess() {
+        profileModel.getMyProfileModelFromServer()
+        
+    }
 }

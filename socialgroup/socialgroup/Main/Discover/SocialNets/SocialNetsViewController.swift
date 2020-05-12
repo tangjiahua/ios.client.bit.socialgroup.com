@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 
-class SocialNetsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UserListManagerDelegate {
+class SocialNetsViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UserListManagerDelegate, UIGestureRecognizerDelegate {
     
     
     
@@ -44,6 +44,23 @@ class SocialNetsViewController: BaseViewController, UITableViewDelegate, UITable
         userListManager = UserListManager()
         userListManager.delegate = self
         userListManager.fetchSocialNetsList()
+        
+        
+        // pop Gesture
+        let popGesture = self.navigationController!.interactivePopGestureRecognizer
+        let popTarget = popGesture?.delegate
+        let popView = popGesture!.view!
+        popGesture?.isEnabled = false
+        
+        let popSelector = NSSelectorFromString("handleNavigationTransition:")
+        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+        fullScreenPoGesture.delegate = self
+        
+        popView.addGestureRecognizer(fullScreenPoGesture)
+    }
+    
+    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+       return true
     }
     
     

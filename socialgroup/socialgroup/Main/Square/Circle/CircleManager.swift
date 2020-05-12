@@ -42,7 +42,7 @@ class CircleManager{
         
         
         if(!isRequesting){
-            fetchCircleItems(parameters: parameters, removeAllItems: true)
+            fetchCircleItems(parameters: parameters, removeAllItems: true, api: NetworkManager.SQUARE_FETCH_API)
         }else{
             print("重复请求")
         }
@@ -58,18 +58,18 @@ class CircleManager{
         let parameters:Parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":"circle", "method":"2", "square_item_id":square_item_id!, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
         
         if(!isRequesting){
-            fetchCircleItems(parameters: parameters, removeAllItems: false)
+            fetchCircleItems(parameters: parameters, removeAllItems: false, api: NetworkManager.SQUARE_FETCH_API)
         }else{
             print("重复请求")
         }
     }
     
     // 具体的网络请求
-    private func fetchCircleItems(parameters:Parameters, removeAllItems:Bool){
+    private func fetchCircleItems(parameters:Parameters, removeAllItems:Bool, api:String){
         
         isRequesting = true
         
-        Alamofire.request(NetworkManager.SQUARE_FETCH_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(api, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result{
             case .success:
                 if let data = response.result.value{
@@ -228,4 +228,37 @@ class CircleManager{
     
     
     
+}
+
+
+// MARK:- 我的动态
+extension CircleManager{
+    // 拉取新的items
+    func fetchMyNewCircleItems(){
+        
+        let parameters:Parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":"circle", "method":"1", "square_item_id":"0", "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        
+        
+        if(!isRequesting){
+            fetchCircleItems(parameters: parameters, removeAllItems: true, api: NetworkManager.DISCOVER_MYPOST_FETCH_MY_POST)
+        }else{
+            print("重复请求")
+        }
+        
+    }
+    
+    
+    // 拉取旧的items
+    func fetchMyOldCircleItems(){
+        let lastItem = circleItems.last
+        let square_item_id = lastItem?.circle_id
+        
+        let parameters:Parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":"circle", "method":"2", "square_item_id":square_item_id!, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        
+        if(!isRequesting){
+            fetchCircleItems(parameters: parameters, removeAllItems: false, api:NetworkManager.DISCOVER_MYPOST_FETCH_MY_POST)
+        }else{
+            print("重复请求")
+        }
+    }
 }

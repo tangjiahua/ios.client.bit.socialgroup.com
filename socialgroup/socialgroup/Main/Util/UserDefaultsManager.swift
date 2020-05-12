@@ -11,7 +11,8 @@ class UserDefaultsManager{
     
     static let userDefaults = UserDefaults.standard
     
-    static public func setBasicUserInfo(_ userId:String, _ password: String, _ socialGroupId: String){
+    static public func setBasicUserInfo(_ account:String, _ userId:String, _ password: String, _ socialGroupId: String){
+        userDefaults.set(account, forKey: "account")
         userDefaults.set(userId, forKey: "user_id")
         userDefaults.set(password, forKey: "password")
         userDefaults.set(socialGroupId, forKey: "socialgroup_id")
@@ -41,6 +42,10 @@ class UserDefaultsManager{
     
     static public func setLogoutInfo(){
         userDefaults.set(false, forKey: "isLogin")
+    }
+    
+    static public func getAccount() -> String{
+        return userDefaults.string(forKey: "account")!
     }
     
     static public func getUserId() -> String {

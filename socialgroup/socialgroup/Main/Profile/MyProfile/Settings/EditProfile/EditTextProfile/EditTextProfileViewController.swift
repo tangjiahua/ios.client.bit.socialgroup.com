@@ -8,13 +8,14 @@
 
 import UIKit
 
+protocol EditTextProfileViewControllerDelegate:NSObjectProtocol {
+    func updateProfileSuccess()
+}
+
+
 class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, EditTextDetailViewControllerDelegate, MyProfileModelDelegate {
     
-    
-
-    
-
-    
+    var delegate: EditTextProfileViewControllerDelegate?
     
     var tableView:UITableView!
     var genderPickerView:UIPickerView!
@@ -43,7 +44,11 @@ class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+        let profileVC = self.navigationController?.viewControllers.first as! MyProfileViewController
+        delegate = profileVC
+        
         self.navigationItem.title = "更改个人资料"
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
@@ -246,6 +251,9 @@ class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UI
         self.showTempAlert(info: "更改个人资料成功")
         profileModel.setMyProfileModelToLocal()
         profileModel.getMyProfileModelFromServer()
+        
+        delegate?.updateProfileSuccess()
+        
     }
     
     func setMyTextProfileToServerFail() {

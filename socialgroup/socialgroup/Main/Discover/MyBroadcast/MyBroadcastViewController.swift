@@ -8,12 +8,9 @@
 
 import UIKit
 
-protocol BroadcastViewControllerDelegate:NSObjectProtocol {
-    func hideTitleScrollView()
-    func showTitleScrollView()
-}
 
-class BroadcastViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, BroadcastManagerDelegate, BroadcastTableViewCellDelegate{
+
+class MyBroadcastViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, BroadcastManagerDelegate, BroadcastTableViewCellDelegate, SquareCommentViewControllerDelegate, UIGestureRecognizerDelegate{
     
     
     
@@ -51,9 +48,9 @@ class BroadcastViewController: BaseViewController, UITableViewDataSource, UITabl
         
         // view
         view.backgroundColor = .secondarySystemBackground
+        self.title = "我发布的广播"
         
-        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIDevice.SCREEN_WIDTH, height: UIDevice.SCREEN_HEIGHT - UIDevice.NAVIGATION_BAR_HEIGHT - UIDevice.STATUS_BAR_HEIGHT - UIDevice.HEIGHT_OF_ADDITIONAL_FOOTER), style: .plain)
-        tableView.contentInset = .init(top: TitleHeight, left: 0, bottom: UIDevice.TAB_BAR_HEIGHT, right: 0)
+        tableView = UITableView(frame: view.frame, style: .plain)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -72,23 +69,39 @@ class BroadcastViewController: BaseViewController, UITableViewDataSource, UITabl
         
         
         if(NetworkManager.isNetworking()){
-            manager.fetchNewBroadcastItems()
+            manager.fetchMyNewBroadcastItems()
         }else{
             self.showTempAlert(info: "无法连接网络")
         }
         
+        
+        // pop Gesture
+        let popGesture = self.navigationController!.interactivePopGestureRecognizer
+        let popTarget = popGesture?.delegate
+        let popView = popGesture!.view!
+        popGesture?.isEnabled = false
+        
+        let popSelector = NSSelectorFromString("handleNavigationTransition:")
+        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+        fullScreenPoGesture.delegate = self
+        
+        popView.addGestureRecognizer(fullScreenPoGesture)
+    }
+    
+    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+       return true
     }
     
     
     // MARK:- Refresher
     @objc func refreshBroadcast(){
-        manager.fetchNewBroadcastItems()
+        manager.fetchMyNewBroadcastItems()
     }
     
 
 }
 
-extension BroadcastViewController{
+extension MyBroadcastViewController{
     
     // MARK:- Tableview Datasource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -127,6 +140,8 @@ extension BroadcastViewController{
         commentVC.broadcastItem = manager.broadcastItems[indexPath.row]
         commentVC.square_item_type = "broadcast"
         commentVC.square_item_id = String(manager.broadcastItems[indexPath.row].broadcast_id)
+        commentVC.isInMyBroadcast = true
+        commentVC.delegate = self
         commentVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(commentVC, animated: true)
     }
@@ -158,24 +173,24 @@ extension BroadcastViewController{
     }
     
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        if(scrollView.contentOffset.y <= -TitleHeight){
-            self.delegate?.showTitleScrollView()
-            return
-        }else{
-            self.delegate?.hideTitleScrollView()
-        }
-        
-//        if (self.lastContentOffset < scrollView.contentOffset.y || (self.lastContentOffset > scrollView.contentOffset.y && scrollView.contentOffset.y > -TitleHeight)) {
-//            // 向上滚动
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//
+//        if(scrollView.contentOffset.y <= -TitleHeight){
+//            self.delegate?.showTitleScrollView()
+//            return
+//        }else{
 //            self.delegate?.hideTitleScrollView()
 //        }
-        
-        
-        self.lastContentOffset = scrollView.contentOffset.y;
-        
-    }
+//
+////        if (self.lastContentOffset < scrollView.contentOffset.y || (self.lastContentOffset > scrollView.contentOffset.y && scrollView.contentOffset.y > -TitleHeight)) {
+////            // 向上滚动
+////            self.delegate?.hideTitleScrollView()
+////        }
+//
+//
+//        self.lastContentOffset = scrollView.contentOffset.y;
+//
+//    }
     
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
 //        self.delegate?.showTitleScrollView()
@@ -186,7 +201,7 @@ extension BroadcastViewController{
     // 滑到底部的时候加载更多的旧item
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if(indexPath.row == manager.broadcastItems.count - 1){
-            manager.fetchOldBroadcastItems()
+            manager.fetchMyOldBroadcastItems()
         }
     }
     
@@ -300,6 +315,9 @@ extension BroadcastViewController{
         pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
             self.manager.reportItem(item: item)
         } ))
+        pushTappedSheet.addAction(.init(title: "删除该条广播", style: .default, handler:{(action: UIAlertAction) in
+            self.manager.deleteItem(item: item)
+        } ))
         
         pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
     }
@@ -307,13 +325,26 @@ extension BroadcastViewController{
     
 }
 
-// MARK:- BroadcastManager deleaget
-extension BroadcastViewController{
+
+//MARK:- broadcast manager delegate
+extension MyBroadcastViewController{
     func deleteItemSuccess(item: BroadcastItem) {
-        print("you cant delete here")
+        self.showTempAlert(info: "删除成功")
+        self.refreshBroadcast()
     }
     
     func deleteItemFail(result: String, info: String) {
-        print("you cant delete here")
+        self.showTempAlertWithOneSecond(info: "删除失败，出bug了")
+    }
+}
+
+//MARK:- square comment view controller delegate
+extension MyBroadcastViewController{
+    func popDeletedCircleItem(item: CircleItem) {
+        print("you cant pop here    ")
+    }
+    
+    func popDeletedBroadcastItem(item: BroadcastItem) {
+        manager.deleteItem(item: item)
     }
 }

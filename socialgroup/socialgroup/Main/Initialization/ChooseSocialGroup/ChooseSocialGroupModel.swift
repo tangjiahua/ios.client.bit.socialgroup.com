@@ -27,6 +27,7 @@ protocol ChooseSocialGroupModelDelegate: NSObjectProtocol {
 
 class ChooseSocialGroupModel{
     
+    var account:String?
     var userId:String?
     var password:String?
     var socialGroupId:String?
@@ -35,7 +36,8 @@ class ChooseSocialGroupModel{
     
     weak var delegate:ChooseSocialGroupModelDelegate?
     
-    init(_ userId:String, _ password: String) {
+    init(_ account:String, _ userId:String, _ password: String) {
+        self.account = account
         self.userId = userId
         self.password = password
     }

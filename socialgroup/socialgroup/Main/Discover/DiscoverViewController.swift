@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableViewDelegate{
+class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate{
     
     
     override func viewDidLoad() {
@@ -19,8 +19,12 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
         self.title = "发现"
         
         
+        
+        
         setUpSubViews()
     }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -41,7 +45,7 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
     
     //MARK: UITableView Datasource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
+        4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -54,6 +58,10 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
                 cell!.textLabel!.text = "社交网络"
             case 1:
                 cell!.textLabel?.text = "寻人启事"
+            case 2:
+                cell?.textLabel?.text = "我发布的广播"
+            case 3:
+                cell?.textLabel?.text = "我发布的动态"
             default:
                 cell!.textLabel?.text = "Nothing"
             }
@@ -81,6 +89,15 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
             self.navigationController?.pushViewController(socialNetsVC, animated: true)
         case 1:
             showFindInputWindow()
+        case 2:
+            let myBroadcastVC = MyBroadcastViewController()
+            myBroadcastVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(myBroadcastVC, animated: true)
+        case 3:
+            let myCircleVC = MyCircleViewController()
+            myCircleVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(myCircleVC, animated: true)
+            
             
         default:
             return

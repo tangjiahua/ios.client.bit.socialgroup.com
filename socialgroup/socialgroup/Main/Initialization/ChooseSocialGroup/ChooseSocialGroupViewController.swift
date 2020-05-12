@@ -113,7 +113,7 @@ class ChooseSocialGroupViewController: BaseViewController, UITableViewDelegate, 
         let alert = UIAlertController(title: "提示", message: "成功加入该社群！", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "确定", style: .default) { (action) in
             // 成功加入的结果
-            UserDefaultsManager.setBasicUserInfo(self.chooseSocialGroupModel!.userId!, self.chooseSocialGroupModel!.password!, self.chooseSocialGroupModel!.socialGroupId!)
+            UserDefaultsManager.setBasicUserInfo(self.chooseSocialGroupModel!.account!, self.chooseSocialGroupModel!.userId!, self.chooseSocialGroupModel!.password!, self.chooseSocialGroupModel!.socialGroupId!)
             UserDefaultsManager.setLoginInfo()
             UIApplication.shared.windows.first?.rootViewController = MainController()
             

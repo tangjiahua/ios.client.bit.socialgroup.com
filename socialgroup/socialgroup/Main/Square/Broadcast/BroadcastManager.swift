@@ -24,6 +24,9 @@ protocol BroadcastManagerDelegate:NSObjectProtocol {
     
     func reportItemSuccess(item:BroadcastItem)
     func reportItemFail(result:String, info: String)
+    
+    func deleteItemSuccess(item:BroadcastItem)
+    func deleteItemFail(result:String, info: String)
 }
 
 
@@ -44,7 +47,7 @@ class BroadcastManager {
         
         
         if(!isRequesting){
-            fetchBroadcastItems(parameters: parameters, removeAllItems: true)
+            fetchBroadcastItems(parameters: parameters, removeAllItems: true, api: NetworkManager.SQUARE_FETCH_API)
         }else{
             print("重复请求")
         }
@@ -60,18 +63,18 @@ class BroadcastManager {
         let parameters:Parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":"broadcast", "method":"2", "square_item_id":square_item_id!, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
         
         if(!isRequesting){
-            fetchBroadcastItems(parameters: parameters, removeAllItems: false)
+            fetchBroadcastItems(parameters: parameters, removeAllItems: false, api: NetworkManager.SQUARE_FETCH_API)
         }else{
             print("重复请求")
         }
     }
     
     // 具体的网络请求
-    private func fetchBroadcastItems(parameters:Parameters, removeAllItems:Bool){
+    private func fetchBroadcastItems(parameters:Parameters, removeAllItems:Bool, api:String){
         
         isRequesting = true
         
-        Alamofire.request(NetworkManager.SQUARE_FETCH_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+        Alamofire.request(api, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result{
             case .success:
                 if let data = response.result.value{
@@ -259,5 +262,65 @@ class BroadcastManager {
         
     }
     
+    // delete
+    func deleteItem(item: BroadcastItem){
+        
+        let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "square_item_type":"broadcast","delete_type":"1", "correspond_id":String(item.broadcast_id), "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        Alamofire.request(NetworkManager.SQUARE_DELETE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                if let data = response.result.value{
+                    let json = JSON(data)
+                    if(json["result"].string!.equals(str: "1")){
+                        self.delegate?.deleteItemSuccess(item: item)
+                    }else{
+                        self.delegate?.deleteItemFail(result: "0", info: json["info"].string!)
+                    }
+                }
+            case .failure:
+                self.delegate?.deleteItemFail(result: "0", info: "response fail")
+            }
+        }
+        
+    }
     
+    
+}
+
+// MARK:- 我的Broadcast
+extension BroadcastManager{
+    func fetchMyNewBroadcastItems(){
+//        {
+//        “socialgroup_id”:1,    //1代表北理社群
+//        “square_item_type”:“broadcast”,    //可以填broadcast或者circle
+//        “method”:1,        //1代表拉取新的item，即以item的id为27为分界线拉取更新的数据；
+//        “square_item_id”:27    //分界id
+//        “user_id”:xx
+//        “password”:xx
+//        }
+        
+        let parameters:Parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":"broadcast", "method":"1", "square_item_id":"0", "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        
+        
+        if(!isRequesting){
+            fetchBroadcastItems(parameters: parameters, removeAllItems: true, api: NetworkManager.DISCOVER_MYPOST_FETCH_MY_POST)
+        }else{
+            print("重复请求")
+        }
+        
+    }
+    
+    // 拉取旧的items
+    func fetchMyOldBroadcastItems(){
+        let lastItem = broadcastItems.last
+        let square_item_id = lastItem?.broadcast_id
+        
+        let parameters:Parameters = ["socialgroup_id":UserDefaultsManager.getSocialGroupId(), "square_item_type":"broadcast", "method":"2", "square_item_id":square_item_id!, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        
+        if(!isRequesting){
+            fetchBroadcastItems(parameters: parameters, removeAllItems: false, api: NetworkManager.DISCOVER_MYPOST_FETCH_MY_POST)
+        }else{
+            print("重复请求")
+        }
+    }
 }

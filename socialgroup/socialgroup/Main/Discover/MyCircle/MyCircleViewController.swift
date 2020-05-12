@@ -8,12 +8,8 @@
 
 import UIKit
 
-protocol CircleViewControllerDelegate:NSObjectProtocol {
-    func hideTitleScrollView()
-    func showTitleScrollView()
-}
 
-class CircleViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, CircleManagerDelegate, CircleTableViewCellDelegate, SquareCommentViewControllerDelegate{
+class MyCircleViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, CircleManagerDelegate, CircleTableViewCellDelegate, SquareCommentViewControllerDelegate, UIGestureRecognizerDelegate{
     
     
     
@@ -46,6 +42,7 @@ class CircleViewController: BaseViewController, UITableViewDelegate, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "我发布的动态"
                 
         // model
         manager = CircleManager()
@@ -54,8 +51,7 @@ class CircleViewController: BaseViewController, UITableViewDelegate, UITableView
         //view
         view.backgroundColor = .secondarySystemBackground
 
-        tableView = UITableView(frame: CGRect(x: 0, y: 0, width: UIDevice.SCREEN_WIDTH, height: UIDevice.SCREEN_HEIGHT - UIDevice.NAVIGATION_BAR_HEIGHT - UIDevice.STATUS_BAR_HEIGHT - UIDevice.HEIGHT_OF_ADDITIONAL_FOOTER), style: .plain)
-        tableView.contentInset = .init(top: TitleHeight, left: 0, bottom: UIDevice.TAB_BAR_HEIGHT, right: 0)
+        tableView = UITableView(frame: view.frame, style: .plain)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -75,21 +71,37 @@ class CircleViewController: BaseViewController, UITableViewDelegate, UITableView
         
         
         if(NetworkManager.isNetworking()){
-            manager.fetchNewCircleItems()
+            manager.fetchMyNewCircleItems()
         }else{
             self.showTempAlert(info: "无法连接网络")
         }
+        
+        // pop Gesture
+        let popGesture = self.navigationController!.interactivePopGestureRecognizer
+        let popTarget = popGesture?.delegate
+        let popView = popGesture!.view!
+        popGesture?.isEnabled = false
+        
+        let popSelector = NSSelectorFromString("handleNavigationTransition:")
+        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+        fullScreenPoGesture.delegate = self
+        
+        popView.addGestureRecognizer(fullScreenPoGesture)
+    }
+    
+    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+       return true
     }
     
     
     // MARK:- Refresher
     @objc func refreshCircle(){
-        manager.fetchNewCircleItems()
+        manager.fetchMyNewCircleItems()
     }
 
 }
 
-extension CircleViewController{
+extension MyCircleViewController{
     
     // MARK:- tableView datasource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -158,22 +170,22 @@ extension CircleViewController{
         
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        if(scrollView.contentOffset.y <= -TitleHeight){
-            self.delegate?.showTitleScrollView()
-            return
-        }else{
-            self.delegate?.hideTitleScrollView()
-        }
-        
-//        if (self.lastContentOffset < scrollView.contentOffset.y) {
-//            // 向上滚动
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//
+//        if(scrollView.contentOffset.y <= -TitleHeight){
+//            self.delegate?.showTitleScrollView()
+//            return
+//        }else{
 //            self.delegate?.hideTitleScrollView()
 //        }
-        self.lastContentOffset = scrollView.contentOffset.y;
-        
-    }
+//
+////        if (self.lastContentOffset < scrollView.contentOffset.y) {
+////            // 向上滚动
+////            self.delegate?.hideTitleScrollView()
+////        }
+//        self.lastContentOffset = scrollView.contentOffset.y;
+//
+//    }
     
     func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
 //        self.delegate?.showTitleScrollView()
@@ -184,7 +196,7 @@ extension CircleViewController{
     // 滑到底部的时候加载更多的旧item
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if(indexPath.row == manager.circleItems.count - 1){
-            manager.fetchOldCircleItems()
+            manager.fetchMyOldCircleItems()
         }
     }
     
@@ -241,7 +253,7 @@ extension CircleViewController{
 }
 
 
-extension CircleViewController{
+extension MyCircleViewController{
     // MARK:- circle tableview Cell delegate
     func avatarTappedCircle(item: CircleItem) {
         let otherProfileVC = OtherProfileViewController()
@@ -307,12 +319,14 @@ extension CircleViewController{
 }
 
 // MARK:- SquareCommentViewController Delegate
-extension CircleViewController{
+extension MyCircleViewController{
     func popDeletedCircleItem(item: CircleItem) {
         manager.deleteItem(item: item)
+        
     }
     
     func popDeletedBroadcastItem(item: BroadcastItem) {
         print("you cant pop here")
     }
+    
 }

@@ -188,9 +188,11 @@ class LoginViewController:BaseViewController,UITextFieldDelegate, LoginModelDele
     func receiveLoginSuccessResponse(result: String, info: String) {
         print("user_id  " + info)
         self.hideHUD()
+        
+        
         let chooseSGVC = ChooseSocialGroupViewController()
         
-        chooseSGVC.chooseSocialGroupModel = ChooseSocialGroupModel(info, password)
+        chooseSGVC.chooseSocialGroupModel = ChooseSocialGroupModel(account, info, password)
         
         self.navigationController?.pushViewController(chooseSGVC, animated: true)
     }

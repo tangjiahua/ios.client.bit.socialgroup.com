@@ -73,7 +73,7 @@ class EditProfileViewController: BaseViewController, UITableViewDelegate, UITabl
         switch indexPath.row {
         case 0:
             let editTextProfileVC = EditTextProfileViewController()
-            editTextProfileVC.profileModel = profileModel
+            editTextProfileVC.profileModel = ProfileModel()
            self.navigationController?.pushViewController(editTextProfileVC, animated: true)
         case 1:
             let editWallVC = EditWallViewController()
