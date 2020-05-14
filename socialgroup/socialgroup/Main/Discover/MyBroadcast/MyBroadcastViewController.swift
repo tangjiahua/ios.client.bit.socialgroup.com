@@ -135,13 +135,16 @@ extension MyBroadcastViewController{
         return calculateHeightForRow(row: indexPath.row)
     }
     
+    // MARK:- 进入评论区
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        showCommentVC(item: manager.broadcastItems[indexPath.row])
+    }
+    
+    private func showCommentVC(item: BroadcastItem){
         let commentVC = SquareCommentViewController()
-        commentVC.broadcastItem = manager.broadcastItems[indexPath.row]
+        commentVC.broadcastItem = item
         commentVC.square_item_type = "broadcast"
-        commentVC.square_item_id = String(manager.broadcastItems[indexPath.row].broadcast_id)
-        commentVC.isInMyBroadcast = true
-        commentVC.delegate = self
+        commentVC.square_item_id = String(item.broadcast_id)
         commentVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(commentVC, animated: true)
     }
@@ -260,6 +263,11 @@ extension MyBroadcastViewController{
     
     
     // MARK:- Broadcast Cell delegate
+    
+    func collectionSpaceTapped(item: BroadcastItem) {
+        showCommentVC(item: item)
+    }
+    
     func likeButtonTappedBroadcast(item: BroadcastItem) {
         if(item.isLiked){
             let alert = UIAlertController(title: "提示", message: "您已点赞过，是否取消点赞？", preferredStyle: .alert)
@@ -330,7 +338,8 @@ extension MyBroadcastViewController{
 extension MyBroadcastViewController{
     func deleteItemSuccess(item: BroadcastItem) {
         self.showTempAlert(info: "删除成功")
-        self.refreshBroadcast()
+        tableView.reloadData()
+        tableView.setNeedsDisplay()
     }
     
     func deleteItemFail(result: String, info: String) {

@@ -15,7 +15,7 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.secondarySystemBackground
-        self.navigationController!.navigationBar.barTintColor = UIColor.secondarySystemBackground
+        self.navigationController!.navigationBar.barTintColor = UIColor.tertiarySystemBackground
         self.title = "发现"
         
         

@@ -15,6 +15,8 @@ protocol BroadcastTableViewCellDelegate:NSObjectProtocol {
     func dislikeButtonTappedBroadcast(item:BroadcastItem)
     func moreButtonTappedBroadcast(item:BroadcastItem)
     
+    func collectionSpaceTapped(item:BroadcastItem)
+    
 }
 
 class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -177,6 +179,9 @@ class BroadcastTableViewCell: UITableViewCell, UICollectionViewDelegate, UIColle
             collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "identifier")
             collectionView.isScrollEnabled = false
             
+            
+           
+            
             self.addSubview(collectionView)
             
             //
@@ -305,11 +310,57 @@ extension BroadcastTableViewCell{
     
     // MARK:- CollectionView DataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return item.picture_count
+        
+        if(item.picture_count < 3){
+            return 3
+        }else if(item.picture_count < 6){
+            return 6
+        }else{
+            return 9
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "identifier", for: indexPath)
+        
+        // 保证空白的地方点击也可以进入详情
+        switch item.picture_count {
+        case 2:
+            if(indexPath.row == 2){
+                let tapGetureReco = UITapGestureRecognizer(target: self, action: #selector(collectionTapped))
+                cell.addGestureRecognizer(tapGetureReco)
+                return cell
+            }
+        case 4:
+            if(indexPath.row == 4 || indexPath.row == 5){
+                let tapGetureReco = UITapGestureRecognizer(target: self, action: #selector(collectionTapped))
+                cell.addGestureRecognizer(tapGetureReco)
+                return cell
+            }
+        case 5:
+            if(indexPath.row == 5){
+                let tapGetureReco = UITapGestureRecognizer(target: self, action: #selector(collectionTapped))
+                cell.addGestureRecognizer(tapGetureReco)
+                return cell
+            }
+        case 7:
+            if(indexPath.row == 7 || indexPath.row == 8){
+                let tapGetureReco = UITapGestureRecognizer(target: self, action: #selector(collectionTapped))
+                cell.addGestureRecognizer(tapGetureReco)
+                return cell
+            }
+        case 8:
+            if(indexPath.row == 8){
+                let tapGetureReco = UITapGestureRecognizer(target: self, action: #selector(collectionTapped))
+                cell.addGestureRecognizer(tapGetureReco)
+                return cell
+            }
+        default:
+            print("default")
+        }
+        
+        
+        
         let imageView = UIImageView(frame: cell.bounds)
         let picThumbnailUrl = NetworkManager.SERVER_RESOURCE_URL + "socialgroup_" + UserDefaultsManager.getSocialGroupId() + "/square/broadcast/thumbnail/" + String(item.broadcast_id) + "@" + String(indexPath.row + 1) + ".jpg"
         
@@ -319,6 +370,9 @@ extension BroadcastTableViewCell{
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 5
         imageView.layer.masksToBounds = true
+        
+        
+        
         
         originImageViews.append(imageView)
         imageUrls.append(picUrl)
@@ -348,6 +402,11 @@ extension BroadcastTableViewCell{
     
     @objc func singleImageTapped(){
         imageTapped(0)
+    }
+    
+    @objc func collectionTapped(){
+        print("collectin tapped")
+        self.delegate?.collectionSpaceTapped(item: item)
     }
     
     

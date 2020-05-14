@@ -272,7 +272,9 @@ class BroadcastManager {
                 if let data = response.result.value{
                     let json = JSON(data)
                     if(json["result"].string!.equals(str: "1")){
+                        self.removeItem(item: item)
                         self.delegate?.deleteItemSuccess(item: item)
+                    
                     }else{
                         self.delegate?.deleteItemFail(result: "0", info: json["info"].string!)
                     }
@@ -282,6 +284,19 @@ class BroadcastManager {
             }
         }
         
+    }
+    
+    private func removeItem(item: BroadcastItem){
+        
+        var index = 0
+        
+        for i in broadcastItems{
+            if(i.broadcast_id == item.broadcast_id){
+                broadcastItems.remove(at: index)
+                break
+            }
+            index += 1
+        }
     }
     
     

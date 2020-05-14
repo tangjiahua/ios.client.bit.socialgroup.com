@@ -488,6 +488,11 @@ extension SquareCommentViewController{
     
     // MARK:- original broadcast cell delegate
     // 点赞 评论 问号 更多四个图标的代理方法
+    
+    func collectionSpaceTapped(item: BroadcastItem) {
+        print("cant see comment here")
+    }
+    
     func likeButtonTappedBroadcast(item: BroadcastItem) {
         let broadcastManager = BroadcastManager()
         broadcastManager.delegate = self

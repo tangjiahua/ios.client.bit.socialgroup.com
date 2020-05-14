@@ -23,7 +23,7 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         self.navigationItem.title = "设置"
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.barTintColor = .secondarySystemBackground
+        navigationController?.navigationBar.barTintColor = .tertiarySystemBackground
         
         tableView = UITableView(frame: view.bounds)
         tableView.backgroundColor = .secondarySystemBackground

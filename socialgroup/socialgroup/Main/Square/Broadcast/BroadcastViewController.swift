@@ -17,6 +17,8 @@ class BroadcastViewController: BaseViewController, UITableViewDataSource, UITabl
     
     
     
+    
+    
     //manager
     var manager:BroadcastManager!
     
@@ -83,6 +85,12 @@ class BroadcastViewController: BaseViewController, UITableViewDataSource, UITabl
     // MARK:- Refresher
     @objc func refreshBroadcast(){
         manager.fetchNewBroadcastItems()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+            if(self.refresher.isRefreshing){
+                self.refresher.endRefreshing()
+                self.showTempAlert(info: "刷新失败")
+            }
+        }
     }
     
 
@@ -122,14 +130,25 @@ extension BroadcastViewController{
         return calculateHeightForRow(row: indexPath.row)
     }
     
+    
+    
+    // MARK:- 选中进入评论区
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        showCommentVC(item: manager.broadcastItems[indexPath.row])
+        
+        
+    }
+    
+    private func showCommentVC(item: BroadcastItem){
         let commentVC = SquareCommentViewController()
-        commentVC.broadcastItem = manager.broadcastItems[indexPath.row]
+        commentVC.broadcastItem = item
         commentVC.square_item_type = "broadcast"
-        commentVC.square_item_id = String(manager.broadcastItems[indexPath.row].broadcast_id)
+        commentVC.square_item_id = String(item.broadcast_id)
         commentVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(commentVC, animated: true)
     }
+    
     
     func calculateHeightForRow(row: Int) -> CGFloat{
         let cellWidth = ScreenWidth - 10
@@ -302,6 +321,10 @@ extension BroadcastViewController{
         } ))
         
         pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
+    }
+    
+    func collectionSpaceTapped(item: BroadcastItem) {
+        showCommentVC(item: item)
     }
     
     
