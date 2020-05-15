@@ -31,6 +31,7 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
         // Do any additional setup after loading the view.
         self.navigationItem.title = "谁戳过我"
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.barTintColor = .secondarySystemBackground
         
         tableView = UITableView(frame: view.bounds)
         tableView.backgroundColor = .secondarySystemBackground
@@ -44,23 +45,10 @@ class UserListViewController: BaseViewController, UITableViewDelegate, UITableVi
         userListManager = UserListManager()
         userListManager.delegate = self
         userListManager.fetchStickToMeList()
-        
-        // pop Gesture
-        let popGesture = self.navigationController!.interactivePopGestureRecognizer
-        let popTarget = popGesture?.delegate
-        let popView = popGesture!.view!
-        popGesture?.isEnabled = false
-        
-        let popSelector = NSSelectorFromString("handleNavigationTransition:")
-        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
-        fullScreenPoGesture.delegate = self
-        
-        popView.addGestureRecognizer(fullScreenPoGesture)
+
     }
     
-    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-       return true
-    }
+
     
     
     //MARK:- tableview delegate

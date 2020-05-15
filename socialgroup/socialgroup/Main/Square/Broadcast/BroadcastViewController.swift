@@ -13,7 +13,7 @@ protocol BroadcastViewControllerDelegate:NSObjectProtocol {
     func showTitleScrollView()
 }
 
-class BroadcastViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, BroadcastManagerDelegate, BroadcastTableViewCellDelegate{
+class BroadcastViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, BroadcastManagerDelegate, BroadcastTableViewCellDelegate, UINavigationControllerDelegate{
     
     
     
@@ -79,7 +79,11 @@ class BroadcastViewController: BaseViewController, UITableViewDataSource, UITabl
             self.showTempAlert(info: "无法连接网络")
         }
         
+        
+        
     }
+    
+    
     
     
     // MARK:- Refresher

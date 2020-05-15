@@ -13,7 +13,7 @@ protocol CircleViewControllerDelegate:NSObjectProtocol {
     func showTitleScrollView()
 }
 
-class CircleViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, CircleManagerDelegate, CircleTableViewCellDelegate, SquareCommentViewControllerDelegate{
+class CircleViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, CircleManagerDelegate, CircleTableViewCellDelegate, SquareCommentViewControllerDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate{
     
     
     
@@ -79,6 +79,7 @@ class CircleViewController: BaseViewController, UITableViewDelegate, UITableView
         }else{
             self.showTempAlert(info: "无法连接网络")
         }
+        
     }
     
     

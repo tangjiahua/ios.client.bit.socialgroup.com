@@ -25,6 +25,8 @@ class NetworkManager{
     static let SQUARE_FETCH_DETAIL_REPLY:String = "https://www.bitsocialgroup.com/api/square/fetch_detail_reply"
     static let SQUARE_REPLY_API:String = "https://www.bitsocialgroup.com/api/square/reply"
     static let SQUARE_DELETE_API:String = "https://www.bitsocialgroup.com/api/square/delete"
+    static let SQUARE_FETCH_PARTICULAR_API:String = "https://www.bitsocialgroup.com/api/square/fetch_particular"
+
     static let PROFILE_STICK_API:String = "https://www.bitsocialgroup.com/api/profile/stick"
     static let WALL_FETCH_API:String = "https://www.bitsocialgroup.com/api/wall/fetch"
     static let WALL_PUSH_API:String = "https://www.bitsocialgroup.com/api/wall/push"

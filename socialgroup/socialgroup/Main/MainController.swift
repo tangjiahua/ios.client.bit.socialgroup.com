@@ -42,7 +42,7 @@ class MainController: UITabBarController, UITabBarControllerDelegate, PushMessag
         //timer
         fetchFromServerSuccess()
         fetchFromServer()
-        timer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(fetchFromServer), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 45.0, target: self, selector: #selector(fetchFromServer), userInfo: nil, repeats: true)
         manager.delegate = self
         
         //application badge

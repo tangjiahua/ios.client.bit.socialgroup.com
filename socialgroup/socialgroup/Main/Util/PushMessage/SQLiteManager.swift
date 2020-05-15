@@ -18,6 +18,7 @@ let push_message_id = Expression<Int>("push_message_id")
 let push_message_type = Expression<Int>("type")
 let push_message_content = Expression<String>("content")
 let push_message_create_date = Expression<String>("create_date")
+let push_message_is_checked = Expression<Bool>("is_checked")
 
 
 //MARK:- SQLiteManager
@@ -59,7 +60,7 @@ class SQLiteManager: NSObject {
                     builder.column(push_message_type)
                     builder.column(push_message_content)
                     builder.column(push_message_create_date)
-                    
+                    builder.column(push_message_is_checked)
                 })
             )
             
@@ -71,8 +72,8 @@ class SQLiteManager: NSObject {
     //增
     func insertPushMessageTable(item: JSON) {
         
-        let insert = getPushMessageTable().insert(push_message_id <- item["push_message_id"].intValue, push_message_type <- item["type"].intValue, push_message_content <- item["content"].stringValue, push_message_create_date <- item["create_date"].stringValue)
-        print("插入 id: \(String(describing: item["push_message_id"].int)), date: \(String(describing: item["create_date"].string))")
+        let insert = getPushMessageTable().insert(push_message_id <- item["push_message_id"].intValue, push_message_type <- item["type"].intValue, push_message_content <- item["content"].stringValue, push_message_create_date <- item["create_date"].stringValue, push_message_is_checked <- false)
+//        print("插入 id: \(String(describing: item["push_message_id"].int)), date: \(String(describing: item["create_date"].string))")
         if let rowId = try? getDB().run(insert) {
             print("插入成功：\(rowId)")
         } else {
@@ -82,15 +83,29 @@ class SQLiteManager: NSObject {
     }
     
     
-    
+    // 更新
+        func updatePushMessageChecked(id: Int) -> Void {
+            let item = getPushMessageTable().filter(push_message_id == id)
+            
+            do {
+                if try getDB().run(item.update(push_message_is_checked <- true)) > 0 {
+                    print("更新成功")
+                } else {
+                    print("没有发现 条目")
+                }
+            } catch {
+                print("更新失败：\(error)")
+            }
+        }
     
     
     func searchPushMessage(limit:Int?, offset:Int?) -> [JSON]{
         var jsons:[JSON] = []
         for item in try! getDB().prepare(getPushMessageTable().order(push_message_id.desc)){
             
-            print("读取：\(item[push_message_id]), \(item[push_message_create_date])")
-            let model:JSON = ["push_message_id": item[push_message_id], "type": item[push_message_type], "content": item[push_message_content], "create_date": item[push_message_create_date]]
+//            print("读取：\(item[push_message_id]), \(item[push_message_create_date])")
+            let model:JSON = ["push_message_id": item[push_message_id], "type": item[push_message_type], "content": item[push_message_content], "create_date": item[push_message_create_date], "is_checked":item[push_message_is_checked]]
+            
             jsons.append(model)
             
         }

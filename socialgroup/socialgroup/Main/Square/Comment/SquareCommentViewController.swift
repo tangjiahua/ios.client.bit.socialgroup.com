@@ -19,8 +19,12 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
     var delegate:SquareCommentViewControllerDelegate?
     
     var square_item_id:String!
+    
+    
     var broadcastItem:BroadcastItem!
     var circleItem:CircleItem!
+    
+    
     var square_item_type:String!   //1代表broadcast
     var tableView:UITableView!
     var segment:UISegmentedControl!
@@ -69,22 +73,10 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
         
         initUI()
         
-        // pop Gesture
-        let popGesture = self.navigationController!.interactivePopGestureRecognizer
-        let popTarget = popGesture?.delegate
-        let popView = popGesture!.view!
-        popGesture?.isEnabled = false
         
-        let popSelector = NSSelectorFromString("handleNavigationTransition:")
-        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
-        fullScreenPoGesture.delegate = self
-        
-        popView.addGestureRecognizer(fullScreenPoGesture)
     }
     
-    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-       return true
-    }
+    
     
 
     func initUI(){

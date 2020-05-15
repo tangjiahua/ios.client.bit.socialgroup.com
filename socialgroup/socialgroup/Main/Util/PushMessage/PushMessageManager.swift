@@ -22,6 +22,7 @@ struct PushMessageModel{
     var type:Int
     var content:String
     var create_date:String
+    var is_checked:Bool
 }
 
 
@@ -60,14 +61,16 @@ class PushMessageManager{
         let jsons = sqliteManager.searchPushMessage(limit: nil, offset: nil)
         
         for json in jsons{
-            let model = PushMessageModel(push_message_id: json["push_message_id"].int!, type: json["type"].int!,  content: json["content"].string!, create_date: json["create_date"].string!)
+            let model = PushMessageModel(push_message_id: json["push_message_id"].int!, type: json["type"].int!,  content: json["content"].string!, create_date: json["create_date"].string!, is_checked: json["is_checked"].bool!)
             pushMessageModels.append(model)
             
         }
         return pushMessageModels
     }
     
-    
+    public func checkedPushMessage(id: Int){
+        sqliteManager.updatePushMessageChecked(id: id)
+    }
     
     
     
@@ -111,14 +114,14 @@ class PushMessageManager{
                                 // 代表是戳一戳消息
                                 let whoStickMeUserId = content["user_id"].string!
                                 let content = "{\"user_id\":\(whoStickMeUserId)}"
-                                let item = PushMessageModel(push_message_id: Int(push_message_id)!, type: Int(type)!, content: content, create_date: create_date)
+                                let item = PushMessageModel(push_message_id: Int(push_message_id)!, type: Int(type)!, content: content, create_date: create_date, is_checked: false)
                                 self.pushMessageModels.append(item)
                                 
                             }else if(type.equals(str: "1") || type.equals(str: "2")){
                                 let square_item_type = content["square_item_type"].string!
                                 let square_item_id = content["square_item_id"].string!
-                                let content = "{\"square_item_type\":\(square_item_type),\"square_item_id\":\(square_item_id)}"
-                                let item = PushMessageModel(push_message_id: Int(push_message_id)!, type: Int(type)!, content: content, create_date: create_date)
+                                let content = "{\"square_item_type\":\"\(square_item_type)\",\"square_item_id\":\(square_item_id)}"
+                                let item = PushMessageModel(push_message_id: Int(push_message_id)!, type: Int(type)!, content: content, create_date: create_date, is_checked: false)
                                 self.pushMessageModels.append(item)
                             }
                             
@@ -145,7 +148,7 @@ class PushMessageManager{
     private func addNewPushMessageToLocal(){
         for model in pushMessageModels{
             
-            let json:JSON = ["push_message_id":model.push_message_id, "type":model.type, "content":model.content, "create_date":model.create_date]
+            let json:JSON = ["push_message_id":model.push_message_id, "type":model.type, "content":model.content, "create_date":model.create_date, "is_checked":model.is_checked]
             sqliteManager.insertPushMessageTable(item: json)
         }
         

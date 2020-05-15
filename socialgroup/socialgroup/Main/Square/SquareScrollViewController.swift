@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewControllerDelegate, CircleViewControllerDelegate, BasePushViewControllerDelegate {
+class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewControllerDelegate, CircleViewControllerDelegate, BasePushViewControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
     
     
     var broadcastVC: BroadcastViewController!
@@ -42,6 +42,25 @@ class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewC
         // left buttons
         initSocialGroupView()
         
+        // pop Gesture
+        let popGesture = self.navigationController!.interactivePopGestureRecognizer
+        let popTarget = popGesture?.delegate
+        let popView = popGesture!.view!
+        popGesture?.isEnabled = false
+        
+        let popSelector = NSSelectorFromString("handleNavigationTransition:")
+        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+        fullScreenPoGesture.delegate = self
+        
+        popView.addGestureRecognizer(fullScreenPoGesture)
+        
+    }
+    
+    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if self.navigationController!.viewControllers.count > 1 {
+              return true
+          }
+         return false
     }
     
     func initPushButton(){

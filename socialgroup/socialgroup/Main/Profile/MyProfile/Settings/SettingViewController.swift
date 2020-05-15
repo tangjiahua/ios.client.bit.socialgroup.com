@@ -23,7 +23,7 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         self.navigationItem.title = "设置"
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.barTintColor = .tertiarySystemBackground
+        navigationController?.navigationBar.barTintColor = .secondarySystemBackground
         
         tableView = UITableView(frame: view.bounds)
         tableView.backgroundColor = .secondarySystemBackground
@@ -34,23 +34,7 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
         
         view.addSubview(tableView)
         
-        // pop Gesture
-        let popGesture = self.navigationController!.interactivePopGestureRecognizer
-        let popTarget = popGesture?.delegate
-        let popView = popGesture!.view!
-        popGesture?.isEnabled = false
-        
-        let popSelector = NSSelectorFromString("handleNavigationTransition:")
-        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
-        fullScreenPoGesture.delegate = self
-        
-        popView.addGestureRecognizer(fullScreenPoGesture)
-
-        // Do any additional setup after loading the view.
-    }
-    
-    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-       return true
+       
     }
     
     

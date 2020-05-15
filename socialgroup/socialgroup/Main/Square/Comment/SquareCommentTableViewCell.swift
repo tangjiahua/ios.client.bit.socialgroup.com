@@ -39,6 +39,8 @@ class SquareCommentTableViewCell: UITableViewCell {
             super.frame = frame
         }
     }
+    
+    
     let cellInitPadding:CGFloat = 10
     let padding:CGFloat = 10
     let avatarImageViewHeight:CGFloat = 40
@@ -117,10 +119,10 @@ class SquareCommentTableViewCell: UITableViewCell {
         
         //more reply button
         if(!item.reply_count.equals(str: "0")){
-            replyLabel = UILabel(frame: CGRect(x: padding, y: contentLabel.frame.maxY + padding, width: ScreenWidth - padding*2 - cellInitPadding, height: contentLabelFontSize))
+            replyLabel = UILabel(frame: CGRect(x: padding, y: contentLabel.frame.maxY, width: ScreenWidth - padding*2 - cellInitPadding, height: contentLabelFontSize + padding*3))
             replyLabel.text = "查看" + item.reply_count + "条回复"
             replyLabel.textColor = .systemBlue
-            replyLabel.textAlignment = .left
+            replyLabel.textAlignment = .justified
             replyLabel.isUserInteractionEnabled = true
             let seeReplyGestureRecognizer = UITapGestureRecognizer(target: self
                 , action: #selector(seeReply))

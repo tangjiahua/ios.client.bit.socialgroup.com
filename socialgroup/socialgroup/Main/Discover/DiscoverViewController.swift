@@ -44,6 +44,7 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
         fullScreenPoGesture.delegate = self
         
         popView.addGestureRecognizer(fullScreenPoGesture)
+        
         setUpSubViews()
         
         

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, EditTextProfileViewControllerDelegate {
+class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, EditTextProfileViewControllerDelegate, UIGestureRecognizerDelegate {
     
     
     
@@ -30,7 +30,23 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
         super.viewDidLoad()
         super.profileModel.myProfileModelDelegate = self
         initMyProfileView()
+        
+        // pop Gesture
+        let popGesture = self.navigationController!.interactivePopGestureRecognizer
+        let popTarget = popGesture?.delegate
+        let popView = popGesture!.view!
+        popGesture?.isEnabled = false
+        
+        let popSelector = NSSelectorFromString("handleNavigationTransition:")
+        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+        fullScreenPoGesture.delegate = self
+        
+        popView.addGestureRecognizer(fullScreenPoGesture)
+        
+        
     }
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
