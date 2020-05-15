@@ -31,7 +31,7 @@ class NetworkManager{
     static let DISCOVER_MEMBERS_FETCH_API:String = "https://www.bitsocialgroup.com/api/discover/members/fetch"
     static let DISCOVER_MEMBERS_SEARCH_API:String = "https://www.bitsocialgroup.com/api/discover/members/search"
     static let DISCOVER_MYPOST_FETCH_MY_POST = "https://www.bitsocialgroup.com/api/discover/mypost/fetch_my_post"
-    
+    static let DISCOVER_FETCH_PUSH_MESSAGE = "https://www.bitsocialgroup.com/api/discover/fetch_push_message"
     static let manager:NetworkReachabilityManager! = NetworkReachabilityManager(host: "https://www.bitsocialgroup.com")
     
     static let SERVER_RESOURCE_URL:String = "https://api.bitsocialgroup.com/resource/"

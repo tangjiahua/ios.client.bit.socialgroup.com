@@ -198,7 +198,7 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
     
     
     private func calculateCommentCellHeight(itemIndex: Int) -> CGFloat{
-        var height = padding + avatarImageViewHeight + padding + UIDevice.getLabHeigh(labelStr: manager.squareCommentItems[itemIndex].content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2) + padding*2
+        var height = padding + avatarImageViewHeight + padding + UIDevice.getLabHeigh(labelStr: manager.squareCommentItems[itemIndex].content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2 - 10) + padding*2
         if(!manager.squareCommentItems[itemIndex].reply_count.equals(str: "0")){
             height = height + moreReplyLabelHeight + padding/2
         }

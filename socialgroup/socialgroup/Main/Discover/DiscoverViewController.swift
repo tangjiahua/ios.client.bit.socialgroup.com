@@ -9,31 +9,81 @@
 import Foundation
 import UIKit
 
-class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate{
+class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate, PushMessageBadgeChangeProtocol{
     
+    
+    
+    var tableView:UITableView!
+    
+    var button:UIButton?
+    
+    let badgeWidth:CGFloat = 25
+    let badgeX:CGFloat = 65
+    var badgeY:CGFloat{
+        return (cellHeight - 10 - badgeWidth)/2
+    }
+    
+    let cellHeight:CGFloat = 60
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.secondarySystemBackground
-        self.navigationController!.navigationBar.barTintColor = UIColor.tertiarySystemBackground
+        self.navigationController!.navigationBar.barTintColor = UIColor.secondarySystemBackground
         self.title = "发现"
         
         
         
+        // pop Gesture
+        let popGesture = self.navigationController!.interactivePopGestureRecognizer
+        let popTarget = popGesture?.delegate
+        let popView = popGesture!.view!
+        popGesture?.isEnabled = false
         
+        let popSelector = NSSelectorFromString("handleNavigationTransition:")
+        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+        fullScreenPoGesture.delegate = self
+        
+        popView.addGestureRecognizer(fullScreenPoGesture)
         setUpSubViews()
+        
+        
+        // MainView的代理设置
+        let mainVC = tabBarController as? MainController
+        mainVC?.pushMessageBadgeChangeDelegate = self
     }
     
-    
+    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if self.navigationController!.viewControllers.count > 1 {
+            return true
+        }
+       return false
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        discoverMessageBadgeChange()
+    }
+    
+    func discoverMessageBadgeChange() {
+        tableView.reloadData()
+    }
+    
+    
+    
+    
+    
+    
+    
     func setUpSubViews(){
         
         //tableView
-        let tableView = UITableView(frame: view.bounds, style: .plain)
+        tableView = UITableView(frame: view.bounds, style: .plain)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.frame = self.view.bounds
@@ -45,7 +95,7 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
     
     //MARK: UITableView Datasource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -62,13 +112,45 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
                 cell?.textLabel?.text = "我发布的广播"
             case 3:
                 cell?.textLabel?.text = "我发布的动态"
+            case 4:
+                cell?.textLabel?.text = "消息"
+                if let badgeValue = tabBarItem.badgeValue{
+                    if(button != nil){
+                        button?.setTitle(badgeValue, for: .normal)
+                    }else{
+                        button = UIButton(frame: CGRect(x: badgeX, y: badgeY, width: badgeWidth, height: badgeWidth))
+                        button?.layer.cornerRadius = badgeWidth/2
+                        button?.layer.masksToBounds = true
+                        button!.backgroundColor = .red
+                        button!.setTitle(badgeValue, for: .normal)
+                        
+                        cell?.addSubview(button!)
+                    }
+                    
+                }
             default:
                 cell!.textLabel?.text = "Nothing"
             }
-            
-            
-            return cell!
+        }else{
+            // 刷新消息的角标
+            if(indexPath.row == 4){
+                if let badgeValue = tabBarItem.badgeValue{
+                    if(button != nil){
+                        button?.setTitle(badgeValue, for: .normal)
+                    }else{
+                        button = UIButton(frame: CGRect(x: badgeX, y: badgeY, width: badgeWidth, height: badgeWidth))
+                        button!.backgroundColor = .red
+                        button!.setTitle(badgeValue, for: .normal)
+                        button?.layer.cornerRadius = badgeWidth/2
+                        button?.layer.masksToBounds = true
+                        cell?.addSubview(button!)
+                    }
+                    
+                }
+            }
         }
+        
+        
         return cell!
     }
     
@@ -78,7 +160,7 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
     
     //MARK: UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return cellHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -97,7 +179,22 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
             let myCircleVC = MyCircleViewController()
             myCircleVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(myCircleVC, animated: true)
+        case 4:
+            let pushMessageVC = PushMessageViewController()
+            pushMessageVC.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(pushMessageVC, animated: true)
             
+            // 消除tabbar角标
+            PushMessageManager.manager.resetNewPushMessageCount()
+            tabBarItem.badgeValue = nil
+            //消除tablecell角标
+            if(button != nil){
+                button?.removeFromSuperview()
+                button = nil
+                tableView.reloadData()
+            }
+            //消除应用图标
+            UIApplication.shared.applicationIconBadgeNumber = 0
             
         default:
             return

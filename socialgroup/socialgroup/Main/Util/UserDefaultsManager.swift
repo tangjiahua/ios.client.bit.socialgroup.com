@@ -44,6 +44,24 @@ class UserDefaultsManager{
         userDefaults.set(false, forKey: "isLogin")
     }
     
+    static public func setNewestPushMessageId(id:Int){
+        userDefaults.set(id, forKey: "newestPushMessageId")
+    }
+    
+    static public func setNewPushMessageCount(count: Int){
+        userDefaults.set(count, forKey: "newPushMessageCount")
+    }
+    
+    
+    
+    static public func getNewPushMessageCount() -> Int{
+        return userDefaults.integer(forKey: "newPushMessageCount")
+    }
+    
+    static public func getNewestPushMessageId() ->Int{
+        return userDefaults.integer(forKey: "newestPushMessageId")
+    }
+    
     static public func getAccount() -> String{
         return userDefaults.string(forKey: "account")!
     }

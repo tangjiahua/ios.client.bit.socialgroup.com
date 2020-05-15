@@ -107,7 +107,7 @@ class SquareCommentTableViewCell: UITableViewCell {
         self.addSubview(dateLabel)
         
         // content
-        contentLabel = UILabel(frame: CGRect(x: padding, y: avatarImageView.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: item.content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2)))
+        contentLabel = UILabel(frame: CGRect(x: padding, y: avatarImageView.frame.maxY + padding, width: ScreenWidth - padding*2 - 10, height: UIDevice.getLabHeigh(labelStr: item.content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2 - 10)))
         contentLabel.font = .systemFont(ofSize: contentLabelFontSize)
         contentLabel.numberOfLines = 0
         contentLabel.text = item.content

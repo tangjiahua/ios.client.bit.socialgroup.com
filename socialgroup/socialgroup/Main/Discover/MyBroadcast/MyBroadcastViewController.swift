@@ -74,23 +74,23 @@ class MyBroadcastViewController: BaseViewController, UITableViewDataSource, UITa
             self.showTempAlert(info: "无法连接网络")
         }
         
-        
-        // pop Gesture
-        let popGesture = self.navigationController!.interactivePopGestureRecognizer
-        let popTarget = popGesture?.delegate
-        let popView = popGesture!.view!
-        popGesture?.isEnabled = false
-        
-        let popSelector = NSSelectorFromString("handleNavigationTransition:")
-        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
-        fullScreenPoGesture.delegate = self
-        
-        popView.addGestureRecognizer(fullScreenPoGesture)
+//
+//        // pop Gesture
+//        let popGesture = self.navigationController!.interactivePopGestureRecognizer
+//        let popTarget = popGesture?.delegate
+//        let popView = popGesture!.view!
+//        popGesture?.isEnabled = false
+//
+//        let popSelector = NSSelectorFromString("handleNavigationTransition:")
+//        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+//        fullScreenPoGesture.delegate = self
+//
+//        popView.addGestureRecognizer(fullScreenPoGesture)
     }
     
-    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-       return true
-    }
+//    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//       return true
+//    }
     
     
     // MARK:- Refresher

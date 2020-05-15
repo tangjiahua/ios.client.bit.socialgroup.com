@@ -52,6 +52,7 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
         if(super.profileModel.getMyProfileModelFromLocal()){
             print("get my profile local success")
             super.refreshProfileView()
+            super.profileModel.getMyProfileModelFromServer()
         }else{
             super.profileModel.getMyProfileModelFromServer()
         }

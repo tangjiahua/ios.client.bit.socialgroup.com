@@ -7,15 +7,25 @@
 //
 
 import UIKit
+import AudioToolbox
 
-class MainController: UITabBarController, UITabBarControllerDelegate {
+protocol PushMessageBadgeChangeProtocol:NSObjectProtocol{
+    func discoverMessageBadgeChange()
+}
+
+class MainController: UITabBarController, UITabBarControllerDelegate, PushMessageManagerDelegate {
     
     let squareVC = SquareScrollViewController()
     let wallVC = WallViewController()
     let discoverVC = DiscoverViewController()
     let profileVC = MyProfileViewController()
 
+    var manager = PushMessageManager.manager
+    var timer:Timer?
+    var pushMessageBadgeChangeDelegate:PushMessageBadgeChangeProtocol?
     
+    var isFirstlyLaunch:Bool = true
+
     override func viewDidLoad() {
         super.viewDidLoad()
         //square
@@ -28,7 +38,78 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         profileVC.profileModel.isMyProfile = true
         initTabBarItems()
         
+        
+        //timer
+        fetchFromServerSuccess()
+        fetchFromServer()
+        timer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(fetchFromServer), userInfo: nil, repeats: true)
+        manager.delegate = self
+        
+        //application badge
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.carPlay,.sound], completionHandler: { (success, error) in
+          print("授权" + (success ? "成功" : "失败"))
+        })
+        
     }
+    
+    private func updateTimer(count:Int) {
+        
+        if let old_count_str = self.tabBar.items?[2].badgeValue{
+            let old_count = Int(old_count_str)!
+            if(count > old_count){
+                let soundID = SystemSoundID(kSystemSoundID_Vibrate)
+                //振动
+                AudioServicesPlaySystemSound(soundID)
+                
+                
+                
+                self.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
+                
+                pushMessageBadgeChangeDelegate?.discoverMessageBadgeChange()
+
+                UIApplication.shared.applicationIconBadgeNumber = count
+            }
+        }else{
+            
+            if(!isFirstlyLaunch){
+                let soundID = SystemSoundID(kSystemSoundID_Vibrate)
+                //振动
+                AudioServicesPlaySystemSound(soundID)
+                
+            }
+            isFirstlyLaunch = false
+            self.tabBar.items?[2].badgeValue = count > 0 ? "\(count)" : nil
+            
+            pushMessageBadgeChangeDelegate?.discoverMessageBadgeChange()
+
+            UIApplication.shared.applicationIconBadgeNumber = count
+        }
+        
+        
+
+    }
+    
+    func fetchFromServerSuccess() {
+        print("fetch success---------------------------------------------------------------------------")
+        let count = manager.getNewPushMessageCount()
+        if(count != 0){
+            updateTimer(count: count)
+        }
+        
+    }
+    
+    func fetchFromServerFail() {
+        
+    }
+    
+    @objc func fetchFromServer(){
+        manager.fetchFromServer()
+    }
+    
+    
+    
+    
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -56,6 +137,8 @@ class MainController: UITabBarController, UITabBarControllerDelegate {
         
         discoverVC.tabBarItem.title = "发现"
         discoverVC.tabBarItem.image = UIImage(named: "discoverTabBarIcon")
+//        pushMessageBadgeChangeDelegate = discoverVC
+        
         
         profileVC.tabBarItem.title = "我"
         profileVC.tabBarItem.image = UIImage(named: "profileTabBarIcon")

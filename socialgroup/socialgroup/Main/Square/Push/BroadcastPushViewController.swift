@@ -92,13 +92,20 @@ class BroadcastPushViewController: BasePushViewController, UITableViewDelegate, 
         if(textTitle.equals(str: "") || textContent.equals(str: "")){
             self.showTempAlertWithOneSecond(info: "标题或内容为空")
         }else{
-            if(photos.count != 0){
-                // 带图发布
-                pushWithPhoto(method: "broadcast", title: textTitle, content: textContent, photos: photos)
+            
+            if(textTitle.count > maxTitleCount){
+                self.showTempAlert(info: "标题超出\(maxTitleCount)字")
             }else{
-                // 文字发布
-                pushWithoutPhoto(method: "broadcast", title: textTitle, content: textContent)
+                if(photos.count != 0){
+                    // 带图发布
+                    pushWithPhoto(method: "broadcast", title: textTitle, content: textContent, photos: photos)
+                }else{
+                    // 文字发布
+                    pushWithoutPhoto(method: "broadcast", title: textTitle, content: textContent)
+                }
             }
+            
+            
         }
     }
     
@@ -287,12 +294,12 @@ extension BroadcastPushViewController{
     
     
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if(textField.text!.count + string.count > maxTitleCount){
-            return false
-        }
-        return true
-    }
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        if(textField.text!.count + string.count > maxTitleCount){
+//            return false
+//        }
+//        return true
+//    }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textTitle = textField.text ?? ""

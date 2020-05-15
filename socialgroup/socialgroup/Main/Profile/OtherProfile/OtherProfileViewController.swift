@@ -88,7 +88,9 @@ extension OtherProfileViewController{
     
     func stickSuccess() {
         self.showTempAlertWithOneSecond(info: "戳一戳成功")
-        super.stickCountLabel.text = String(Int(profileModel.stickCount)! + 1)
+        let count = Int(profileModel.stickCount)! + 1
+        super.stickCountLabel.text = String(count)
+        profileModel.stickCount = String(count)
         super.stickCountLabel.setNeedsDisplay()
     }
     

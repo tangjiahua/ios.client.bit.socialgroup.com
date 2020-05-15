@@ -97,7 +97,7 @@ class SquareReplyViewController: BaseViewController, UITableViewDelegate, UITabl
     }
     
     private func calculateReplyCellHeight(itemIndex: Int) -> CGFloat{
-        let height = padding + avatarImageViewHeight + padding + UIDevice.getLabHeigh(labelStr: "回复  " + manager.squareReplyItems[itemIndex].reply_to_user_nickname + ":  " + manager.squareReplyItems[itemIndex].content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2) + padding*2
+        let height = padding + avatarImageViewHeight + padding + UIDevice.getLabHeigh(labelStr: "回复  " + manager.squareReplyItems[itemIndex].reply_to_user_nickname + ":  " + manager.squareReplyItems[itemIndex].content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2 - 10) + padding*2
         
         return height
     }

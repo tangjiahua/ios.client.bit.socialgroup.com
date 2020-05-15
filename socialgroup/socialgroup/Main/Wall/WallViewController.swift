@@ -40,7 +40,7 @@ class WallViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.barTintColor = .tertiarySystemBackground
+        navigationController?.navigationBar.barTintColor = .secondarySystemBackground
         self.title = "公告墙"
         
         // Do any additional setup after loading the view.

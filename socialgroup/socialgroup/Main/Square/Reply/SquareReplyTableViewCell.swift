@@ -93,7 +93,7 @@ class SquareReplyTableViewCell: UITableViewCell {
         self.addSubview(dateLabel)
         
         // content
-        contentLabel = UILabel(frame: CGRect(x: padding, y: avatarImageView.frame.maxY + padding, width: ScreenWidth - padding*2, height: UIDevice.getLabHeigh(labelStr: "回复  " + item.reply_to_user_nickname + ":  " + item.content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2)))
+        contentLabel = UILabel(frame: CGRect(x: padding, y: avatarImageView.frame.maxY + padding, width: ScreenWidth - padding*2 - 10, height: UIDevice.getLabHeigh(labelStr: "回复  " + item.reply_to_user_nickname + ":  " + item.content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2 - 10)))
         contentLabel.font = .systemFont(ofSize: contentLabelFontSize)
         contentLabel.numberOfLines = 0
         contentLabel.text = "回复  " + item.reply_to_user_nickname + ":  " + item.content

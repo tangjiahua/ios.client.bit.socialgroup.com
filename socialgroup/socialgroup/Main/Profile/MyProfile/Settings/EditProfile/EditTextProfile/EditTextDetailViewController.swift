@@ -91,23 +91,23 @@ class EditTextDetailViewController: BaseViewController, UITextFieldDelegate, UIT
     //MARK:- tableview
 
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if(textView.text.count + text.count > limit){
-            return false
-        }else{
-            return true
-        }
-    }
-    
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        if((textField.text?.count ?? 0) + string.count > limit){
-            return false
-        }else{
-            return true
-        }
-    }
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        if(textView.text.count + text.count > limit){
+//            return false
+//        }else{
+//            return true
+//        }
+//    }
+//
+//
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//
+//        if((textField.text?.count ?? 0) + string.count > limit){
+//            return false
+//        }else{
+//            return true
+//        }
+//    }
     
     
     //MARK:-  picker view
@@ -133,15 +133,27 @@ class EditTextDetailViewController: BaseViewController, UITextFieldDelegate, UIT
     //MARK:- tapped actions
     @objc func saveTextViewButtonTapped(){
         
-        self.delegate?.changeInTextView(title: navigationItem.title!, info: textView.text)
+        if(textView.text.count > limit){
+            self.showTempAlert(info: "超过字数\(String(limit))的限制")
+        }else{
+            self.delegate?.changeInTextView(title: navigationItem.title!, info: textView.text)
+            
+            self.dismiss(animated: true, completion: nil)
+            print("save")
+        }
         
-        self.dismiss(animated: true, completion: nil)
-        print("save")
+        
     }
     
     @objc func saveTextFieldButtonTapped(){
-        self.delegate?.changeInTextField(title: navigationItem.title!, info: textField.text!)
-        self.dismiss(animated: true, completion: nil)
+        if(textField.text?.count ?? 0 > limit){
+            self.showTempAlert(info: "超过字数\(String(limit))的限制")
+        }else{
+            self.delegate?.changeInTextField(title: navigationItem.title!, info: textField.text!)
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        
         
     }
     
