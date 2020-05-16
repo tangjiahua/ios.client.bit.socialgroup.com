@@ -35,6 +35,17 @@ class DiscoverTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+        
+    }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        if(highlighted){
+            self.backgroundColor = UIColor(white: 0.5, alpha: 0.2)
+//            self.backgroundView?.alpha = 0.2/
+        }else{
+            self.backgroundColor = .tertiarySystemBackground
+        }
+        
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

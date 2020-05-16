@@ -20,6 +20,7 @@ class NotificationPushManager{
     
     var delegate:NotificationPushManagerDelegate?
     
+    var api:String?
     
     func pushPoster(posterPushModel: PosterPushModel){
 
@@ -52,7 +53,7 @@ class NotificationPushManager{
                   multipart.append(data, withName: "poster",fileName: "posterfile",  mimeType: "image/*")
               
               
-          }, to: NetworkManager.WALL_PUSH_API,method: .post) { (encodingResult) in
+          }, to: api!,method: .post) { (encodingResult) in
               
               switch encodingResult{
               case .success(let upload, _, _):

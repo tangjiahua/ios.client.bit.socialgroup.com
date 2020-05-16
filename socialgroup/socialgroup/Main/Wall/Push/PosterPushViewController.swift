@@ -63,6 +63,8 @@ class PosterPushViewController: BaseViewController, UIImagePickerControllerDeleg
 
     
     let pushManager = NotificationPushManager()
+    var push_api:String?
+    
     var posterPushModel = PosterPushModel(posterImagePath: "", welcome: "", holddate: "", holdlocation: "", holder: "", detail: "", link: "")
 
     
@@ -76,6 +78,10 @@ class PosterPushViewController: BaseViewController, UIImagePickerControllerDeleg
         tapGestureRecognizer.cancelsTouchesInView = false
         scrollView.addGestureRecognizer(tapGestureRecognizer)
         
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.delegate = nil
     }
     
 
@@ -287,6 +293,8 @@ class PosterPushViewController: BaseViewController, UIImagePickerControllerDeleg
         
         if(checkPoster()){
             self.showLoading(text: "正在发布海报", isSupportClick: false)
+            pushManager.api = self.push_api
+            
             pushManager.pushPoster(posterPushModel: posterPushModel)
         }
         

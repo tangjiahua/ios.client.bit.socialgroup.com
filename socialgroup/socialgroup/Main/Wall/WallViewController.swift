@@ -36,6 +36,7 @@ class WallViewController: BaseViewController, UITableViewDelegate, UITableViewDa
     let briefLabelHeight:CGFloat = 35
     let briefLabelWidth:CGFloat = 300
     
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -303,6 +304,7 @@ extension WallViewController{
             pushPosterVC.modalPresentationStyle = .fullScreen
             pushPosterVC.setUpViews()
             pushPosterVC.delegate = self
+            pushPosterVC.push_api = NetworkManager.WALL_PUSH_API
             self.present(pushPosterVC, animated: true, completion: nil)
         }))
         pushClickSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))

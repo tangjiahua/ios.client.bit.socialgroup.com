@@ -11,6 +11,7 @@ import UIKit
 protocol SquareReplyTableViewCellDelegate:NSObjectProtocol {
     func avatarTappedReply(item:SquareReplyItem)
     func cellTappedReply(item: SquareReplyItem)
+    func replyToUserTappedReply(item: SquareReplyItem)
 }
 
 class SquareReplyTableViewCell: UITableViewCell {
@@ -22,6 +23,7 @@ class SquareReplyTableViewCell: UITableViewCell {
     var nicknameLabel:UILabel!
     var dateLabel:UILabel!
     var contentLabel:UILabel!
+    var replyContentLabel:UILabel!
     
     //CGFloat
     override var frame:CGRect{
@@ -93,11 +95,42 @@ class SquareReplyTableViewCell: UITableViewCell {
         self.addSubview(dateLabel)
         
         // content
-        contentLabel = UILabel(frame: CGRect(x: padding, y: avatarImageView.frame.maxY + padding, width: ScreenWidth - padding*2 - 10, height: UIDevice.getLabHeigh(labelStr: "回复  " + item.reply_to_user_nickname + ":  " + item.content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2 - 10)))
+        
+        
+
+        
+        
+        contentLabel = UILabel(frame: CGRect(x: padding, y: avatarImageView.frame.maxY + padding, width: ScreenWidth - padding*2 - 10, height: UIDevice.getLabHeigh(labelStr: "回复 " + item.reply_to_user_nickname + " :  ", font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2 - 10)))
         contentLabel.font = .systemFont(ofSize: contentLabelFontSize)
         contentLabel.numberOfLines = 0
-        contentLabel.text = "回复  " + item.reply_to_user_nickname + ":  " + item.content
+            
+        // 富文本
+        let text = "回复 " + item.reply_to_user_nickname + " :  "  as NSString
+        let highlightText = item.reply_to_user_nickname as NSString
+        let hightlightTextRange = text.range(of: highlightText as String)
+        let attributeStr = NSMutableAttributedString.init(string: text as String)
+        attributeStr.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.systemBlue, range: hightlightTextRange)
+        contentLabel.lineBreakMode = .byCharWrapping
+        contentLabel.attributedText = attributeStr
+        contentLabel.isUserInteractionEnabled = true
+        
+        
         self.addSubview(contentLabel)
+        
+        // replyContent
+        replyContentLabel = UILabel(frame: CGRect(x: padding, y: contentLabel.frame.maxY + padding, width: ScreenWidth - padding*2 - 10, height: UIDevice.getLabHeigh(labelStr: item.content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2 - 10)))
+        replyContentLabel.font = .systemFont(ofSize: contentLabelFontSize)
+        replyContentLabel.numberOfLines = 0
+        replyContentLabel.text = item.content
+        self.addSubview(replyContentLabel)
+        
+        
+        
+        
+        
+        let replyToUserLabelTappedGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(replyToUserLabelTapped))
+        contentLabel.addGestureRecognizer(replyToUserLabelTappedGestureRecognizer)
+        
         
         let cellTappedGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cellTappedReply))
         self.addGestureRecognizer(cellTappedGestureRecognizer)
@@ -110,6 +143,10 @@ class SquareReplyTableViewCell: UITableViewCell {
     
     @objc func cellTappedReply(){
         self.delegate.cellTappedReply(item: item)
+    }
+    
+    @objc func replyToUserLabelTapped(){
+        self.delegate.replyToUserTappedReply(item: item)
     }
 
 }

@@ -46,6 +46,13 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
         
     }
     
+    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if self.navigationController!.viewControllers.count > 1 {
+              return true
+          }
+         return false
+    }
+    
     
     
     override func viewWillAppear(_ animated: Bool) {

@@ -97,7 +97,7 @@ class SquareReplyViewController: BaseViewController, UITableViewDelegate, UITabl
     }
     
     private func calculateReplyCellHeight(itemIndex: Int) -> CGFloat{
-        let height = padding + avatarImageViewHeight + padding + UIDevice.getLabHeigh(labelStr: "回复  " + manager.squareReplyItems[itemIndex].reply_to_user_nickname + ":  " + manager.squareReplyItems[itemIndex].content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2 - 10) + padding*2
+        let height = padding + avatarImageViewHeight + padding + UIDevice.getLabHeigh(labelStr: "回复 " + manager.squareReplyItems[itemIndex].reply_to_user_nickname + " :  ", font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2 - 10) + padding + UIDevice.getLabHeigh(labelStr:  manager.squareReplyItems[itemIndex].content, font: .systemFont(ofSize: contentLabelFontSize), width: ScreenWidth - padding*2 - 10) + padding*2
         
         return height
     }
@@ -170,6 +170,21 @@ extension SquareReplyViewController{
         let nc = UINavigationController(rootViewController: writeReplyVC)
         self.present(nc, animated: true, completion: nil)
     }
+    
+    
+    func replyToUserTappedReply(item: SquareReplyItem) {
+        let otherProfileVC = OtherProfileViewController()
+        otherProfileVC.profileModel = ProfileModel()
+        otherProfileVC.profileModel.otherProfileModelDelegate = otherProfileVC
+        otherProfileVC.profileModel.setBasicModel()
+        otherProfileVC.getProfile(user_id: Int(item.reply_from_user_id)!)
+        otherProfileVC.modalPresentationStyle = .fullScreen
+        self.present(otherProfileVC, animated: true, completion: nil)
+    }
+    
+    
+    
+    
     
     // MARK: - write view controller delegate
     func pushComment(content: String) {

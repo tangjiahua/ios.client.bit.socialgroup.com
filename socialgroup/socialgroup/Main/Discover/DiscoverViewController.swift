@@ -9,7 +9,9 @@
 import Foundation
 import UIKit
 
-class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate, PushMessageBadgeChangeProtocol{
+class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate, PushMessageBadgeChangeProtocol, PosterPushViewControllerDelegate{
+   
+    
     
     
     
@@ -96,7 +98,7 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
     
     //MARK: UITableView Datasource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
+        6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -129,6 +131,8 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
                     }
                     
                 }
+            case 5:
+                cell?.textLabel?.text = "张贴海报"
             default:
                 cell!.textLabel?.text = "Nothing"
             }
@@ -196,11 +200,33 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
             }
             //消除应用图标
             UIApplication.shared.applicationIconBadgeNumber = 0
+        case 5:
+            let alert = UIAlertController(title: "注意", message: "为了公告墙的质量，当您在此处发布海拔之后，海报不会立刻被张贴在公告墙上，请联系开发者获取张贴海报权限或者临时张贴活动海报，感谢您的支持！", preferredStyle: .alert)
+            self.present(alert, animated: true, completion: nil)
+            let okAction = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                let pushPosterVC = PosterPushViewController()
+                pushPosterVC.modalPresentationStyle = .fullScreen
+                pushPosterVC.setUpViews()
+                pushPosterVC.delegate = self
+                pushPosterVC.push_api = NetworkManager.WALL_PUSH_USER_API
+                self.present(pushPosterVC, animated: true, completion: nil)
+            }
+            alert.addAction(okAction)
+            
+            
             
         default:
             return
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    
+    func posterPushSuccess() {
+        self.showTempAlert(info: "感谢您！发布成功，请联系开发者让海报展示在公告墙上")
+        
+       }
+    
     
     private func showFindInputWindow(){
         var inputText:UITextField = UITextField()
