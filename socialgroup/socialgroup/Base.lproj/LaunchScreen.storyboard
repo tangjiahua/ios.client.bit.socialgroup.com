@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina6_5" orientation="portrait" appearance="light"/>
+    <device id="retina3_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,29 +11,33 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="r49-hQ-EHt"/>
-                        <viewControllerLayoutGuide type="bottom" id="mkq-wk-vhp"/>
+                        <viewControllerLayoutGuide type="top" id="lG3-mm-B5H"/>
+                        <viewControllerLayoutGuide type="bottom" id="zE0-RU-yk1"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <view key="view" contentMode="scaleAspectFill" insetsLayoutMarginsFromSafeArea="NO" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nOw-vb-5xB">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" image="Launch" id="Vtv-HQ-72d" userLabel="LaunchImage">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="nOw-vb-5xB" firstAttribute="top" secondItem="r49-hQ-EHt" secondAttribute="bottom" id="33E-GG-wvm"/>
-                            <constraint firstAttribute="trailing" secondItem="nOw-vb-5xB" secondAttribute="trailing" id="PKF-yF-Ptj"/>
-                            <constraint firstItem="nOw-vb-5xB" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="rgQ-Jf-BqP"/>
-                            <constraint firstItem="mkq-wk-vhp" firstAttribute="top" secondItem="nOw-vb-5xB" secondAttribute="bottom" id="u5a-dy-qYy"/>
+                            <constraint firstItem="Vtv-HQ-72d" firstAttribute="top" secondItem="lG3-mm-B5H" secondAttribute="bottom" id="7Fi-e0-ikE"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Vtv-HQ-72d" secondAttribute="trailing" id="e3L-w3-EvL"/>
+                            <constraint firstItem="zE0-RU-yk1" firstAttribute="top" secondItem="Vtv-HQ-72d" secondAttribute="bottom" id="lCe-38-MEz"/>
+                            <constraint firstItem="Vtv-HQ-72d" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="qbL-A1-Qvc"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.6305418719212"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Launch" width="414" height="896"/>
+    </resources>
 </document>

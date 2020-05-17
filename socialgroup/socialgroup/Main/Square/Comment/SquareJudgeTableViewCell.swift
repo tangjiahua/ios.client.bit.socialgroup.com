@@ -20,13 +20,28 @@ class SquareJudgeTableViewCell: UITableViewCell {
     var avatarImageView:UIImageView!
     var nicknameLabel:UILabel!
     
-    let padding:CGFloat = 10
+    let padding:CGFloat = 5
     let avatarImageViewHeight:CGFloat = 40
     let nicknameLabelHeight:CGFloat = 20
     
     let ScreenWidth = UIDevice.SCREEN_WIDTH
     
     var item:SquareJudgeItem!
+    
+    //CGFloat
+    override var frame:CGRect{
+        get{
+            return super.frame
+        }
+        set{
+            var frame = newValue
+            frame.origin.x += 5
+            frame.origin.y += 5
+            frame.size.width -= 2*5
+            frame.size.height -= 2*5
+            super.frame = frame
+        }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()

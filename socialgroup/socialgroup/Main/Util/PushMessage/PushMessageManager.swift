@@ -183,4 +183,8 @@ class PushMessageManager{
         
     }
     
+    public func disconnect(){
+        sqliteManager.disconnectDB()
+    }
+    
 }

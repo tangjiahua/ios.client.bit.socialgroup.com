@@ -63,19 +63,19 @@ class UserDefaultsManager{
     }
     
     static public func getAccount() -> String{
-        return userDefaults.string(forKey: "account")!
+        return userDefaults.string(forKey: "account") ?? ""
     }
     
     static public func getUserId() -> String {
-        return userDefaults.string(forKey: "user_id")!
+        return userDefaults.string(forKey: "user_id") ?? ""
     }
     
     static public func getPassword() -> String {
-        return userDefaults.string(forKey: "password")!
+        return userDefaults.string(forKey: "password") ?? ""
     }
     
     static public func getSocialGroupId() -> String{
-        return userDefaults.string(forKey: "socialgroup_id")!
+        return userDefaults.string(forKey: "socialgroup_id") ?? ""
     }
     
     static public func getUserNickname() -> String{

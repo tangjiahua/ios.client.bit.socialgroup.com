@@ -22,6 +22,9 @@ class LoginViewController:BaseViewController,UITextFieldDelegate, LoginModelDele
     //登录 注册按钮
     var loginButton:UIButton!
     var registerButton:UIButton!
+    var checkButton:UIButton!
+    
+    var isChecked:Bool = false
     
     var registerVC:RegisterViewController!
     
@@ -46,7 +49,7 @@ class LoginViewController:BaseViewController,UITextFieldDelegate, LoginModelDele
         let mainSize = UIScreen.main.bounds.size
         
         //登录框背景
-        let vLogin =  UIView(frame:CGRect(x: 15, y: 100, width: mainSize.width - 30, height: 160))
+        let vLogin =  UIView(frame:CGRect(x: 15, y: UIDevice.STATUS_BAR_HEIGHT + 30, width: mainSize.width - 30, height: 160))
         vLogin.layer.borderWidth = 0.5
         vLogin.layer.borderColor = UIColor.lightGray.cgColor
         vLogin.layer.cornerRadius = 5
@@ -95,8 +98,48 @@ class LoginViewController:BaseViewController,UITextFieldDelegate, LoginModelDele
         vLogin.addSubview(txtPwd)
         
         
+        // 勾选框
+        checkButton = UIButton(frame: CGRect(x: vLogin.frame.minX, y: vLogin.frame.maxY + 20, width: 30, height: 30))
+        checkButton.isSelected = false
+        checkButton.setImage(UIImage(named: "check_off"), for: .normal)
+        checkButton.setImage(UIImage(named: "check_on"), for: .selected)
+        checkButton.addTarget(self, action: #selector(checkClick), for: .touchUpInside)
+        view.addSubview(checkButton)
+        
+        
+        //勾选
+        let tintLabel = UILabel(frame: CGRect(x: checkButton.frame.maxX + 10, y:  vLogin.frame.maxY + 20, width: ScreenWidth - 20, height: 30))
+        tintLabel.text = "勾选左框表示我已经阅读并且同意："
+        view.addSubview(tintLabel)
+        
+        
+        // 隐私政策条目
+        let privacyButton = UILabel(frame: CGRect(x: checkButton.frame.maxX + 10, y:  tintLabel.frame.maxY, width: 70, height: 30))
+        privacyButton.text = "隐私政策"
+        privacyButton.textColor = .systemBlue
+        privacyButton.isUserInteractionEnabled = true
+        let gestureReco = UITapGestureRecognizer(target: self, action: #selector(clickPrivacy))
+        privacyButton.addGestureRecognizer(gestureReco)
+        view.addSubview(privacyButton)
+        
+        // 以及
+        let andLabel = UILabel(frame: CGRect(x: privacyButton.frame.maxX, y:  tintLabel.frame.maxY, width: 35, height: 30))
+        andLabel.text = "以及"
+        view.addSubview(andLabel)
+        
+        
+        // 服务条款
+        let termsButton = UILabel(frame: CGRect(x: andLabel.frame.maxX, y:  tintLabel.frame.maxY, width: 70, height: 30))
+        termsButton.text = "服务条款"
+        termsButton.textColor = .systemBlue
+        termsButton.isUserInteractionEnabled = true
+        let gestureReco2 = UITapGestureRecognizer(target: self, action: #selector(clickTerms))
+        termsButton.addGestureRecognizer(gestureReco2)
+        view.addSubview(termsButton)
+        
+        
         //登录按钮
-        loginButton = UIButton(frame: CGRect(x: vLogin.frame.minX, y: vLogin.frame.maxY + 20, width: ScreenWidth - 30, height: 50))
+        loginButton = UIButton(frame: CGRect(x: vLogin.frame.minX, y: privacyButton.frame.maxY + 20, width: ScreenWidth - 30, height: 50))
         loginButton.setTitle("登录", for: .normal)
         loginButton.setTitleColor(.white, for: .normal)
         loginButton.backgroundColor = .lightGray
@@ -122,6 +165,32 @@ class LoginViewController:BaseViewController,UITextFieldDelegate, LoginModelDele
     
     
     //MARK:- textfield delegate function
+    
+    @objc func checkClick(){
+        checkButton.isSelected = !checkButton.isSelected
+        isChecked = checkButton.isSelected
+        if((txtUser.text!.count != 0) && (txtPwd.text!.count != 0) && isChecked){
+            loginButton.isUserInteractionEnabled = true
+            loginButton.backgroundColor = .systemBlue
+            return
+        }
+        loginButton.isUserInteractionEnabled = false
+        loginButton.backgroundColor = .lightGray
+    }
+    
+    @objc func clickPrivacy(){
+        let privacyVC = WebPageViewController()
+        privacyVC.initPrivacy()
+        self.present(privacyVC, animated: true, completion: nil)
+    }
+    
+    @objc func clickTerms(){
+        let termsVC = WebPageViewController()
+        termsVC.initTerms()
+        self.present(termsVC, animated: true, completion: nil)
+    }
+    
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -154,7 +223,7 @@ class LoginViewController:BaseViewController,UITextFieldDelegate, LoginModelDele
     //MARK:- 自定义的事件
     // 对输入的内容进行判断所有的格式是否正确
     @objc func textFieldChanged(textField: UITextField){
-        if((txtUser.text!.count != 0) && (txtPwd.text!.count != 0)){
+        if((txtUser.text!.count != 0) && (txtPwd.text!.count != 0) && isChecked){
             loginButton.isUserInteractionEnabled = true
             loginButton.backgroundColor = .systemBlue
             return

@@ -84,10 +84,10 @@
 		E98CE4EB23F2AB3A00BAF41F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4EA23F2AB3A00BAF41F /* RegisterViewController.swift */; };
 		E98CE4EF23F2BC7000BAF41F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4EE23F2BC7000BAF41F /* Util.swift */; };
 		E98CE4F123F319E400BAF41F /* RegisterAndLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F023F319E400BAF41F /* RegisterAndLoginModel.swift */; };
-		E98CE4F423F32DC300BAF41F /* HandyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = E98CE4F323F32DC300BAF41F /* HandyJSON */; };
 		E98CE4F623F520A900BAF41F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F523F520A900BAF41F /* BaseViewController.swift */; };
 		E98CE4F823F5218A00BAF41F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F723F5218A00BAF41F /* NetworkManager.swift */; };
 		E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */; };
+		E9D1EC882471713300E06CA6 /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D1EC872471713300E06CA6 /* WebPageViewController.swift */; };
 		E9ECF1862467D9A80048EBF3 /* NotificationPushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ECF1852467D9A80048EBF3 /* NotificationPushManager.swift */; };
 		E9F38CDC246E722E000953DC /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F38CCE246E71FB000953DC /* SQLite.framework */; };
 		E9F38CDD246E722E000953DC /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E9F38CCE246E71FB000953DC /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -248,6 +248,7 @@
 		E98CE4F523F520A900BAF41F /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		E98CE4F723F5218A00BAF41F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSocialGroupViewController.swift; sourceTree = "<group>"; };
+		E9D1EC872471713300E06CA6 /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		E9ECF1852467D9A80048EBF3 /* NotificationPushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPushManager.swift; sourceTree = "<group>"; };
 		E9F38CC3246E71FB000953DC /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../../../Downloads/SQLite.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		E9F38CDF246E72A7000953DC /* SQLiteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteManager.swift; sourceTree = "<group>"; };
@@ -269,7 +270,6 @@
 				E98CE4E423F1BA4900BAF41F /* SDWebImage in Frameworks */,
 				E98CE4DE23F1925200BAF41F /* SwiftyJSON in Frameworks */,
 				E9F38CDC246E722E000953DC /* SQLite.framework in Frameworks */,
-				E98CE4F423F32DC300BAF41F /* HandyJSON in Frameworks */,
 				E98CE4E623F1BA4900BAF41F /* SDWebImageMapKit in Frameworks */,
 				E98CE4E123F19B9000BAF41F /* Alamofire in Frameworks */,
 			);
@@ -554,6 +554,7 @@
 			isa = PBXGroup;
 			children = (
 				E98CE4D823F1567E00BAF41F /* LoginViewController.swift */,
+				E9D1EC872471713300E06CA6 /* WebPageViewController.swift */,
 				E98CE4EA23F2AB3A00BAF41F /* RegisterViewController.swift */,
 				E98CE4F023F319E400BAF41F /* RegisterAndLoginModel.swift */,
 				E969D04123F5895000CEEDC8 /* ChooseSocialGroup */,
@@ -698,7 +699,6 @@
 				E98CE4E023F19B9000BAF41F /* Alamofire */,
 				E98CE4E323F1BA4900BAF41F /* SDWebImage */,
 				E98CE4E523F1BA4900BAF41F /* SDWebImageMapKit */,
-				E98CE4F323F32DC300BAF41F /* HandyJSON */,
 			);
 			productName = socialgroup;
 			productReference = E98CE4AF23F14CC600BAF41F /* SocialGroup.app */;
@@ -732,7 +732,6 @@
 				E98CE4DC23F1925200BAF41F /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				E98CE4DF23F19B9000BAF41F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				E98CE4E223F1BA4900BAF41F /* XCRemoteSwiftPackageReference "SDWebImage" */,
-				E98CE4F223F32DC300BAF41F /* XCRemoteSwiftPackageReference "HandyJSON" */,
 			);
 			productRefGroup = E98CE4B023F14CC600BAF41F /* Products */;
 			projectDirPath = "";
@@ -849,6 +848,7 @@
 				E97E893A2401184600E32811 /* BroadcastTableViewCell.swift in Sources */,
 				E98CE4D523F1509200BAF41F /* DiscoverViewController.swift in Sources */,
 				E944DC9E2405687D00ED770A /* CirclePushViewController.swift in Sources */,
+				E9D1EC882471713300E06CA6 /* WebPageViewController.swift in Sources */,
 				E98264CA23F6CACE009CE123 /* DetailTableViewCell.swift in Sources */,
 				E97E893224005BAF00E32811 /* BroadcastManager.swift in Sources */,
 				E98264ED23FBBE69009CE123 /* HGImageCollectionViewCell.swift in Sources */,
@@ -951,6 +951,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jiahua Tang (4BVM57NARM)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -969,7 +970,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1011,6 +1012,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jiahua Tang (4BVM57NARM)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1023,7 +1025,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1037,7 +1039,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jiahua Tang (4BVM57NARM)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 4BVM57NARM;
 				INFOPLIST_FILE = socialgroup/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1046,9 +1049,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitsocialgroup.socialgroup;
 				PRODUCT_NAME = SocialGroup;
+				PROVISIONING_PROFILE_SPECIFIER = SocialGroupProjectProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = socialgroup/BridgeHeaderFile.h;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1056,7 +1060,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Jiahua Tang (4BVM57NARM)";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 4BVM57NARM;
 				INFOPLIST_FILE = socialgroup/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1065,9 +1070,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitsocialgroup.socialgroup;
 				PRODUCT_NAME = SocialGroup;
+				PROVISIONING_PROFILE_SPECIFIER = SocialGroupProjectProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = socialgroup/BridgeHeaderFile.h;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1119,14 +1125,6 @@
 				minimumVersion = 5.5.2;
 			};
 		};
-		E98CE4F223F32DC300BAF41F /* XCRemoteSwiftPackageReference "HandyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/alibaba/HandyJSON";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1149,11 +1147,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E98CE4E223F1BA4900BAF41F /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImageMapKit;
-		};
-		E98CE4F323F32DC300BAF41F /* HandyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E98CE4F223F32DC300BAF41F /* XCRemoteSwiftPackageReference "HandyJSON" */;
-			productName = HandyJSON;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

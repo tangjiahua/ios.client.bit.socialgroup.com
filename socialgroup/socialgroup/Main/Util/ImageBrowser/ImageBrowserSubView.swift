@@ -176,10 +176,11 @@ class ImageBrowserSubView: UIView, UIScrollViewDelegate {
         let contentOffsetY = scrollView.contentOffset.y
         
         //只有一根手指事件才做出响应
-        if(contentOffsetY < 0 && self.touchFingerNumber == 1){
+        
+        if(contentOffsetY < -0 && self.touchFingerNumber == 1  && self.subScrollView.zoomScale == 1){
 //            let contentOffset = scrollView.contentOffset
-            
-//            let locationPoint = [panGestureRecognizer locationInView:panGestureRecognizer.view];
+            print(self.subScrollView.zoomScale)
+            //            let locationPoint = [panGestureRecognizer locationInView:panGestureRecognizer.view];
             let locationPoint = subScrollViewPan.translation(in: subScrollViewPan.view)
 //            print(locationPoint)
             self.changeSizeCenter(contentOffsetY: locationPoint.y, contentOffsetX: locationPoint.x)
@@ -189,7 +190,7 @@ class ImageBrowserSubView: UIView, UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let contentOffsetY = scrollView.contentOffset.y
         
-        if((contentOffsetY<0 && self.touchFingerNumber == 1) && ((velocity.y<0) || contentOffsetY < -100)){
+        if((contentOffsetY<0 && self.touchFingerNumber == 1  && self.subScrollView.zoomScale == 1) && ((velocity.y<0) || contentOffsetY < -100)){
             //如果是向下划触发消失的操作
             self.delegate?.imageBrowserSubViewSingleTapWithModel(imageBrowserModel: self.imageBrowserModel)
             

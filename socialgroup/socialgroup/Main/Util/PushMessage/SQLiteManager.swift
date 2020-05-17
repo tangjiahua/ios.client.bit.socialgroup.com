@@ -40,18 +40,36 @@ class SQLiteManager: NSObject {
             db?.busyTimeout = 5.0
             
         }
-        print(NSSearchPathForDirectoriesInDomains(
-        .documentDirectory, .userDomainMask, true
-        ).first!)
         return db!
         
     }
+    
+    public func disconnectDB(){
+        table = nil
+        db = nil
+        
+    }
+    
+//    public func dropPushMessageTable(){
+//        if db == nil {
+//            
+//            let path = NSSearchPathForDirectoriesInDomains(
+//                .documentDirectory, .userDomainMask, true
+//                ).first!
+//            db = try! Connection("\(path)/db.sqlite3")
+//            
+//            db?.busyTimeout = 5.0
+//            
+//        }
+//        try! getDB().run(getPushMessageTable().drop(ifExists: true))
+//        // DROP TABLE IF EXISTS "users"
+//    }
     
     private func getPushMessageTable() -> Table {
         
         if table == nil {
             
-            table = Table("push_message")
+            table = Table("push_message\(UserDefaultsManager.getUserId())")
             
             try! getDB().run(
                 table!.create(temporary: false, ifNotExists: true, withoutRowid: false, block: { (builder) in

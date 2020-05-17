@@ -44,7 +44,7 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 7
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,8 +57,14 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
         case 1:
             cell.textLabel?.text = "账号设置"
         case 2:
-            cell.textLabel?.text = "关于"
+            cell.textLabel?.text = "介绍"
         case 3:
+            cell.textLabel?.text = "联系我们"
+        case 4:
+            cell.textLabel?.text = "使用条款"
+        case 5:
+            cell.textLabel?.text = "隐私政策"
+        case 6:
             cell.textLabel?.text = "退出账号"
         default:
             cell.textLabel?.text = "默认"
@@ -86,9 +92,22 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
             let editAccountVC = EditAccountViewController()
             self.navigationController?.pushViewController(editAccountVC, animated: true)
         case 2:
-            let aboutVC = AboutViewController()
+            let aboutVC = WebPageViewController()
+            aboutVC.initFAQ()
             self.navigationController?.pushViewController(aboutVC, animated: true)
         case 3:
+            let contactVC = WebPageViewController()
+            contactVC.initContact()
+            self.navigationController?.pushViewController(contactVC, animated: true)
+        case 4:
+            let termsVC = WebPageViewController()
+            termsVC.initTerms()
+            self.navigationController?.pushViewController(termsVC, animated: true)
+        case 5:
+            let privacyVC = WebPageViewController()
+            privacyVC.initPrivacy()
+            self.navigationController?.pushViewController(privacyVC, animated: true)
+        case 6:
             showLogOutWindow()
         default:
             break
@@ -118,7 +137,8 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
      */
     private func logOut(){
         UserDefaultsManager.deleteUserInfo()
-        
+        PushMessageManager.manager.disconnect()
+//        PushMessageManager.manager.dropPushMessageDatabase()
         UIApplication.shared.windows.first?.rootViewController = UINavigationController(rootViewController: LoginViewController())
     }
 }

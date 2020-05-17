@@ -177,7 +177,7 @@ extension SquareReplyViewController{
         otherProfileVC.profileModel = ProfileModel()
         otherProfileVC.profileModel.otherProfileModelDelegate = otherProfileVC
         otherProfileVC.profileModel.setBasicModel()
-        otherProfileVC.getProfile(user_id: Int(item.reply_from_user_id)!)
+        otherProfileVC.getProfile(user_id: Int(item.reply_to_user_id)!)
         otherProfileVC.modalPresentationStyle = .fullScreen
         self.present(otherProfileVC, animated: true, completion: nil)
     }

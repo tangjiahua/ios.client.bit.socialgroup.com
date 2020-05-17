@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "HandyJSON",
-        "repositoryURL": "https://github.com/alibaba/HandyJSON",
-        "state": {
-          "branch": null,
-          "revision": "dfab665e87f5dd56e16273222718ecd04a9a9d70",
-          "version": "5.0.1"
-        }
-      },
-      {
         "package": "SDWebImage",
         "repositoryURL": "https://github.com/SDWebImage/SDWebImage",
         "state": {
