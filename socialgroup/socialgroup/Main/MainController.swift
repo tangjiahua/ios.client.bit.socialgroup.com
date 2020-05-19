@@ -13,7 +13,8 @@ protocol PushMessageBadgeChangeProtocol:NSObjectProtocol{
     func discoverMessageBadgeChange()
 }
 
-class MainController: UITabBarController, UITabBarControllerDelegate, PushMessageManagerDelegate {
+class MainController: UITabBarController, UITabBarControllerDelegate, PushMessageManagerDelegate, UtilDelegate {
+    
     
     let squareVC = SquareScrollViewController()
     let wallVC = WallViewController()
@@ -49,6 +50,12 @@ class MainController: UITabBarController, UITabBarControllerDelegate, PushMessag
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.badge,.carPlay,.sound], completionHandler: { (success, error) in
           print("授权" + (success ? "成功" : "失败"))
         })
+        
+        // 版本检查
+        let util = Util()
+        util.delegate = self
+        util.checkVersion()
+        
         
     }
     
@@ -151,8 +158,16 @@ class MainController: UITabBarController, UITabBarControllerDelegate, PushMessag
     
     
 
+    //检测更新
+    func versionNeedUpdate(){
+        let alert = UIAlertController(title: "版本更新", message: "新版本发布了！为了您的体验请尽快前往AppStore升级到新版本", preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+        let okAction = UIAlertAction(title: "确定", style: .default)
+        alert.addAction(okAction)
+    }
     
-
+    
+    
 }
 
 

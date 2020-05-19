@@ -9,10 +9,19 @@
 import Foundation
 import UIKit
 import Photos
+import Alamofire
+import SwiftyJSON
+
+protocol UtilDelegate:NSObjectProtocol{
+    func versionNeedUpdate()
+}
+
 
 class Util {
     
+    public let VERSION = 1.1
     
+    var delegate:UtilDelegate?
     
     //只能为数字
     static func onlyInputNumbers(_ string: String) -> Bool{
@@ -26,6 +35,33 @@ class Util {
         let regex = "[a-zA-Z0-9]*"
         let predicate = NSPredicate(format: "SELF MATCHES%@", regex)
         return predicate.evaluate(with: string)
+    }
+    
+    
+    // 版本更新
+    func checkVersion(){
+        let parameters:Parameters = ["device_type":"ios"]
+        Alamofire.request(NetworkManager.CHECK_VERSION_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            
+            switch response.result{
+            case .success:
+                if let data = response.result.value{
+                    let json = JSON(data)
+                    let result = json["result"].string!
+                    if(result.equals(str: "1")){
+                        let version = json["info"].string!
+                        let versionNew = Double(version)!
+                        if(self.VERSION < versionNew){
+                            self.delegate?.versionNeedUpdate()
+                        }
+                    }
+                }
+            case .failure:
+                print("check version fail")
+            }
+            
+            
+        }
     }
     
     

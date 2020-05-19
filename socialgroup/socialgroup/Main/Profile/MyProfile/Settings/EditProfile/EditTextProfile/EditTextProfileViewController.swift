@@ -31,7 +31,7 @@ class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UI
     
     let editList = [
         "昵称",
-        "真实姓名",
+        "姓名",
         "性别",
         "年龄",
         "家乡",
@@ -159,7 +159,7 @@ class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UI
         case 0:
             editDetailVC.initTextField(title: "昵称", oldValue: profileModel.nickname, limit: 20)
         case 1:
-            editDetailVC.initTextField(title: "真实姓名", oldValue: profileModel.realname, limit: 10)
+            editDetailVC.initTextField(title: "姓名", oldValue: profileModel.realname, limit: 10)
         case 2:
             editDetailVC.initPickerView(title: "性别")
         case 3:
@@ -209,7 +209,7 @@ class EditTextProfileViewController: BaseViewController, UITableViewDelegate, UI
         switch title {
         case "昵称":
             profileModel.nickname = info
-        case "真实姓名":
+        case "姓名":
             profileModel.realname = info
         case "年龄":
             profileModel.age = info

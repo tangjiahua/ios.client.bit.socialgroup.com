@@ -41,13 +41,22 @@ class FindUserViewController: BaseViewController, UITableViewDelegate, UITableVi
         view.addSubview(tableView)
         
         
-        userListManager = UserListManager()
-        userListManager.delegate = self
-        userListManager.fetchFindUserListByRealName(realName: findByRealName)
+        
     }
     
-    func setFindBy(realName:String){
-        findByRealName = realName
+    func setFindBy(info:String, method:String){
+        
+        if(method.equals(str: "1")){
+            userListManager = UserListManager()
+            userListManager.delegate = self
+            userListManager.fetchFindUserListBy(info: info, method:"1")
+        }else if(method.equals(str: "2")){
+            userListManager = UserListManager()
+            userListManager.delegate = self
+            userListManager.fetchFindUserListBy(info: info, method:"2")
+        }
+        
+        
     }
     
     

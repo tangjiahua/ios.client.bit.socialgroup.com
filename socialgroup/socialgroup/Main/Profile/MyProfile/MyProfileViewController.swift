@@ -175,6 +175,17 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
         print("get my profile server success")
         super.refreshProfileView()
         super.profileModel.setMyProfileModelToLocal()
+        
+        if(profileModel.nickname.equals(str: "暂未填写")){
+            
+            let alert = UIAlertController(title: "提示", message: "您尚未更改昵称，记得点击页面右上角的按钮更改资料噢～", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "确定", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+        
+        
     }
     
     func getMyProfileServerFail(info: String) {

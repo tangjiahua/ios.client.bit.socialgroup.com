@@ -111,8 +111,8 @@ class UserListManager{
      “password”:xxx
      }
      */
-    func fetchFindUserListByRealName(realName:String){
-        let parameters:Parameters = ["socialgroup_id":userDefaults.string(forKey: "socialgroup_id")!,"method":"1","info":realName, "user_id":userDefaults.string(forKey: "user_id")!, "password":userDefaults.string(forKey: "password")!]
+    func fetchFindUserListBy(info:String, method: String){
+        let parameters:Parameters = ["socialgroup_id":userDefaults.string(forKey: "socialgroup_id")!,"method":method,"info":info, "user_id":userDefaults.string(forKey: "user_id")!, "password":userDefaults.string(forKey: "password")!]
         
         Alamofire.request(NetworkManager.DISCOVER_MEMBERS_SEARCH_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result{

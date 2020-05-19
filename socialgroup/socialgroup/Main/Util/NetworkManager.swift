@@ -42,6 +42,7 @@ class NetworkManager{
     static let SERVER_RESOURCE_URL:String = "https://api.bitsocialgroup.com/resource/"
     static let SOCIALGROUP_AVATAR_RESOURCE:String = "https://api.bitsocialgroup.com/resource/socialgroup_system/avatar/"
     
+    static let CHECK_VERSION_API = "https://bitsocialgroup.com/api/version"
     
     static func isNetworking() -> Bool{
         return manager.isReachable
@@ -63,4 +64,7 @@ class NetworkManager{
          }
         manager.startListening()//开始监听网络
         }
+    
+    
+    
 }

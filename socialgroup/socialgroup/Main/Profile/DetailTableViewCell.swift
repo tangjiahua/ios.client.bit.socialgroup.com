@@ -33,6 +33,8 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
     let publicIntroductionTextViewHeight:CGFloat = 300
     let privateIntroductionTextViewHeight:CGFloat = 200
     
+    let cellTextBoldFontSize:CGFloat = 18
+    
     var itemHeight:CGFloat{
         return (screenWidth - padding*2) / 3 - 3
     }
@@ -269,25 +271,58 @@ class DetailTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
         let icon = UIImageView(frame: CGRect(x: padding, y: 5, width: 30, height: 30))
         let space = "        "
         cell.selectionStyle = .none
-        
         cell.addSubview(icon)
+        
+        
         
         switch indexPath.row {
         case 0:
-            cell.textLabel?.text = space + profileModel.hometown
+            // 富文本
+            let text = space + "家乡：" + profileModel.hometown  as NSString
+            let highlightText = "家乡：" as NSString
+            let hightlightTextRange = text.range(of: highlightText as String)
+            let attributeStr = NSMutableAttributedString.init(string: text as String)
+            attributeStr.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: cellTextBoldFontSize), range: hightlightTextRange)
+            
+            cell.textLabel?.attributedText = attributeStr
+//            cell.textLabel?.text = space + "家乡：" + profileModel.hometown
             icon.image = UIImage(named:"hometown")
         case 1:
-            cell.textLabel?.text = space + profileModel.grade
+            // 富文本
+            let text = space + "年级：" + profileModel.grade  as NSString
+            let highlightText = "年级：" as NSString
+            let hightlightTextRange = text.range(of: highlightText as String)
+            let attributeStr = NSMutableAttributedString.init(string: text as String)
+            attributeStr.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: cellTextBoldFontSize), range: hightlightTextRange)
+//            cell.textLabel?.text = space + "年级：" + profileModel.grade
+            cell.textLabel?.attributedText = attributeStr
+
             icon.image = UIImage(named:"grade")
 
 
         case 2:
-            cell.textLabel?.text = space + profileModel.relationshipStatus
+            // 富文本
+            let text = space + "感情状况：" + profileModel.relationshipStatus  as NSString
+            let highlightText = "感情状况：" as NSString
+            let hightlightTextRange = text.range(of: highlightText as String)
+            let attributeStr = NSMutableAttributedString.init(string: text as String)
+            attributeStr.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: cellTextBoldFontSize), range: hightlightTextRange)
+//            cell.textLabel?.text = space + "感情状况：" + profileModel.relationshipStatus            cell.textLabel?.attributedText = attributeStr
+            cell.textLabel?.attributedText = attributeStr
+
             icon.image = UIImage(named:"love")
 
 
         case 3:
-            cell.textLabel?.text = space + profileModel.major
+            // 富文本
+            let text = space + "专业：" + profileModel.major  as NSString
+            let highlightText = "专业：" as NSString
+            let hightlightTextRange = text.range(of: highlightText as String)
+            let attributeStr = NSMutableAttributedString.init(string: text as String)
+            attributeStr.addAttribute(NSAttributedString.Key.font, value: UIFont.boldSystemFont(ofSize: cellTextBoldFontSize), range: hightlightTextRange)
+//            cell.textLabel?.text = space + "专业：" + profileModel.major
+            cell.textLabel?.attributedText = attributeStr
+
             icon.image = UIImage(named:"major")
 
             

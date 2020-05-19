@@ -45,11 +45,25 @@ class LoginViewController:BaseViewController,UITextFieldDelegate, LoginModelDele
         view.backgroundColor = .secondarySystemBackground
         self.navigationController?.navigationBar.isHidden = true
         
+//        self.view.backgroundColor=[UIColor, colorWithHexString:@"#"];
+        view.backgroundColor = UIDevice.kRGBColorFromHex(rgbValue: 0x1CA1F0)
+
+        
         //获取屏幕尺寸
         let mainSize = UIScreen.main.bounds.size
         
+        let loginLogoHeight:CGFloat = 120
+        let loginLogo = UIImageView(frame: CGRect(x: 0, y:0, width: mainSize.width, height: loginLogoHeight))
+        loginLogo.image = UIImage(named: "LoginLogo")
+        loginLogo.contentMode = .scaleAspectFill
+        loginLogo.layer.masksToBounds = true
+        loginLogo.layer.cornerRadius = 5
+        loginLogo.backgroundColor = .tertiarySystemBackground
+        self.view.addSubview(loginLogo)
+        
+        
         //登录框背景
-        let vLogin =  UIView(frame:CGRect(x: 15, y: UIDevice.STATUS_BAR_HEIGHT + 30, width: mainSize.width - 30, height: 160))
+        let vLogin =  UIView(frame:CGRect(x: 15, y: loginLogo.frame.maxY + 20, width: mainSize.width - 30, height: 160))
         vLogin.layer.borderWidth = 0.5
         vLogin.layer.borderColor = UIColor.lightGray.cgColor
         vLogin.layer.cornerRadius = 5
@@ -110,13 +124,14 @@ class LoginViewController:BaseViewController,UITextFieldDelegate, LoginModelDele
         //勾选
         let tintLabel = UILabel(frame: CGRect(x: checkButton.frame.maxX + 10, y:  vLogin.frame.maxY + 20, width: ScreenWidth - 20, height: 30))
         tintLabel.text = "勾选左框表示我已经阅读并且同意："
+        tintLabel.textColor = .white
         view.addSubview(tintLabel)
         
         
         // 隐私政策条目
         let privacyButton = UILabel(frame: CGRect(x: checkButton.frame.maxX + 10, y:  tintLabel.frame.maxY, width: 70, height: 30))
         privacyButton.text = "隐私政策"
-        privacyButton.textColor = .systemBlue
+        privacyButton.textColor = .blue
         privacyButton.isUserInteractionEnabled = true
         let gestureReco = UITapGestureRecognizer(target: self, action: #selector(clickPrivacy))
         privacyButton.addGestureRecognizer(gestureReco)
@@ -125,13 +140,14 @@ class LoginViewController:BaseViewController,UITextFieldDelegate, LoginModelDele
         // 以及
         let andLabel = UILabel(frame: CGRect(x: privacyButton.frame.maxX, y:  tintLabel.frame.maxY, width: 35, height: 30))
         andLabel.text = "以及"
+        andLabel.textColor = .white
         view.addSubview(andLabel)
         
         
         // 服务条款
         let termsButton = UILabel(frame: CGRect(x: andLabel.frame.maxX, y:  tintLabel.frame.maxY, width: 70, height: 30))
         termsButton.text = "服务条款"
-        termsButton.textColor = .systemBlue
+        termsButton.textColor = .blue
         termsButton.isUserInteractionEnabled = true
         let gestureReco2 = UITapGestureRecognizer(target: self, action: #selector(clickTerms))
         termsButton.addGestureRecognizer(gestureReco2)
@@ -181,13 +197,15 @@ class LoginViewController:BaseViewController,UITextFieldDelegate, LoginModelDele
     @objc func clickPrivacy(){
         let privacyVC = WebPageViewController()
         privacyVC.initPrivacy()
-        self.present(privacyVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(privacyVC, animated: true)
+//        self.present(privacyVC, animated: true, completion: nil)
     }
     
     @objc func clickTerms(){
         let termsVC = WebPageViewController()
         termsVC.initTerms()
-        self.present(termsVC, animated: true, completion: nil)
+        self.navigationController?.pushViewController(termsVC, animated: true)
+//        self.present(termsVC, animated: true, completion: nil)
     }
     
     

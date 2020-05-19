@@ -229,25 +229,60 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
     
     
     private func showFindInputWindow(){
-        var inputText:UITextField = UITextField()
-        let msgAlert = UIAlertController(title: "搜索", message: "输入对方真实姓名", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+        
+        let pushTappedSheet = UIAlertController.init(title: "查找", message: nil, preferredStyle: .actionSheet)
+        self.present(pushTappedSheet, animated: true, completion: nil)
+        pushTappedSheet.addAction(.init(title: "通过昵称查找", style: .default, handler:{(action: UIAlertAction) in
             
-            let findUserVC = FindUserViewController()
-            findUserVC.setFindBy(realName: inputText.text ?? "")
-            findUserVC.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(findUserVC, animated: true)
-        }
-        let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
-            print("cancel")
-        }
-        msgAlert.addAction(ok)
-        msgAlert.addAction(cancel)
-        msgAlert.addTextField { (textField) in
-            inputText = textField
-            inputText.placeholder = "输入真实姓名"
-        }
-        self.present(msgAlert, animated: true, completion: nil)
+            var inputText:UITextField = UITextField()
+            let msgAlert = UIAlertController(title: "搜索", message: "输入对方昵称", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                
+                let findUserVC = FindUserViewController()
+                findUserVC.setFindBy(info: inputText.text ?? "", method:"2")
+                findUserVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(findUserVC, animated: true)
+            }
+            let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                print("cancel")
+            }
+            msgAlert.addAction(ok)
+            msgAlert.addAction(cancel)
+            msgAlert.addTextField { (textField) in
+                inputText = textField
+                inputText.placeholder = "输入昵称"
+            }
+            self.present(msgAlert, animated: true, completion: nil)
+            
+        } ))
+        pushTappedSheet.addAction(.init(title: "通过姓名查找", style: .default, handler:{(action: UIAlertAction) in
+            
+            var inputText:UITextField = UITextField()
+            let msgAlert = UIAlertController(title: "搜索", message: "输入对方姓名", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                
+                let findUserVC = FindUserViewController()
+                findUserVC.setFindBy(info: inputText.text ?? "", method: "1")
+                findUserVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(findUserVC, animated: true)
+            }
+            let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                print("cancel")
+            }
+            msgAlert.addAction(ok)
+            msgAlert.addAction(cancel)
+            msgAlert.addTextField { (textField) in
+                inputText = textField
+                inputText.placeholder = "输入姓名"
+            }
+            self.present(msgAlert, animated: true, completion: nil)
+            
+        } ))
+        pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
+        
+        
+        
+        
         
 
     }
