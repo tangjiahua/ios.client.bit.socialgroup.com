@@ -11,9 +11,17 @@ import UIKit
 protocol SquareCommentViewControllerDelegate:NSObjectProtocol {
     func popDeletedCircleItem(item:CircleItem)
     func popDeletedBroadcastItem(item:BroadcastItem)
+    
+    func popReportedItemSuccess()
+    func popReportedItemFail()
+    
+    func popManagerDeleteItemSuccess(item: BroadcastItem)
+    func popManagerDeleteItemSuccess(item: CircleItem)
 }
 
 class SquareCommentViewController: BaseViewController, UINavigationControllerDelegate,  UITableViewDelegate, UITableViewDataSource,UIGestureRecognizerDelegate,BroadcastTableViewCellDelegate,BroadcastManagerDelegate,CircleTableViewCellDelegate, CircleManagerDelegate, SquareCommentManagerDelegate, SquareCommentTableViewCellDelegate, SquareJudgeTableViewCellDelegate,SquareReplyManagerDelegate,  WriteViewControllerDelegate  {
+    
+    
     
     //delegate
     var delegate:SquareCommentViewControllerDelegate?
@@ -534,8 +542,66 @@ extension SquareCommentViewController{
         let pushTappedSheet = UIAlertController.init(title: "更多", message: nil, preferredStyle: .actionSheet)
         self.present(pushTappedSheet, animated: true, completion: nil)
         pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
-            broadcastManager.reportItem(item: item)
+            
+            if(self.isInMyBroadcast){
+                self.showTempAlert(info: "别举报了，请自觉删除！")
+                return
+            }
+            
+            
+            var inputText:UITextField = UITextField()
+            let msgAlert = UIAlertController(title: "举报", message: "描述您的举报理由，能够帮助我们快速排查违规行为", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                // 确定举报
+                let content = inputText.text ?? ""
+                broadcastManager.reportItem(item: item, content: content)
+                
+            }
+            let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                print("cancel")
+            }
+            msgAlert.addAction(ok)
+            msgAlert.addAction(cancel)
+            msgAlert.addTextField { (textField) in
+                inputText = textField
+                inputText.placeholder = "输入理由"
+            }
+            self.present(msgAlert, animated: true, completion: nil)
         } ))
+        
+        
+        if(!isInMyBroadcast && UserDefaultsManager.getRole().equals(str: "1")){
+            //管理员可以删除
+            pushTappedSheet.addAction(.init(title: "管理员-删除该条广播", style: .default, handler:{(action: UIAlertAction) in
+                
+                
+                var inputText:UITextField = UITextField()
+                let msgAlert = UIAlertController(title: "删除", message: "描述您的删除理由，能够帮助我们快速排查违规行为", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                    // 确定举报
+                    let content = inputText.text ?? ""
+                        broadcastManager.managerDeleteItem(item: item, content: content)
+                    
+                    
+                }
+                let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                    print("cancel")
+                }
+                msgAlert.addAction(ok)
+                msgAlert.addAction(cancel)
+                msgAlert.addTextField { (textField) in
+                    inputText = textField
+                    inputText.placeholder = "输入理由"
+                }
+                self.present(msgAlert, animated: true, completion: nil)
+                
+                
+            } ))
+        }
+        
+        
+        
+        
         if(isInMyBroadcast){
             pushTappedSheet.addAction(.init(title: "删除该条广播", style: .default, handler:{(action: UIAlertAction) in
                 broadcastManager.deleteItem(item: item)
@@ -564,13 +630,70 @@ extension SquareCommentViewController{
         self.navigationController?.pushViewController(replyVC, animated: true)
     }
     
-    func replyToComment(item:SquareCommentItem){
+    func cellCommentTapped(item:SquareCommentItem){
+        
         let writeReplyVC = WriteViewController()
         writeReplyVC.initReplyToCommentTextView(limit: 200, squareCommentItem: item)
         writeReplyVC.delegate = self
         let nc = UINavigationController(rootViewController: writeReplyVC)
         self.present(nc, animated: true, completion: nil)
     }
+    
+    func cellCommentLongPressed(item: SquareCommentItem) {
+        if(item.user_id.equals(str: UserDefaultsManager.getUserId())){
+            // 说明是自己的评论
+            let pushTappedSheet = UIAlertController.init(title: "选项", message: nil, preferredStyle: .actionSheet)
+            self.present(pushTappedSheet, animated: true, completion: nil)
+            pushTappedSheet.addAction(.init(title: "删除我的评论", style: .default, handler:{(action: UIAlertAction) in
+                self.manager.deleteMyComment(item: item)
+                    
+                }))
+            pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: { (action) in
+                
+            }))
+        }else{
+            // 说明是别人的评论
+            let pushTappedSheet = UIAlertController.init(title: "选项", message: nil, preferredStyle: .actionSheet)
+            self.present(pushTappedSheet, animated: true, completion: nil)
+            pushTappedSheet.addAction(.init(title: "举报该评论", style: .default, handler:{(action: UIAlertAction) in
+                
+                var inputText:UITextField = UITextField()
+                let msgAlert = UIAlertController(title: "举报", message: "描述您的举报理由，能够帮助我们快速排查违规行为", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                    // 确定举报
+                    let content = inputText.text ?? ""
+                    self.manager.reportComment(item: item, content: content)
+                    
+                }
+                let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                    print("cancel")
+                }
+                msgAlert.addAction(ok)
+                msgAlert.addAction(cancel)
+                msgAlert.addTextField { (textField) in
+                    inputText = textField
+                    inputText.placeholder = "输入理由"
+                }
+                self.present(msgAlert, animated: true, completion: nil)
+                
+                
+                    
+                }))
+            pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: { (action) in
+                
+            }))
+            
+            
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     // MARK: - judge cell delegate
     func SquareJudgeTableViewCellAvatarTapped(item: SquareJudgeItem) {
@@ -627,6 +750,54 @@ extension SquareCommentViewController{
         self.showTempAlert(info: "评论失败")
     }
     
+    
+    func deleteMyCommentSuccess(item: SquareCommentItem) {
+        self.showTempAlert(info: "删除成功")
+        tableView.reloadData()
+    }
+    
+    func deleteMyCommentFail(result: String, info: String) {
+        self.showTempAlert(info: info)
+    }
+    
+    
+    func reportCommentSuccess(item: SquareCommentItem) {
+        self.showTempAlert(info: "举报信息已经上传服务器，为您屏蔽了该用户")
+        manager.checkItems()
+        tableView.reloadData()
+    }
+    
+    func reportCommentFail(result: String, info: String) {
+        self.showTempAlertWithOneSecond(info: "举报信息未上传服务器，但为您屏蔽了该用户")
+        manager.checkItems()
+        tableView.reloadData()
+    }
+    
+    
+    func reportReplyFail(result: String, info: String) {
+        self.showTempAlertWithOneSecond(info: "举报信息未上传服务器，但为您屏蔽了该用户")
+        manager.checkItems()
+        tableView.reloadData()
+    }
+    
+    func reportReplySuccess(item: SquareReplyItem) {
+        self.showTempAlert(info: "举报信息已经上传服务器，为您屏蔽了该用户")
+        manager.checkItems()
+        tableView.reloadData()
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //MARK:- Square reply manager delegate
     func fetchSquareReplySuccess() {
         print("fetch reply success in squareCommentViewCOntroller")
@@ -647,6 +818,15 @@ extension SquareCommentViewController{
     
     func pushReplyFail() {
         self.showTempAlert(info: "回复失败")
+        
+    }
+    
+    func deleteMyReplyFail(result: String, info: String) {
+        print("delete my reply fail")
+    }
+    
+    func deleteMyReplySuccess(item: SquareReplyItem) {
+        print("delete my reply success")
         
     }
     
@@ -721,11 +901,30 @@ extension SquareCommentViewController{
     }
     
     func reportItemSuccess(item: BroadcastItem) {
-        self.showTempAlert(info: "举报成功")
+        
+        
+        self.navigationController?.popViewController(animated: true)
+        self.delegate?.popReportedItemSuccess()
     }
     
     func reportItemFail(result: String, info: String) {
-        self.showTempAlertWithOneSecond(info: "举报失败，可能因为您已经举报过了")
+//        self.showTempAlertWithOneSecond(info: "举报信息上传服务器失败，但我们为您屏蔽了该内容")
+        self.navigationController?.popViewController(animated: true)
+        self.delegate?.popReportedItemFail()
+        //        self.delegate?.popDeletedBroadcastItem(item: item)
+    }
+    func managerDeleteItemSuccess(item: BroadcastItem) {
+        self.navigationController?.popViewController(animated: true)
+        self.delegate?.popManagerDeleteItemSuccess(item: item)
+    }
+    
+    func managerDeleteItemSuccess(item: CircleItem) {
+        self.navigationController?.popViewController(animated: true)
+        self.delegate?.popManagerDeleteItemSuccess(item: item)
+    }
+    
+    func managerDeleteItemFail(result: String, info: String) {
+        self.showTempAlert(info: "管理员删除失败：" + info)
     }
     
     
@@ -767,8 +966,67 @@ extension SquareCommentViewController{
         let pushTappedSheet = UIAlertController.init(title: "更多", message: nil, preferredStyle: .actionSheet)
         self.present(pushTappedSheet, animated: true, completion: nil)
         pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
-            circleManager.reportItem(item: item)
+            if(item.user_id == Int(UserDefaultsManager.getUserId())){
+                self.showTempAlert(info: "别举报了，自觉删除吧！")
+            }else{
+                var inputText:UITextField = UITextField()
+                let msgAlert = UIAlertController(title: "举报", message: "描述您的举报理由，能够帮助我们快速排查违规行为", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                    // 确定举报
+                    let content = inputText.text ?? ""
+                    circleManager.reportItem(item: item, content: content)
+                    
+                }
+                let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                    print("cancel")
+                }
+                msgAlert.addAction(ok)
+                msgAlert.addAction(cancel)
+                msgAlert.addTextField { (textField) in
+                    inputText = textField
+                    inputText.placeholder = "输入理由"
+                }
+                self.present(msgAlert, animated: true, completion: nil)
+            }
+            
+            
+            
+            
+            
         } ))
+        
+        
+        if(!UserDefaultsManager.getUserId().equals(str: String(item.user_id)) && UserDefaultsManager.getRole().equals(str: "1")){
+            //管理员可以删除
+            pushTappedSheet.addAction(.init(title: "管理员-删除该条动态", style: .default, handler:{(action: UIAlertAction) in
+                
+                
+                var inputText:UITextField = UITextField()
+                let msgAlert = UIAlertController(title: "删除", message: "描述您的删除理由，能够帮助我们快速排查违规行为", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                    // 确定举报
+                    let content = inputText.text ?? ""
+                        circleManager.managerDeleteItem(item: item, content: content)
+                    
+                    
+                }
+                let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                    print("cancel")
+                }
+                msgAlert.addAction(ok)
+                msgAlert.addAction(cancel)
+                msgAlert.addTextField { (textField) in
+                    inputText = textField
+                    inputText.placeholder = "输入理由"
+                }
+                self.present(msgAlert, animated: true, completion: nil)
+                
+                
+            } ))
+        }
+        
+        
+        
         pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
         if(item.user_id == Int(UserDefaultsManager.getUserId())){
             // 说明是我自己发的内容
@@ -799,7 +1057,9 @@ extension SquareCommentViewController{
     }
     
     func reportItemSuccess(item: CircleItem) {
-        self.showTempAlert(info: "举报成功")
+        self.navigationController?.popViewController(animated: true)
+        delegate?.popReportedItemSuccess()
+        
     }
     
     func deleteItemSuccess(item: BroadcastItem) {

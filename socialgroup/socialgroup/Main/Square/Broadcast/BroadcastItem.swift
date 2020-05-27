@@ -32,4 +32,6 @@ class BroadcastItem {
         self.dislike_count = dislike_count
         self.picture_count = picture_count
     }
+    
+    
 }

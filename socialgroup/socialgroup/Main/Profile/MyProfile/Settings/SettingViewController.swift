@@ -44,7 +44,7 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return 8
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -66,6 +66,8 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
             cell.textLabel?.text = "隐私政策"
         case 6:
             cell.textLabel?.text = "退出账号"
+        case 7:
+            cell.textLabel?.text = "黑名单"
         default:
             cell.textLabel?.text = "默认"
         }
@@ -109,6 +111,9 @@ class SettingViewController: BaseViewController, UITableViewDelegate, UITableVie
             self.navigationController?.pushViewController(privacyVC, animated: true)
         case 6:
             showLogOutWindow()
+        case 7:
+            let blockListVC = BlockListViewController()
+            self.navigationController?.pushViewController(blockListVC, animated: true)
         default:
             break
         }

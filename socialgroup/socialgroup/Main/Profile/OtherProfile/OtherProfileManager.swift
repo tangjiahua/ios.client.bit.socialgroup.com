@@ -13,6 +13,10 @@ import Alamofire
 protocol OtherProfileManagerDelegate:NSObjectProtocol {
     func stickSuccess()
     func stickFail()
+    
+    func reportUserSuccess(item:ProfileModel)
+    func reportUserFail(result:String, info: String)
+    
 }
 
 class OtherProfileManager{
@@ -39,6 +43,34 @@ class OtherProfileManager{
                 self.delegate?.stickFail()
             }
         }
+    }
+    
+    //report
+    func reportUser(item: ProfileModel, content: String){
+        
+        let reportManger = ReportManager.manager
+//        reportManger.addReportedBroadcast(broadcast_id: item.broadcast_id)
+//        var userid = Int(item.userid)
+        reportManger.addReportedUser(user_id: Int(item.userid!)!, avatar: Int(item.avatar!)!, nickname: item.nickname)
+        
+        let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "reported_id": item.userid!, "type":"user", "content":content, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        
+        Alamofire.request(NetworkManager.SQUARE_REPORT_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                if let data = response.result.value{
+                    let json = JSON(data)
+                    if(json["result"].string!.equals(str: "1")){
+                        self.delegate?.reportUserSuccess(item: item)
+                    }else{
+                        self.delegate?.reportUserFail(result: "0", info: json["info"].string!)
+                    }
+                }
+            case .failure:
+                self.delegate?.reportUserFail(result: "0", info: "response fail")
+            }
+        }
+        
     }
     
 }

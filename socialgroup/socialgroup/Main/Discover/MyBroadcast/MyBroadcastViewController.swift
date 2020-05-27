@@ -14,6 +14,8 @@ class MyBroadcastViewController: BaseViewController, UITableViewDataSource, UITa
     
     
     
+    
+    
     //manager
     var manager:BroadcastManager!
     
@@ -130,6 +132,7 @@ extension MyBroadcastViewController{
         commentVC.broadcastItem = item
         commentVC.square_item_type = "broadcast"
         commentVC.square_item_id = String(item.broadcast_id)
+        commentVC.isInMyBroadcast = true
         commentVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(commentVC, animated: true)
     }
@@ -197,6 +200,8 @@ extension MyBroadcastViewController{
     // MARK:- BroadcastManager Delegate
     func BroadcastFetchSuccess(result: String, info: String) {
         tableView.refreshControl?.endRefreshing()
+        manager.checkItems()
+
         tableView.reloadData()
     }
     
@@ -213,6 +218,7 @@ extension MyBroadcastViewController{
             item.isLiked = true
             item.like_count += 1
         }
+        
         tableView.reloadData()
     }
     
@@ -242,6 +248,14 @@ extension MyBroadcastViewController{
     
     func reportItemFail(result: String, info: String) {
         self.showTempAlertWithOneSecond(info: "举报失败，可能因为您已经举报过了")
+    }
+    
+    func managerDeleteItemSuccess(item: BroadcastItem) {
+        self.showTempAlert(info: "不应该在此处删除")
+    }
+    
+    func managerDeleteItemFail(result: String, info: String) {
+        self.showTempAlert(info: "管理员删除失败：" + info)
     }
     
     
@@ -306,7 +320,7 @@ extension MyBroadcastViewController{
         let pushTappedSheet = UIAlertController.init(title: "更多", message: nil, preferredStyle: .actionSheet)
         self.present(pushTappedSheet, animated: true, completion: nil)
         pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
-            self.manager.reportItem(item: item)
+            self.showTempAlert(info: "别举报了，请自觉删除！")
         } ))
         pushTappedSheet.addAction(.init(title: "删除该条广播", style: .default, handler:{(action: UIAlertAction) in
             self.manager.deleteItem(item: item)
@@ -340,5 +354,20 @@ extension MyBroadcastViewController{
     
     func popDeletedBroadcastItem(item: BroadcastItem) {
         manager.deleteItem(item: item)
+    }
+    
+    func popReportedItemSuccess(){
+        
+    }
+    func popReportedItemFail(){
+        
+    }
+    
+    func popManagerDeleteItemSuccess(item: BroadcastItem) {
+        self.showTempAlert(info: "不应该在这里用管理员删除")
+    }
+    
+    func popManagerDeleteItemSuccess(item: CircleItem) {
+        self.showTempAlert(info: "不应该在这里用管理员删除")
     }
 }

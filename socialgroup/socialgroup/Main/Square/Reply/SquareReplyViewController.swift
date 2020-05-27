@@ -152,6 +152,22 @@ extension SquareReplyViewController{
         self.showTempAlert(info: "回复失败")
     }
     
+    func reportReplySuccess(item: SquareReplyItem) {
+        self.showTempAlert(info: "举报信息已经上传服务器，为您屏蔽了该用户")
+        manager.checkItems()
+        tableView.reloadData()
+    }
+    
+    func reportReplyFail(result: String, info: String) {
+        self.showTempAlertWithOneSecond(info: "举报信息未上传服务器，但为您屏蔽了该用户")
+        manager.checkItems()
+        tableView.reloadData()
+    }
+    
+    
+    
+    
+    
     // MARK:- square reply cell delegate
     func avatarTappedReply(item: SquareReplyItem) {
         let otherProfileVC = OtherProfileViewController()
@@ -164,11 +180,64 @@ extension SquareReplyViewController{
     }
     
     func cellTappedReply(item: SquareReplyItem) {
+        
+        
         let writeReplyVC = WriteViewController()
         writeReplyVC.initReplyToReplyTextView(limit: 200, squareReplyItem: item)
         writeReplyVC.delegate = self
         let nc = UINavigationController(rootViewController: writeReplyVC)
         self.present(nc, animated: true, completion: nil)
+    }
+    
+    
+    func cellReplyLongPressed(item: SquareReplyItem) {
+        if(item.reply_from_user_id.equals(str: UserDefaultsManager.getUserId())){
+            // 说明点击的是自己的回复
+            let pushTappedSheet = UIAlertController.init(title: "选项", message: nil, preferredStyle: .actionSheet)
+            self.present(pushTappedSheet, animated: true, completion: nil)
+            pushTappedSheet.addAction(.init(title: "删除我的回复", style: .default, handler:{(action: UIAlertAction) in
+                self.manager.deleteMyReply(item: item)
+                    
+                }))
+            pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: { (action) in
+                
+            }))
+            
+        }else{
+            // 说明是别人的回复
+            let pushTappedSheet = UIAlertController.init(title: "选项", message: nil, preferredStyle: .actionSheet)
+            self.present(pushTappedSheet, animated: true, completion: nil)
+            pushTappedSheet.addAction(.init(title: "举报该回复", style: .default, handler:{(action: UIAlertAction) in
+                
+                var inputText:UITextField = UITextField()
+                let msgAlert = UIAlertController(title: "举报", message: "描述您的举报理由，能够帮助我们快速排查违规行为", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                    // 确定举报
+                    let content = inputText.text ?? ""
+                    self.manager.reportReply(item: item, content: content)
+                    
+                }
+                let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                    print("cancel")
+                }
+                msgAlert.addAction(ok)
+                msgAlert.addAction(cancel)
+                msgAlert.addTextField { (textField) in
+                    inputText = textField
+                    inputText.placeholder = "输入理由"
+                }
+                self.present(msgAlert, animated: true, completion: nil)
+                
+                
+                    
+                }))
+            pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: { (action) in
+                
+            }))
+        }
+        
+        
+        
     }
     
     
@@ -181,6 +250,8 @@ extension SquareReplyViewController{
         otherProfileVC.modalPresentationStyle = .fullScreen
         self.present(otherProfileVC, animated: true, completion: nil)
     }
+    
+    
     
     
     
@@ -199,6 +270,15 @@ extension SquareReplyViewController{
     
     func pushReplyToReply(content: String, item: SquareReplyItem) {
         manager.pushReplyToReply(content: content, replyItem: item)
+    }
+    
+    func deleteMyReplySuccess(item: SquareReplyItem) {
+        self.showTempAlert(info: "删除成功")
+        tableView.reloadData()
+    }
+    
+    func deleteMyReplyFail(result: String, info: String) {
+        self.showTempAlert(info: info)
     }
     
 }

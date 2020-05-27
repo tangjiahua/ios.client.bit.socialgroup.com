@@ -19,6 +19,9 @@ class NetworkManager{
     static let PROFILE_CHANGE_PWD_API:String = "https://www.bitsocialgroup.com/api/profile/change_password"
     static let SQUARE_FETCH_API:String = "https://www.bitsocialgroup.com/api/square/fetch"
     static let SQUARE_JUDGE_API:String = "https://www.bitsocialgroup.com/api/square/judge"
+    static let SQUARE_REPORT_API:String = "https://www.bitsocialgroup.com/api/other/report"
+    static let SQUARE_MANAGER_DELETE_API:String = "https://www.bitsocialgroup.com/api/square/manager/delete"
+    
     static let SQUARE_PUSH_API:String = "https://www.bitsocialgroup.com/api/square/push"
     static let SQUARE_FETCH_DETAIL_API:String = "https://www.bitsocialgroup.com/api/square/fetch_detail"
     static let SQUARE_COMMENT_API:String = "https://www.bitsocialgroup.com/api/square/comment"

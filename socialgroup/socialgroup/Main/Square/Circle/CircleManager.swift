@@ -21,6 +21,9 @@ protocol CircleManagerDelegate:NSObjectProtocol {
     func reportItemSuccess(item:CircleItem)
     func reportItemFail(result:String, info: String)
     
+    func managerDeleteItemSuccess(item:CircleItem)
+    func managerDeleteItemFail(result:String, info: String)
+    
     func deleteItemSuccess(item:CircleItem)
     func deleteItemFail(result:String, info: String)
 }
@@ -183,10 +186,15 @@ class CircleManager{
     
     
     //report
-    func reportItem(item: CircleItem){
+    func reportItem(item: CircleItem, content:String){
         
-        let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "square_item_type":"circle", "square_item_id":String(item.circle_id), "judge_type":"3", "is_to_cancel":"0", "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
-        Alamofire.request(NetworkManager.SQUARE_JUDGE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+        let reportManger = ReportManager.manager
+        reportManger.addReportedCircle(circle_id: item.circle_id)
+        
+        
+        let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "reported_id":String(item.circle_id), "type":"circle", "content":content, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        
+        Alamofire.request(NetworkManager.SQUARE_REPORT_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result{
             case .success:
                 if let data = response.result.value{
@@ -226,7 +234,71 @@ class CircleManager{
         
     }
     
+    func managerDeleteItem(item: CircleItem, content: String){
+            
+    //        let reportManger = ReportManager.manager
+    //        reportManger.addReportedBroadcast(broadcast_id: item.broadcast_id)
+            
+            
+            let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "reported_id":String(item.circle_id), "type":"circle", "content":content, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+            
+            Alamofire.request(NetworkManager.SQUARE_MANAGER_DELETE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                switch response.result{
+                case .success:
+                    if let data = response.result.value{
+                        let json = JSON(data)
+                        if(json["result"].string!.equals(str: "1")){
+                            self.delegate?.managerDeleteItemSuccess(item: item)
+                        }else{
+                            self.delegate?.managerDeleteItemFail(result: "0", info: json["info"].string!)
+                        }
+                    }
+                case .failure:
+                    self.delegate?.managerDeleteItemFail(result: "0", info: "response fail")
+                }
+            }
+            
+        }
     
+    func removeItem(item: CircleItem){
+        
+        var index = 0
+        
+        for i in circleItems{
+            if(i.circle_id == item.circle_id){
+                circleItems.remove(at: index)
+                break
+            }
+            index += 1
+        }
+    }
+    
+    func checkItems(){
+        //举报的内容要move掉
+        
+        let reportManager = ReportManager.manager
+        
+        let reported_items = reportManager.getReportedCircle()
+        let reported_users = reportManager.getReportedUser()
+        
+        
+        for item in circleItems{
+            
+            for reported_item in reported_items{
+                if(item.circle_id == reported_item.circle_id){
+                    removeItem(item: item)
+                }
+            }
+            
+            for reported_user in reported_users{
+                if(item.user_id == reported_user.user_id){
+                    removeItem(item: item)
+                }
+            }
+            
+        }
+        
+    }
     
 }
 
@@ -261,4 +333,6 @@ extension CircleManager{
             print("重复请求")
         }
     }
+    
+    
 }

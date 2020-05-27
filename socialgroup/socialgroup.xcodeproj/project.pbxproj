@@ -24,6 +24,7 @@
 		E928C72C23FE8B9A004D75E0 /* ImageBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928C72B23FE8B9A004D75E0 /* ImageBrowserViewController.swift */; };
 		E92F7BB22407807500212167 /* SquareCommentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92F7BB12407807500212167 /* SquareCommentItem.swift */; };
 		E92F7BB4240787FB00212167 /* SquareCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92F7BB3240787FB00212167 /* SquareCommentTableViewCell.swift */; };
+		E9386BA0247BDDFF00CA0BB1 /* BlockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9386B9F247BDDFF00CA0BB1 /* BlockListViewController.swift */; };
 		E942E627240A4D2D004035D6 /* SquareJudgeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E942E626240A4D2D004035D6 /* SquareJudgeItem.swift */; };
 		E942E629240A514B004035D6 /* SquareJudgeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E942E628240A514B004035D6 /* SquareJudgeTableViewCell.swift */; };
 		E942E62B240A5A9B004035D6 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E942E62A240A5A9B004035D6 /* WriteViewController.swift */; };
@@ -55,7 +56,6 @@
 		E98264D123F979FC009CE123 /* UserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264D023F979FC009CE123 /* UserListViewController.swift */; };
 		E98264D423F97A44009CE123 /* UserListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264D323F97A44009CE123 /* UserListManager.swift */; };
 		E98264D623FA16BF009CE123 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264D523FA16BF009CE123 /* EditProfileViewController.swift */; };
-		E98264D823FA1706009CE123 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264D723FA1706009CE123 /* AboutViewController.swift */; };
 		E98264DD23FA1D50009CE123 /* EditTextProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264DC23FA1D50009CE123 /* EditTextProfileViewController.swift */; };
 		E98264DF23FA1D5A009CE123 /* EditWallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264DE23FA1D5A009CE123 /* EditWallViewController.swift */; };
 		E98264E123FA846F009CE123 /* EditTextDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98264E023FA846F009CE123 /* EditTextDetailViewController.swift */; };
@@ -87,6 +87,7 @@
 		E98CE4F623F520A900BAF41F /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F523F520A900BAF41F /* BaseViewController.swift */; };
 		E98CE4F823F5218A00BAF41F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F723F5218A00BAF41F /* NetworkManager.swift */; };
 		E98CE4FA23F5632000BAF41F /* ChooseSocialGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */; };
+		E9C96C80247838A600A6C0C5 /* ReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C96C7F247838A600A6C0C5 /* ReportManager.swift */; };
 		E9D1EC882471713300E06CA6 /* WebPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D1EC872471713300E06CA6 /* WebPageViewController.swift */; };
 		E9ECF1862467D9A80048EBF3 /* NotificationPushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9ECF1852467D9A80048EBF3 /* NotificationPushManager.swift */; };
 		E9F38CDC246E722E000953DC /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9F38CCE246E71FB000953DC /* SQLite.framework */; };
@@ -178,6 +179,7 @@
 		E90DA889240BA7350070B462 /* PosterPushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterPushViewController.swift; sourceTree = "<group>"; };
 		E90DA88B240BA7740070B462 /* PosterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterModel.swift; sourceTree = "<group>"; };
 		E90DA891240BD46F0070B462 /* PosterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterDetailViewController.swift; sourceTree = "<group>"; };
+		E911439F2474CCF000A3C159 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		E928C71B23FE5F3F004D75E0 /* BridgeHeaderFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeaderFile.h; sourceTree = "<group>"; };
 		E928C71D23FE60F3004D75E0 /* ImageBrowserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserManager.swift; sourceTree = "<group>"; };
 		E928C72123FE64F5004D75E0 /* ImageBrowserMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserMainView.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 		E928C72B23FE8B9A004D75E0 /* ImageBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageBrowserViewController.swift; sourceTree = "<group>"; };
 		E92F7BB12407807500212167 /* SquareCommentItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCommentItem.swift; sourceTree = "<group>"; };
 		E92F7BB3240787FB00212167 /* SquareCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareCommentTableViewCell.swift; sourceTree = "<group>"; };
+		E9386B9F247BDDFF00CA0BB1 /* BlockListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListViewController.swift; sourceTree = "<group>"; };
 		E942E626240A4D2D004035D6 /* SquareJudgeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareJudgeItem.swift; sourceTree = "<group>"; };
 		E942E628240A514B004035D6 /* SquareJudgeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareJudgeTableViewCell.swift; sourceTree = "<group>"; };
 		E942E62A240A5A9B004035D6 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
@@ -218,7 +221,6 @@
 		E98264D023F979FC009CE123 /* UserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewController.swift; sourceTree = "<group>"; };
 		E98264D323F97A44009CE123 /* UserListManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListManager.swift; sourceTree = "<group>"; };
 		E98264D523FA16BF009CE123 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
-		E98264D723FA1706009CE123 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		E98264DC23FA1D50009CE123 /* EditTextProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextProfileViewController.swift; sourceTree = "<group>"; };
 		E98264DE23FA1D5A009CE123 /* EditWallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWallViewController.swift; sourceTree = "<group>"; };
 		E98264E023FA846F009CE123 /* EditTextDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTextDetailViewController.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 		E98CE4F523F520A900BAF41F /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		E98CE4F723F5218A00BAF41F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		E98CE4F923F5632000BAF41F /* ChooseSocialGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSocialGroupViewController.swift; sourceTree = "<group>"; };
+		E9C96C7F247838A600A6C0C5 /* ReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportManager.swift; sourceTree = "<group>"; };
 		E9D1EC872471713300E06CA6 /* WebPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebPageViewController.swift; sourceTree = "<group>"; };
 		E9ECF1852467D9A80048EBF3 /* NotificationPushManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPushManager.swift; sourceTree = "<group>"; };
 		E9F38CC3246E71FB000953DC /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../../../../Downloads/SQLite.swift-master/SQLite.xcodeproj"; sourceTree = "<group>"; };
@@ -429,7 +432,7 @@
 			isa = PBXGroup;
 			children = (
 				E98264CE23F96D14009CE123 /* SettingViewController.swift */,
-				E98264D723FA1706009CE123 /* AboutViewController.swift */,
+				E9386B9F247BDDFF00CA0BB1 /* BlockListViewController.swift */,
 				E94F8DC0246AF2D000640CAC /* EditAccount */,
 				E98264D923FA1D1B009CE123 /* EditProfile */,
 			);
@@ -570,7 +573,7 @@
 				E98264BC23F5C0BB009CE123 /* UserDefaultsManager.swift */,
 				E98CE4F723F5218A00BAF41F /* NetworkManager.swift */,
 				E969D03D23F5771D00CEEDC8 /* LoadingUI.swift */,
-				E9F38CE4246E80F5000953DC /* PushMessage */,
+				E9F38CE4246E80F5000953DC /* SQLiteManager */,
 				E928C71C23FE607F004D75E0 /* ImageBrowser */,
 				E98264E223FBBE4C009CE123 /* HGImagePicker */,
 			);
@@ -668,13 +671,14 @@
 			path = PushMessage;
 			sourceTree = "<group>";
 		};
-		E9F38CE4246E80F5000953DC /* PushMessage */ = {
+		E9F38CE4246E80F5000953DC /* SQLiteManager */ = {
 			isa = PBXGroup;
 			children = (
 				E9F38CDF246E72A7000953DC /* SQLiteManager.swift */,
 				E9F38CE5246E810D000953DC /* PushMessageManager.swift */,
+				E9C96C7F247838A600A6C0C5 /* ReportManager.swift */,
 			);
-			path = PushMessage;
+			path = SQLiteManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -726,6 +730,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = E98CE4A623F14CC600BAF41F;
 			packageReferences = (
@@ -841,6 +846,7 @@
 				E98CE4D123F1502000BAF41F /* SquareScrollViewController.swift in Sources */,
 				E969D03E23F5771D00CEEDC8 /* LoadingUI.swift in Sources */,
 				E9F38CE0246E72A7000953DC /* SQLiteManager.swift in Sources */,
+				E9386BA0247BDDFF00CA0BB1 /* BlockListViewController.swift in Sources */,
 				E9ECF1862467D9A80048EBF3 /* NotificationPushManager.swift in Sources */,
 				E92F7BB4240787FB00212167 /* SquareCommentTableViewCell.swift in Sources */,
 				E94F8DC8246B001E00640CAC /* MyCircleViewController.swift in Sources */,
@@ -852,9 +858,9 @@
 				E98264CA23F6CACE009CE123 /* DetailTableViewCell.swift in Sources */,
 				E97E893224005BAF00E32811 /* BroadcastManager.swift in Sources */,
 				E98264ED23FBBE69009CE123 /* HGImageCollectionViewCell.swift in Sources */,
+				E9C96C80247838A600A6C0C5 /* ReportManager.swift in Sources */,
 				E98CE4D923F1567E00BAF41F /* LoginViewController.swift in Sources */,
 				E90DA88A240BA7350070B462 /* PosterPushViewController.swift in Sources */,
-				E98264D823FA1706009CE123 /* AboutViewController.swift in Sources */,
 				E98264F023FBBE69009CE123 /* HGImagePickerController.swift in Sources */,
 				E900B08C2466A74500D1FB1F /* FindUserViewController.swift in Sources */,
 				E90DA882240AF0E60070B462 /* OtherProfileManager.swift in Sources */,
@@ -912,6 +918,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				E98CE4BE23F14CC800BAF41F /* Base */,
+				E911439F2474CCF000A3C159 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -923,6 +930,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -984,6 +992,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1041,12 +1050,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 4BVM57NARM;
 				INFOPLIST_FILE = socialgroup/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitsocialgroup.socialgroup;
 				PRODUCT_NAME = SocialGroup;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1060,17 +1071,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 4BVM57NARM;
 				INFOPLIST_FILE = socialgroup/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bitsocialgroup.socialgroup;
 				PRODUCT_NAME = SocialGroup;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = SocialGroupProjectProfile;
 				SWIFT_OBJC_BRIDGING_HEADER = socialgroup/BridgeHeaderFile.h;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

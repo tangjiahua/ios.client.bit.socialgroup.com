@@ -96,6 +96,11 @@ class BroadcastPushViewController: BasePushViewController, UITableViewDelegate, 
             if(textTitle.count > maxTitleCount){
                 self.showTempAlert(info: "标题超出\(maxTitleCount)字")
             }else{
+                
+                if(!textTitle.equals(str: titleTextField.text!)){
+                    textTitle = titleTextField.text!
+                }
+                
                 if(photos.count != 0){
                     // 带图发布
                     pushWithPhoto(method: "broadcast", title: textTitle, content: textContent, photos: photos)
@@ -304,6 +309,8 @@ extension BroadcastPushViewController{
     func textFieldDidEndEditing(_ textField: UITextField) {
         textTitle = textField.text ?? ""
     }
+    
+    
     
     
     //MARK:- ui collectionVIew data source

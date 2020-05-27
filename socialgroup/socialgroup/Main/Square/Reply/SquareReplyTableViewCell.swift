@@ -12,6 +12,7 @@ protocol SquareReplyTableViewCellDelegate:NSObjectProtocol {
     func avatarTappedReply(item:SquareReplyItem)
     func cellTappedReply(item: SquareReplyItem)
     func replyToUserTappedReply(item: SquareReplyItem)
+    func cellReplyLongPressed(item:SquareReplyItem)
 }
 
 class SquareReplyTableViewCell: UITableViewCell {
@@ -135,6 +136,9 @@ class SquareReplyTableViewCell: UITableViewCell {
         let cellTappedGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cellTappedReply))
         self.addGestureRecognizer(cellTappedGestureRecognizer)
         
+        let cellLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(cellLongPressed))
+        self.addGestureRecognizer(cellLongPressGestureRecognizer)
+        
     }
     
     @objc func avatarTapped(){
@@ -149,4 +153,8 @@ class SquareReplyTableViewCell: UITableViewCell {
         self.delegate.replyToUserTappedReply(item: item)
     }
 
+    
+    @objc func cellLongPressed(){
+        self.delegate?.cellReplyLongPressed(item:item)
+    }
 }

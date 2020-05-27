@@ -15,6 +15,10 @@ class MyCircleViewController: BaseViewController, UITableViewDelegate, UITableVi
     
     
     
+    
+    
+    
+    
     // manager
     var manager:CircleManager!
 
@@ -289,7 +293,7 @@ extension MyCircleViewController{
         let pushTappedSheet = UIAlertController.init(title: "更多", message: nil, preferredStyle: .actionSheet)
         self.present(pushTappedSheet, animated: true, completion: nil)
             pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
-            self.manager.reportItem(item: item)
+            self.showTempAlert(info: "别举报了，自觉删除吧！")
         } ))
         pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
         if(item.user_id == Int(UserDefaultsManager.getUserId())){
@@ -314,5 +318,30 @@ extension MyCircleViewController{
     func popDeletedBroadcastItem(item: BroadcastItem) {
         print("you cant pop here")
     }
+    
+    func popReportedItemSuccess(){
+        
+    }
+    func popReportedItemFail(){
+        
+    }
+    
+    func popManagerDeleteItemSuccess(item: BroadcastItem) {
+        self.showTempAlert(info: "不应该在这里用管理员删除")
+    }
+    
+    func popManagerDeleteItemSuccess(item: CircleItem) {
+        self.showTempAlert(info: "不应该在这里用管理员删除")
+    }
+    
+    func managerDeleteItemSuccess(item: CircleItem) {
+        self.showTempAlert(info: "不应该在这里用管理员删除")
+    }
+    
+    func managerDeleteItemFail(result: String, info: String) {
+        self.showTempAlert(info: "不应该在这里用管理员删除")
+    }
+    
+    
     
 }

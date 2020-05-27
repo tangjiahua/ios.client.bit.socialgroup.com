@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageBrowserViewController: UIViewController, UIViewControllerTransitioningDelegate, ImageBrowserMainViewDelegate {
+class ImageBrowserViewController: BaseViewController, UIViewControllerTransitioningDelegate, ImageBrowserMainViewDelegate {
     /**
     初始化查看大图的controller
 
@@ -68,7 +68,43 @@ class ImageBrowserViewController: UIViewController, UIViewControllerTransitionin
     func initView(){
         view.backgroundColor = .black
         view.addSubview(self.browserMainView)
+        
+        //添加长按手势
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressClick))
+        self.view.isUserInteractionEnabled = true
+        self.view.addGestureRecognizer(longPress)
+        
     }
+    
+     //长按手势事件
+    @objc func longPressClick() {
+        let alert = UIAlertController(title: "请选择", message: nil, preferredStyle: .actionSheet)
+//        let action = UIAlertAction(title: "保存到相册", style: .default) { [weak self](_) in
+        //按着command键，同时点击UIImageWriteToSavedPhotosAlbum方法可以看到
+//        UIImageWriteToSavedPhotosAlbum(self!.subImageView.image!, self!, #selector(self!.image(_:didFinishSavingWithError:contextInfo:)), nil)
+//        }
+        let action = UIAlertAction(title: "保存到相册", style: .default) { (alert) in
+//            UIImageWriteToSavedPhotosAlbum(self.originImageViews[self.selectPage].image!, self, #selector(saveImageResponse(_:didFinishSavingWithError:contextInfo:)), nil )
+            let select = self.browserMainView.selectPage!
+            let image = self.browserMainView.dataSource[select].bigImageView.image
+            UIImageWriteToSavedPhotosAlbum(image!, self, #selector(self.saveImageResponse(image:didFinishSavingWithError:contextInfo:)), nil)
+        }
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        alert.addAction(action)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
+            
+    }
+    
+    //保存二维码
+    @objc func saveImageResponse(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
+        if error == nil {
+            self.showTempAlert(info: "保存成功")
+        } else {
+            self.showTempAlert(info: "保存失败")
+        }
+    }
+    
 
 }
 

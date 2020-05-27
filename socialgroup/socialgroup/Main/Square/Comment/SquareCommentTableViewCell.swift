@@ -11,7 +11,9 @@ import UIKit
 protocol SquareCommentTableViewCellDelegate:NSObjectProtocol {
     func avatarTappedComment(item:SquareCommentItem)
     func seeMoreReply(item:SquareCommentItem)
-    func replyToComment(item:SquareCommentItem)
+    func cellCommentTapped(item:SquareCommentItem)
+    func cellCommentLongPressed(item:SquareCommentItem)
+
 }
 
 class SquareCommentTableViewCell: UITableViewCell {
@@ -134,6 +136,8 @@ class SquareCommentTableViewCell: UITableViewCell {
         let cellTappedGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(cellTapped))
         self.addGestureRecognizer(cellTappedGestureRecognizer)
         
+        let cellLongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(cellLongPressed))
+        self.addGestureRecognizer(cellLongPressGestureRecognizer)
     }
     
     @objc func avatarTapped(){
@@ -145,7 +149,11 @@ class SquareCommentTableViewCell: UITableViewCell {
     }
     
     @objc func cellTapped(){
-        self.delegate?.replyToComment(item:item)
+        self.delegate?.cellCommentTapped(item:item)
+    }
+    
+    @objc func cellLongPressed(){
+        self.delegate?.cellCommentLongPressed(item:item)
     }
 
 }

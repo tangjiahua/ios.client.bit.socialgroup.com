@@ -111,8 +111,28 @@ class ImageBrowserSubView: UIView, UIScrollViewDelegate {
         
         self.updateSubScrollViewSubImageView()
         
+        //长按保存
+        //添加长按手势
+//        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPressClick))
+//        self.subImageView.isUserInteractionEnabled = true
+//        self.subImageView.addGestureRecognizer(longPress)
+        
+        
+        
         
     }
+    
+    //长按手势事件
+//    @objc func longPressClick() {
+//        let alert = UIAlertController(title: "请选择", message: nil, preferredStyle: .actionSheet)
+//        let action = UIAlertAction(title: "保存到相册", style: .default) { [weak self](_) in
+//        //按着command键，同时点击UIImageWriteToSavedPhotosAlbum方法可以看到
+//        UIImageWriteToSavedPhotosAlbum(self!.subImageView.image!, self!, #selector(self!.image(_:didFinishSavingWithError:contextInfo:)), nil)
+//            let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+//        alert.addAction(action)
+//        alert.addAction(cancel)
+//        self.presentViewController(alert, animated: true, completion: nil)
+//    }
     
     
     @objc func singleTapAction(singleTap: UITapGestureRecognizer){

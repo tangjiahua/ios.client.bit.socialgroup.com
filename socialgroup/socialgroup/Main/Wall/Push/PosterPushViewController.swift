@@ -304,8 +304,8 @@ class PosterPushViewController: BaseViewController, UIImagePickerControllerDeleg
     
     private func checkPoster() -> Bool{
         // test welcome
-        if(welcomeTextView.text.count == 0 || welcomeTextView.text.count > 200){
-            self.showTempAlert(info: "引语尚未填写或超出200字")
+        if(welcomeTextView.text.count == 0 || welcomeTextView.text.count > 400){
+            self.showTempAlert(info: "引语尚未填写或超出400字")
             return false
         }else{
             posterPushModel.welcome = welcomeTextView.text
@@ -336,8 +336,8 @@ class PosterPushViewController: BaseViewController, UIImagePickerControllerDeleg
         }
         
         // test detail
-        if(detailTextView.text!.count == 0 || detailTextView.text!.count > 400){
-            self.showTempAlert(info: "简介尚未填写或超出50字")
+        if(detailTextView.text!.count == 0 || detailTextView.text!.count > 800){
+            self.showTempAlert(info: "简介尚未填写或超出800字")
             return false
         }else{
             posterPushModel.detail = detailTextView.text

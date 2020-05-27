@@ -19,6 +19,8 @@ class CircleViewController: BaseViewController, UITableViewDelegate, UITableView
     
     
     
+    
+    
     // manager
     var manager:CircleManager!
 
@@ -86,6 +88,12 @@ class CircleViewController: BaseViewController, UITableViewDelegate, UITableView
     // MARK:- Refresher
     @objc func refreshCircle(){
         manager.fetchNewCircleItems()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+            if(self.refresher.isRefreshing){
+                self.refresher.endRefreshing()
+                self.showTempAlert(info: "刷新失败")
+            }
+        }
     }
 
 }
@@ -192,6 +200,7 @@ extension CircleViewController{
     // MARK:- circle Manager delegate
     func CircleFetchSuccess(result: String, info: String) {
         tableView.refreshControl?.endRefreshing()
+        manager.checkItems()
         tableView.reloadData()
     }
     
@@ -210,11 +219,14 @@ extension CircleViewController{
             item.isLiked = true
             item.like_count += 1
         }
+        manager.checkItems()
         tableView.reloadData()
     }
     
     func reportItemSuccess(item: CircleItem) {
-        self.showTempAlert(info: "举报成功")
+        self.showTempAlert(info: "举报信息已经上传服务器")
+        manager.checkItems()
+        tableView.reloadData()
     }
     
     
@@ -225,7 +237,9 @@ extension CircleViewController{
     
     
     func reportItemFail(result: String, info: String) {
-        self.showTempAlertWithOneSecond(info: "举报失败，可能因为您已经举报过了")
+        self.showTempAlertWithOneSecond(info: "举报信息未上传服务器，但为您屏蔽了该内容")
+        manager.checkItems()
+        tableView.reloadData()
     }
     
     // delete delegate
@@ -236,6 +250,16 @@ extension CircleViewController{
     
     func deleteItemFail(result: String, info: String) {
         self.showTempAlertWithOneSecond(info: "删除失败，出bug了")
+    }
+    
+    func managerDeleteItemSuccess(item: CircleItem) {
+       manager.removeItem(item: item)
+        tableView.reloadData()
+        self.showTempAlert(info: "管理员删除成功")
+    }
+    
+    func managerDeleteItemFail(result: String, info: String) {
+        self.showTempAlert(info: "管理员删除失败：" + info)
     }
     
     
@@ -292,8 +316,70 @@ extension CircleViewController{
         let pushTappedSheet = UIAlertController.init(title: "更多", message: nil, preferredStyle: .actionSheet)
         self.present(pushTappedSheet, animated: true, completion: nil)
             pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
-            self.manager.reportItem(item: item)
+            
+                
+                
+                
+                if(item.user_id == Int(UserDefaultsManager.getUserId())){
+                    self.showTempAlert(info: "别举报了，自觉删除吧！")
+                }else{
+                    var inputText:UITextField = UITextField()
+                    let msgAlert = UIAlertController(title: "举报", message: "描述您的举报理由，能够帮助我们快速排查违规行为", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                        // 确定举报
+                        let content = inputText.text ?? ""
+                        self.manager.reportItem(item: item, content: content)
+                        
+                    }
+                    let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                        print("cancel")
+                    }
+                    msgAlert.addAction(ok)
+                    msgAlert.addAction(cancel)
+                    msgAlert.addTextField { (textField) in
+                        inputText = textField
+                        inputText.placeholder = "输入理由"
+                    }
+                    self.present(msgAlert, animated: true, completion: nil)
+                }
+                
+                
+                
+                
         } ))
+        
+        
+        if(UserDefaultsManager.getRole() == "1"){
+            //管理员可以删除
+            pushTappedSheet.addAction(.init(title: "管理员-删除该条动态", style: .default, handler:{(action: UIAlertAction) in
+                
+                
+                var inputText:UITextField = UITextField()
+                let msgAlert = UIAlertController(title: "删除", message: "描述您的删除理由，能够帮助我们快速排查违规行为", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                    // 确定举报
+                    let content = inputText.text ?? ""
+                    self.manager.managerDeleteItem(item: item, content: content)
+                    
+                }
+                let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                    print("cancel")
+                }
+                msgAlert.addAction(ok)
+                msgAlert.addAction(cancel)
+                msgAlert.addTextField { (textField) in
+                    inputText = textField
+                    inputText.placeholder = "输入理由"
+                }
+                self.present(msgAlert, animated: true, completion: nil)
+                
+                
+            } ))
+        }
+        
+        
+        
+        
         pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
         if(item.user_id == Int(UserDefaultsManager.getUserId())){
             // 说明是我自己发的内容
@@ -315,5 +401,25 @@ extension CircleViewController{
     
     func popDeletedBroadcastItem(item: BroadcastItem) {
         print("you cant pop here")
+    }
+    
+    func popReportedItemSuccess(){
+        self.showTempAlert(info: "举报成功，我们将尽快处理")
+        manager.checkItems()
+        tableView.reloadData()
+    }
+    func popReportedItemFail(){
+        self.showTempAlert(info: "举报没有上传到服务器，但我们为您屏蔽了该内容")
+        manager.checkItems()
+        tableView.reloadData()
+    }
+    func popManagerDeleteItemSuccess(item: CircleItem) {
+        self.showTempAlert(info: "管理员删除成功")
+        manager.removeItem(item: item)
+        tableView.reloadData()
+    }
+    
+    func popManagerDeleteItemSuccess(item: BroadcastItem) {
+        print("useless")
     }
 }

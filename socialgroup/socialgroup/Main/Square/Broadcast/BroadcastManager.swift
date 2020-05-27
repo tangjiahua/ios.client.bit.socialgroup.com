@@ -25,6 +25,9 @@ protocol BroadcastManagerDelegate:NSObjectProtocol {
     func reportItemSuccess(item:BroadcastItem)
     func reportItemFail(result:String, info: String)
     
+    func managerDeleteItemSuccess(item:BroadcastItem)
+    func managerDeleteItemFail(result:String, info: String)
+    
     func deleteItemSuccess(item:BroadcastItem)
     func deleteItemFail(result:String, info: String)
 }
@@ -241,10 +244,15 @@ class BroadcastManager {
     }
     
     //report
-    func reportItem(item: BroadcastItem){
+    func reportItem(item: BroadcastItem, content: String){
         
-        let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "square_item_type":"broadcast", "square_item_id":String(item.broadcast_id), "judge_type":"3", "is_to_cancel":"0", "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
-        Alamofire.request(NetworkManager.SQUARE_JUDGE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+        let reportManger = ReportManager.manager
+        reportManger.addReportedBroadcast(broadcast_id: item.broadcast_id)
+        
+        
+        let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "reported_id":String(item.broadcast_id), "type":"broadcast", "content":content, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        
+        Alamofire.request(NetworkManager.SQUARE_REPORT_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
             switch response.result{
             case .success:
                 if let data = response.result.value{
@@ -261,6 +269,35 @@ class BroadcastManager {
         }
         
     }
+    
+    
+    func managerDeleteItem(item: BroadcastItem, content: String){
+        
+//        let reportManger = ReportManager.manager
+//        reportManger.addReportedBroadcast(broadcast_id: item.broadcast_id)
+        
+        
+        let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "reported_id":String(item.broadcast_id), "type":"broadcast", "content":content, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        
+        Alamofire.request(NetworkManager.SQUARE_MANAGER_DELETE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                if let data = response.result.value{
+                    let json = JSON(data)
+                    if(json["result"].string!.equals(str: "1")){
+                        self.delegate?.managerDeleteItemSuccess(item: item)
+                    }else{
+                        self.delegate?.managerDeleteItemFail(result: "0", info: json["info"].string!)
+                    }
+                }
+            case .failure:
+                self.delegate?.managerDeleteItemFail(result: "0", info: "response fail")
+            }
+        }
+        
+    }
+    
+    
     
     // delete
     func deleteItem(item: BroadcastItem){
@@ -286,7 +323,7 @@ class BroadcastManager {
         
     }
     
-    private func removeItem(item: BroadcastItem){
+    func removeItem(item: BroadcastItem){
         
         var index = 0
         
@@ -297,6 +334,28 @@ class BroadcastManager {
             }
             index += 1
         }
+    }
+    
+    func checkItems(){
+        //举报的内容要move掉
+        
+        let reportManager = ReportManager.manager
+        
+        let reported_items = reportManager.getReportedBroadcast()
+        
+        
+        
+        for item in broadcastItems{
+            
+            for reported_item in reported_items{
+                if(item.broadcast_id == reported_item.broadcast_id){
+                    removeItem(item: item)
+                }
+            }
+            
+            
+        }
+        
     }
     
     

@@ -16,6 +16,13 @@ protocol SquareReplyManagerDelegate:NSObjectProtocol {
     
     func pushReplySuccess()
     func pushReplyFail()
+    
+    func deleteMyReplySuccess(item:SquareReplyItem)
+    func deleteMyReplyFail(result:String, info: String)
+    
+    func reportReplySuccess(item:SquareReplyItem)
+    func reportReplyFail(result:String, info: String)
+    
 }
 
 class SquareReplyManager{
@@ -63,6 +70,9 @@ class SquareReplyManager{
                                 let replyItem = SquareReplyItem(square_item_type: self.squareCommentItem.square_item_type,square_item_id: self.squareCommentItem.square_item_id, comment_id: self.squareCommentItem.comment_id, reply_id: reply_id, reply_from_user_id: reply_from_user_id, nickname: nickname, avatar: avatar, reply_to_user_id: reply_to_user_id, reply_to_user_nickname: reply_to_user_nickname, content: content, create_date: create_date)
                                 self.squareReplyItems.append(replyItem)
                             }
+                            
+                            self.checkItems()
+                            
                             self.delegate?.fetchSquareReplySuccess()
                             
                         }else{
@@ -130,6 +140,93 @@ class SquareReplyManager{
                 
                 
             }
+        }
+    }
+    
+    func deleteMyReply(item: SquareReplyItem){
+        if(!isRequesting){
+            isRequesting = true
+            let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "square_item_type":item.square_item_type!, "delete_type":"3", "correspond_id":item.reply_id!,  "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+               Alamofire.request(NetworkManager.SQUARE_DELETE_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                self.isRequesting = false
+                switch response.result{
+                    
+                   case .success:
+                       if let data = response.result.value{
+                           let json = JSON(data)
+                           if(json["result"].string!.equals(str: "1")){
+                               self.removeItem(item: item)
+                               self.delegate?.deleteMyReplySuccess(item: item)
+                           
+                           }else{
+                               self.delegate?.deleteMyReplyFail(result: "0", info: json["info"].string!)
+                           }
+                       }
+                   case .failure:
+                       self.delegate?.deleteMyReplyFail(result: "0", info: "response fail")
+                   }
+               }
+        }
+    }
+    
+    func reportReply(item: SquareReplyItem, content: String){
+        let reportManger = ReportManager.manager
+        reportManger.addReportedUser(user_id: Int(item.reply_from_user_id!)!, avatar: Int(item.avatar!)!, nickname: item.nickname)
+        
+        
+        let parameters:Parameters = ["socialgroup_id": UserDefaultsManager.getSocialGroupId(), "reported_id":item.reply_from_user_id!, "type":"user", "content":content, "user_id":UserDefaultsManager.getUserId(), "password":UserDefaultsManager.getPassword()]
+        
+        Alamofire.request(NetworkManager.SQUARE_REPORT_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                if let data = response.result.value{
+                    let json = JSON(data)
+                    if(json["result"].string!.equals(str: "1")){
+                        self.delegate?.reportReplySuccess(item: item)
+                    }else{
+                        self.delegate?.reportReplyFail(result: "0", info: json["info"].string!)
+                    }
+                }
+            case .failure:
+                self.delegate?.reportReplyFail(result: "0", info: "response fail")
+            }
+        }
+    }
+    
+    
+    
+    func checkItems(){
+        //举报的内容要move掉
+        
+        let reportManager = ReportManager.manager
+        
+        let reported_users = reportManager.getReportedUser()
+        
+        
+        for item in squareReplyItems{
+            
+            
+            for reported_user in reported_users{
+                if(Int(item.reply_from_user_id)! == reported_user.user_id){
+                    removeItem(item: item)
+                }
+            }
+            
+        }
+        
+    }
+    
+    
+    func removeItem(item: SquareReplyItem){
+        
+        var index = 0
+        
+        for i in squareReplyItems{
+            if(i.reply_id == item.reply_id){
+                squareReplyItems.remove(at: index)
+                break
+            }
+            index += 1
         }
     }
     

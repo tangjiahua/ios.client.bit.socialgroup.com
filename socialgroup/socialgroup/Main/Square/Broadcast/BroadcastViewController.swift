@@ -13,7 +13,13 @@ protocol BroadcastViewControllerDelegate:NSObjectProtocol {
     func showTitleScrollView()
 }
 
-class BroadcastViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, BroadcastManagerDelegate, BroadcastTableViewCellDelegate, UINavigationControllerDelegate{
+class BroadcastViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate, BroadcastManagerDelegate, BroadcastTableViewCellDelegate,SquareCommentViewControllerDelegate,  UINavigationControllerDelegate{
+    
+    
+    
+    
+    
+    
     
     
     
@@ -149,6 +155,7 @@ extension BroadcastViewController{
         commentVC.broadcastItem = item
         commentVC.square_item_type = "broadcast"
         commentVC.square_item_id = String(item.broadcast_id)
+        commentVC.delegate = self
         commentVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(commentVC, animated: true)
     }
@@ -217,6 +224,7 @@ extension BroadcastViewController{
     // MARK:- BroadcastManager Delegate
     func BroadcastFetchSuccess(result: String, info: String) {
         tableView.refreshControl?.endRefreshing()
+        manager.checkItems()
         tableView.reloadData()
     }
     
@@ -257,11 +265,25 @@ extension BroadcastViewController{
     }
     
     func reportItemSuccess(item: BroadcastItem) {
-        self.showTempAlert(info: "举报成功")
+        self.showTempAlert(info: "举报信息已经上传服务器，为您屏蔽了该用户")
+        manager.checkItems()
+        tableView.reloadData()
     }
     
     func reportItemFail(result: String, info: String) {
-        self.showTempAlertWithOneSecond(info: "举报失败，可能因为您已经举报过了")
+        self.showTempAlertWithOneSecond(info: "举报信息未上传服务器，但为您屏蔽了该内容")
+        manager.checkItems()
+        tableView.reloadData()
+    }
+    
+    func managerDeleteItemSuccess(item: BroadcastItem) {
+        manager.removeItem(item: item)
+        tableView.reloadData()
+        self.showTempAlert(info: "管理员删除成功")
+    }
+    
+    func managerDeleteItemFail(result: String, info: String) {
+        self.showTempAlert(info: "管理员删除失败：" + info)
     }
     
     
@@ -321,8 +343,60 @@ extension BroadcastViewController{
         let pushTappedSheet = UIAlertController.init(title: "更多", message: nil, preferredStyle: .actionSheet)
         self.present(pushTappedSheet, animated: true, completion: nil)
         pushTappedSheet.addAction(.init(title: "举报该条广播", style: .default, handler:{(action: UIAlertAction) in
-            self.manager.reportItem(item: item)
+            
+            
+            var inputText:UITextField = UITextField()
+            let msgAlert = UIAlertController(title: "举报", message: "描述您的举报理由，能够帮助我们快速排查违规行为", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                // 确定举报
+                let content = inputText.text ?? ""
+                self.manager.reportItem(item: item, content: content)
+                
+            }
+            let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                print("cancel")
+            }
+            msgAlert.addAction(ok)
+            msgAlert.addAction(cancel)
+            msgAlert.addTextField { (textField) in
+                inputText = textField
+                inputText.placeholder = "输入理由"
+            }
+            self.present(msgAlert, animated: true, completion: nil)
+            
+            
         } ))
+        
+        if(UserDefaultsManager.getRole() == "1"){
+            //管理员可以删除
+            pushTappedSheet.addAction(.init(title: "管理员-删除该条广播", style: .default, handler:{(action: UIAlertAction) in
+                
+                
+                var inputText:UITextField = UITextField()
+                let msgAlert = UIAlertController(title: "删除", message: "描述您的删除理由，能够帮助我们快速排查违规行为", preferredStyle: .alert)
+                let ok = UIAlertAction(title: "确定", style: .default) { (UIAlertAction) in
+                    // 确定举报
+                    let content = inputText.text ?? ""
+                    self.manager.managerDeleteItem(item: item, content: content)
+                    
+                    
+                }
+                let cancel = UIAlertAction(title: "取消", style: .cancel) { (UIAlertAction) in
+                    print("cancel")
+                }
+                msgAlert.addAction(ok)
+                msgAlert.addAction(cancel)
+                msgAlert.addTextField { (textField) in
+                    inputText = textField
+                    inputText.placeholder = "输入理由"
+                }
+                self.present(msgAlert, animated: true, completion: nil)
+                
+                
+            } ))
+        }
+        
+        
         
         pushTappedSheet.addAction(.init(title: "取消", style: .cancel, handler: nil))
     }
@@ -343,4 +417,39 @@ extension BroadcastViewController{
     func deleteItemFail(result: String, info: String) {
         print("you cant delete here")
     }
+}
+
+
+extension BroadcastViewController{
+    
+    func popDeletedCircleItem(item: CircleItem) {
+        print("cannot delete here")
+    }
+    
+    func popDeletedBroadcastItem(item: BroadcastItem) {
+        print("cannot delete here")
+    }
+    
+    func popReportedItemSuccess() {
+        self.showTempAlert(info: "举报成功，我们将尽快处理")
+        manager.checkItems()
+        tableView.reloadData()
+    }
+    
+    func popReportedItemFail() {
+        self.showTempAlert(info: "举报没有上传到服务器，但我们为您屏蔽了该内容")
+        manager.checkItems()
+        tableView.reloadData()
+    }
+    
+    func popManagerDeleteItemSuccess(item: BroadcastItem) {
+        self.showTempAlert(info: "管理员删除成功")
+        manager.removeItem(item: item)
+        tableView.reloadData()
+    }
+    
+    func popManagerDeleteItemSuccess(item: CircleItem) {
+        print("useless")
+    }
+    
 }
