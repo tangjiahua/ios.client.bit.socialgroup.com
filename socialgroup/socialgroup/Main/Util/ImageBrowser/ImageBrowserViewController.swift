@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class ImageBrowserViewController: BaseViewController, UIViewControllerTransitioningDelegate, ImageBrowserMainViewDelegate {
     /**
@@ -87,7 +88,40 @@ class ImageBrowserViewController: BaseViewController, UIViewControllerTransition
 //            UIImageWriteToSavedPhotosAlbum(self.originImageViews[self.selectPage].image!, self, #selector(saveImageResponse(_:didFinishSavingWithError:contextInfo:)), nil )
             let select = self.browserMainView.selectPage!
             let image = self.browserMainView.dataSource[select].bigImageView.image
-            UIImageWriteToSavedPhotosAlbum(image!, self, #selector(self.saveImageResponse(image:didFinishSavingWithError:contextInfo:)), nil)
+            
+            
+            switch(PHPhotoLibrary.authorizationStatus()){
+                case .notDetermined:
+                    print("还没有获取权限")
+                    PHPhotoLibrary.requestAuthorization({ (status) in
+                        if status == .authorized {
+                            print("同意")
+                            self.saveImage(image: image!)
+                        } else if status == .denied || status == .restricted{
+                            print("点拒绝")
+                            self.showTempAlert(info: "保存失败，无权限")
+                        }
+                    })
+                    break
+                case .restricted:
+                    self.showTempAlert(info: "此应用没有被授予权限")
+                    break
+                case .denied:
+                    self.showTempAlert(info: "此应用被用户拒绝访问相册")
+                    break
+                case .authorized:
+                    self.saveImage(image: image!)
+                    break
+                @unknown default:
+                    print("default")
+            }
+            
+            
+            
+            
+            
+            
+//            UIImageWriteToSavedPhotosAlbum(image!, self, #selector(self.saveImageResponse(image:didFinishSavingWithError:contextInfo:)), nil)
         }
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         alert.addAction(action)
@@ -96,17 +130,45 @@ class ImageBrowserViewController: BaseViewController, UIViewControllerTransition
             
     }
     
-    //保存二维码
-    @objc func saveImageResponse(image: UIImage, didFinishSavingWithError error: NSError?, contextInfo:UnsafeRawPointer) {
-        if error == nil {
-            self.showTempAlert(info: "保存成功")
-        } else {
-            self.showTempAlert(info: "保存失败")
+    
+
+    //MARK: Photos框架保存照片
+    func saveImage(image: UIImage) {
+        PHPhotoLibrary.shared().performChanges({
+            PHAssetChangeRequest.creationRequestForAsset(from: image)
+        }) { (isSuccess, error) in
+            print("\(isSuccess)----\(String(describing: error))")
+            if isSuccess {
+                self.showTempAlert(info: "保存成功")
+            } else {
+                print("error---->\(String(describing: error))")
+                self.showTempAlert(info: "保存失败")
+            }
         }
     }
     
+    // 相册权限
+//    func isRightPhoto(){
+//        if PHPhotoLibrary.authorizationStatus() == .notDetermined {
+//            PHPhotoLibrary.requestAuthorization({ (status) in
+//                if status == .authorized {
+//                    print("同意")
+//                } else if status == .denied || status == .restricted{
+//                    print("点拒绝")
+//                }
+//
+//            })
+//        } else {
+//            print("无权限")
+//        }
+//    }
+    
+
 
 }
+    
+
+
 
 
 extension ImageBrowserViewController{
