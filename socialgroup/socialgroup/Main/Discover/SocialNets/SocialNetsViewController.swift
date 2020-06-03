@@ -25,6 +25,7 @@ class SocialNetsViewController: BaseViewController, UITableViewDelegate, UITable
     let userDefaults = UserDefaults.standard
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -108,13 +109,20 @@ class SocialNetsViewController: BaseViewController, UITableViewDelegate, UITable
         return cellHeight
     }
     
+    // 滑到底部的时候加载更多的旧item
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        if(indexPath.row == userListManager.model.count - 1 && !userListManager.fetchNoMore){
+            userListManager.fetchOldSocialNetsList()
+        }
+        
+    }
+    
     
     //MARK:-userListManager delegate
     
     func fetchStickToMeListSuccess(count:Int) {
-        if(count == 0){
-            self.showTempAlert(info: "😢本社群的社交网络竟然还没有构建起来")
-        }
+        print("nomore")
         tableView.reloadData()
     }
     

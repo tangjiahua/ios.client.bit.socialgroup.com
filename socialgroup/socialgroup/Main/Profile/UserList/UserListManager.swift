@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyJSON
 
 struct UserListModel {
+    var user_profile_id:String!
     var user_id:String!
     var nickname:String!
     var realname:String!
@@ -27,6 +28,7 @@ protocol UserListManagerDelegate:NSObjectProtocol {
 class UserListManager{
     var model:[UserListModel] = []
     var userDefaults = UserDefaults.standard
+    var fetchNoMore = false
     
     var delegate:UserListManagerDelegate?
     
@@ -43,6 +45,7 @@ class UserListManager{
                         let array = json["info"].array!
                         for i in array{
                             var item = UserListModel()
+                            item.user_profile_id = ""
                             item.user_id = i["user_id"].string!
                             item.nickname = i["nickname"].string!
                             item.realname = i["realname"].string!
@@ -78,6 +81,7 @@ class UserListManager{
                         let array = json["info"].array!
                         for i in array{
                             var item = UserListModel()
+                            item.user_profile_id = i["user_profile_id"].string!
                             item.user_id = i["user_id"].string!
                             item.nickname = i["nickname"].string!
                             item.realname = i["realname"].string!
@@ -86,6 +90,47 @@ class UserListManager{
                             item.age = i["age"].string!
                             self.model.append(item)
                         }
+                        self.delegate?.fetchStickToMeListSuccess(count: array.count)
+                        
+                    }else{
+                        self.delegate?.fetchStickToMeListFail(info: json["info"].string!)
+                    }
+                    
+                }
+            case.failure(let error):
+                print(error)
+                self.delegate?.fetchStickToMeListFail(info: "response .fail")
+            }
+        }
+    }
+    
+    // MARK:- 拉取“发现”-“社交网络”的网络请求
+    func fetchOldSocialNetsList(){
+        let parameters:Parameters = ["socialgroup_id":userDefaults.string(forKey: "socialgroup_id")!,"method":"2","user_profile_id":model.last!.user_profile_id!, "user_id":userDefaults.string(forKey: "user_id")!, "password":userDefaults.string(forKey: "password")!]
+        
+        Alamofire.request(NetworkManager.DISCOVER_MEMBERS_FETCH_API, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                if let data = response.result.value{
+                    let json = JSON(data)
+                    if(json["result"].string!.equals(str: "1")){
+                        let array = json["info"].array!
+                        for i in array{
+                            var item = UserListModel()
+                            item.user_profile_id = i["user_profile_id"].string!
+                            item.user_id = i["user_id"].string!
+                            item.nickname = i["nickname"].string!
+                            item.realname = i["realname"].string!
+                            item.gender = i["gender"].string!
+                            item.avatar = i["avatar"].string!
+                            item.age = i["age"].string!
+                            self.model.append(item)
+                        }
+                        
+                        if(array.count == 0){
+                            self.fetchNoMore = true
+                        }
+                        
                         self.delegate?.fetchStickToMeListSuccess(count: array.count)
                         
                     }else{
@@ -123,6 +168,7 @@ class UserListManager{
                         let array = json["info"].array!
                         for i in array{
                             var item = UserListModel()
+                            item.user_profile_id = ""
                             item.user_id = i["user_id"].string!
                             item.nickname = i["nickname"].string!
                             item.realname = i["realname"].string!
