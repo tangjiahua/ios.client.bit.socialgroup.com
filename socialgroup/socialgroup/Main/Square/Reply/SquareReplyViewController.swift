@@ -51,6 +51,19 @@ class SquareReplyViewController: BaseViewController, UITableViewDelegate, UITabl
         initUI()
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let vc = self.navigationController!.viewControllers.first! as! BaseNavigationViewController
+        vc.viewIsInTransition = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let vc = self.navigationController!.viewControllers.first! as! BaseNavigationViewController
+        vc.viewIsInTransition = false
+    }
+    
+    
+    
     func initData(commentItem:SquareCommentItem){
         self.commentItem = commentItem
     }

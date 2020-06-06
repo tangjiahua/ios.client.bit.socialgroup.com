@@ -11,7 +11,7 @@ import SDWebImage
 
 
 
-class BaseProfileViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
+class BaseProfileViewController: BaseNavigationViewController, UITableViewDelegate, UITableViewDataSource {
     
     var heightForTableView:CGFloat{
         //照片墙高度

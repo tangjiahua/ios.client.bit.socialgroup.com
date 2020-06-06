@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, EditTextProfileViewControllerDelegate, UIGestureRecognizerDelegate {
+class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate, UIImagePickerControllerDelegate, EditTextProfileViewControllerDelegate {
     
     
     
@@ -18,8 +18,8 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
     
     let buttonHeight:CGFloat = 20
     var uploadMethod:Int = 1    //1代表头像，2代表背景
-    
-    
+//    var viewIsInTransition = false
+//    var fullScreenPoGesture: UIPanGestureRecognizer!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,28 +32,50 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
         initMyProfileView()
         
         // pop Gesture
-        let popGesture = self.navigationController!.interactivePopGestureRecognizer
-        let popTarget = popGesture?.delegate
-        let popView = popGesture!.view!
-        popGesture?.isEnabled = false
-        
-        let popSelector = NSSelectorFromString("handleNavigationTransition:")
-        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
-        fullScreenPoGesture.delegate = self
-        
-        popView.addGestureRecognizer(fullScreenPoGesture)
+//        setPopGesture()
         
         
     }
     
-    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if self.navigationController!.viewControllers.count > 1 {
-              return true
-          }
-         return false
-    }
-    
-    
+//    override func viewWillDisappear(_ animated: Bool) {
+//            print("disappear")
+//            viewIsInTransition = true
+//        }
+//
+//        override func viewDidDisappear(_ animated: Bool) {
+//            print("view did disappear")
+//            viewIsInTransition = false
+//        }
+        
+        
+        
+//        func setPopGesture(){
+//            // pop Gesture
+//            let popGesture = self.navigationController!.interactivePopGestureRecognizer
+//            let popTarget = popGesture?.delegate
+//            let popView = popGesture!.view!
+//            popGesture?.isEnabled = false
+//
+//            let popSelector = NSSelectorFromString("handleNavigationTransition:")
+//            fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+//    //        let fullScreenPoGesture = UITapGestureRecognizer(target: popTarget, action: popSelector)
+//            fullScreenPoGesture.delegate = self
+//
+//            popView.addGestureRecognizer(fullScreenPoGesture)
+//        }
+//
+//    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//        print(self.navigationController?.viewControllers.count ?? 0)
+//
+//
+//
+//        if self.navigationController!.viewControllers.count > 1 && !viewIsInTransition {
+//              return true
+//          }
+//
+//
+//         return false
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -98,7 +120,7 @@ class MyProfileViewController: BaseProfileViewController, MyProfileModelDelegate
         
         
         settingVC.hidesBottomBarWhenPushed = true
-        self.navigationController?.pushViewController(settingVC, animated: true)
+        self.navigationController!.pushViewController(settingVC, animated: true)
     }
     
     override func stickButtonTapped(){

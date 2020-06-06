@@ -19,7 +19,7 @@ protocol UtilDelegate:NSObjectProtocol{
 
 class Util {
     
-    public let VERSION = 1.1
+    public let VERSION = 1.11
     
     var delegate:UtilDelegate?
     

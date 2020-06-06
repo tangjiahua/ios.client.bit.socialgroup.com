@@ -8,13 +8,14 @@
 
 import UIKit
 
-class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewControllerDelegate, CircleViewControllerDelegate, BasePushViewControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate {
+class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewControllerDelegate, CircleViewControllerDelegate, BasePushViewControllerDelegate {
     
     
     var broadcastVC: BroadcastViewController!
     var circleVC: CircleViewController!
     
-    
+//    var viewIsInTransition = false
+//    var fullScreenPoGesture: UIPanGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,26 +43,53 @@ class SquareScrollViewController: BaseSquareScrollViewController, BroadcastViewC
         // left buttons
         initSocialGroupView()
         
-        // pop Gesture
-        let popGesture = self.navigationController!.interactivePopGestureRecognizer
-        let popTarget = popGesture?.delegate
-        let popView = popGesture!.view!
-        popGesture?.isEnabled = false
+
         
-        let popSelector = NSSelectorFromString("handleNavigationTransition:")
-        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
-        fullScreenPoGesture.delegate = self
-        
-        popView.addGestureRecognizer(fullScreenPoGesture)
-        
+//        setPopGesture()
     }
     
-    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if self.navigationController!.viewControllers.count > 1 {
-              return true
-          }
-         return false
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+////        print("disappear")
+//        viewIsInTransition = true
+//    }
+//
+//    override func viewDidDisappear(_ animated: Bool) {
+////        print("view did disappear")
+//        viewIsInTransition = false
+//    }
+    
+    
+    
+//    func setPopGesture(){
+//        // pop Gesture
+//        let popGesture = self.navigationController!.interactivePopGestureRecognizer
+//        let popTarget = popGesture?.delegate
+//        let popView = popGesture!.view!
+//        popGesture?.isEnabled = false
+//
+//        let popSelector = NSSelectorFromString("handleNavigationTransition:")
+//        fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
+////        let fullScreenPoGesture = UITapGestureRecognizer(target: popTarget, action: popSelector)
+//        fullScreenPoGesture.delegate = self
+//
+//        popView.addGestureRecognizer(fullScreenPoGesture)
+//    }
+//
+//
+//
+//    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//
+//        print(viewIsInTransition)
+//
+//        if self.navigationController!.viewControllers.count > 1 && !viewIsInTransition {
+//              return true
+//          }
+//
+//
+//         return false
+//    }
+//
+    
     
     func initPushButton(){
         let pushButtom = UIBarButtonItem(image: UIImage(named: "push-black"), style: .plain, target: self, action: #selector(push))

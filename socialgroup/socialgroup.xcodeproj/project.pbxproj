@@ -10,6 +10,7 @@
 		E900B0862466A6CA00D1FB1F /* DIscoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B0852466A6CA00D1FB1F /* DIscoverTableViewCell.swift */; };
 		E900B0892466A72F00D1FB1F /* SocialNetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B0882466A72F00D1FB1F /* SocialNetsViewController.swift */; };
 		E900B08C2466A74500D1FB1F /* FindUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E900B08B2466A74500D1FB1F /* FindUserViewController.swift */; };
+		E9091332248BD9C100CE7857 /* BaseNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9091331248BD9C100CE7857 /* BaseNavigationViewController.swift */; };
 		E90DA882240AF0E60070B462 /* OtherProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA881240AF0E60070B462 /* OtherProfileManager.swift */; };
 		E90DA885240BA6FD0070B462 /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA884240BA6FD0070B462 /* PosterCell.swift */; };
 		E90DA887240BA70C0070B462 /* WallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90DA886240BA70C0070B462 /* WallManager.swift */; };
@@ -173,6 +174,7 @@
 		E900B0852466A6CA00D1FB1F /* DIscoverTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIscoverTableViewCell.swift; sourceTree = "<group>"; };
 		E900B0882466A72F00D1FB1F /* SocialNetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialNetsViewController.swift; sourceTree = "<group>"; };
 		E900B08B2466A74500D1FB1F /* FindUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindUserViewController.swift; sourceTree = "<group>"; };
+		E9091331248BD9C100CE7857 /* BaseNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationViewController.swift; sourceTree = "<group>"; };
 		E90DA881240AF0E60070B462 /* OtherProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileManager.swift; sourceTree = "<group>"; };
 		E90DA884240BA6FD0070B462 /* PosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
 		E90DA886240BA70C0070B462 /* WallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallManager.swift; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 			isa = PBXGroup;
 			children = (
 				E98CE4F523F520A900BAF41F /* BaseViewController.swift */,
+				E9091331248BD9C100CE7857 /* BaseNavigationViewController.swift */,
 				E98CE4CE23F14FCE00BAF41F /* MainController.swift */,
 				E98CE4C923F14E2400BAF41F /* Util */,
 				E98CE4C823F14E1C00BAF41F /* Initialization */,
@@ -852,6 +855,7 @@
 				E94F8DC8246B001E00640CAC /* MyCircleViewController.swift in Sources */,
 				E98264DF23FA1D5A009CE123 /* EditWallViewController.swift in Sources */,
 				E97E893A2401184600E32811 /* BroadcastTableViewCell.swift in Sources */,
+				E9091332248BD9C100CE7857 /* BaseNavigationViewController.swift in Sources */,
 				E98CE4D523F1509200BAF41F /* DiscoverViewController.swift in Sources */,
 				E944DC9E2405687D00ED770A /* CirclePushViewController.swift in Sources */,
 				E9D1EC882471713300E06CA6 /* WebPageViewController.swift in Sources */,

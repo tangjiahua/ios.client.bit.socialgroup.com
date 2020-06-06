@@ -9,9 +9,8 @@
 import Foundation
 import UIKit
 
-class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate, PushMessageBadgeChangeProtocol, PosterPushViewControllerDelegate{
+class DiscoverViewController:BaseNavigationViewController, UITableViewDataSource, UITableViewDelegate, PushMessageBadgeChangeProtocol, PosterPushViewControllerDelegate{
    
-    
     
     
     
@@ -35,17 +34,7 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
         
         
         
-        // pop Gesture
-        let popGesture = self.navigationController!.interactivePopGestureRecognizer
-        let popTarget = popGesture?.delegate
-        let popView = popGesture!.view!
-        popGesture?.isEnabled = false
         
-        let popSelector = NSSelectorFromString("handleNavigationTransition:")
-        let fullScreenPoGesture = UIPanGestureRecognizer(target: popTarget, action: popSelector)
-        fullScreenPoGesture.delegate = self
-        
-        popView.addGestureRecognizer(fullScreenPoGesture)
         
         setUpSubViews()
         
@@ -55,12 +44,9 @@ class DiscoverViewController:BaseViewController, UITableViewDataSource, UITableV
         mainVC?.pushMessageBadgeChangeDelegate = self
     }
     
-    @objc func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if self.navigationController!.viewControllers.count > 1 {
-            return true
-        }
-       return false
-    }
+    
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

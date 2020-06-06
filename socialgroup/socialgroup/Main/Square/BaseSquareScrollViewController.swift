@@ -19,7 +19,7 @@ let Coler:UIColor = UIColor.label //标题选中的颜色
 let ButtonStartTag:Int = 2000
 
 
-class BaseSquareScrollViewController: UIViewController, UIScrollViewDelegate {
+class BaseSquareScrollViewController: BaseNavigationViewController, UIScrollViewDelegate {
     var NavigationHeight:CGFloat = 64//导航栏的高度
     var titleScrollView:UIScrollView?//标题滚动视图
     var contentScollView:UIScrollView?//管理子控制器View的滚动视图

@@ -84,6 +84,17 @@ class SquareCommentViewController: BaseViewController, UINavigationControllerDel
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        let vc = self.navigationController!.viewControllers.first! as! BaseNavigationViewController
+        vc.viewIsInTransition = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        let vc = self.navigationController!.viewControllers.first! as! BaseNavigationViewController
+        vc.viewIsInTransition = false
+    }
+    
+    
     
     
 
